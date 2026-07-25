@@ -262,7 +262,7 @@ function App() {
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
       <Routes>
-        <Route path="/" element={userToUse ? <Navigate to="/dashboard" replace /> : <Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/auth" element={userToUse ? <Navigate to="/dashboard" replace /> : <Auth />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
