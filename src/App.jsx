@@ -263,7 +263,7 @@ function App() {
       <div className="bg-grid"></div>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/auth" element={userToUse ? <Navigate to="/dashboard" replace /> : <Auth />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/*" element={userToUse ? <AuthenticatedApp session={userToUse} isMock={isMock} profile={profile} setProfileCompleted={(val) => {

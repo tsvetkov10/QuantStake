@@ -38,28 +38,28 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="glass-panel">
+          <div className="glass-panel" style={{ background: 'rgba(10, 10, 16, 0.85)', border: '1px solid rgba(0, 243, 255, 0.15)', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)' }}>
             {sent ? (
               <div className="flex-col items-center justify-center text-center" style={{ padding: '2rem' }}>
                 <Send size={48} className="text-success mb-4" />
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Message Received</h3>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff' }}>Message Received</h3>
                 <p className="text-secondary">Our support team will get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex-col gap-6">
                 <div>
-                  <label className="label">Name</label>
-                  <input type="text" className="input-field" placeholder="John Doe" required />
+                  <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Name</label>
+                  <input type="text" className="input-field" placeholder="John Doe" required style={{ background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
                 </div>
                 <div>
-                  <label className="label">Email</label>
-                  <input type="email" className="input-field" placeholder="john@example.com" required />
+                  <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Email</label>
+                  <input type="email" className="input-field" placeholder="john@example.com" required style={{ background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
                 </div>
                 <div>
-                  <label className="label">Message</label>
-                  <textarea className="input-field" placeholder="How can we help you?" required rows="5" style={{ resize: 'vertical' }}></textarea>
+                  <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
+                  <textarea className="input-field" placeholder="How can we help you?" required rows="5" style={{ resize: 'vertical', background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }}></textarea>
                 </div>
-                <button className="btn btn-primary" type="submit" style={{ width: '100%' }}>
+                <button className="btn btn-primary" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #00f3ff 0%, #00ffaa 100%)', color: '#000', border: 'none', borderRadius: '12px', cursor: 'pointer', boxShadow: '0 0 25px rgba(0, 243, 255, 0.3)' }}>
                   Send Transmission
                 </button>
               </form>
