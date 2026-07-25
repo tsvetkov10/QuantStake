@@ -72,7 +72,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       <div className="mobile-top-header">
         <div className="flex items-center gap-2">
           <TrendingUp size={24} className="logo-icon" strokeWidth={3} />
-          <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px' }}>QuantStake</h2>
+          <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px' }}>QuantStakes</h2>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/settings">
@@ -96,7 +96,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', background: 'linear-gradient(180deg, rgba(15,15,20,0.95) 0%, rgba(10,10,15,0.95) 100%)', boxShadow: '5px 0 20px rgba(0,0,0,0.2)' }}>
         <div className="flex items-center gap-3 mb-8 sidebar-header">
           <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
-          <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStake</h2>
+          <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h2>
         </div>
         
         <nav className="flex-col gap-3" style={{ flexGrow: 1 }}>
@@ -239,7 +239,7 @@ function App() {
         <div style={{height: '100vh', width: '100vw', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <div className="flex items-center gap-3 mb-10">
             <TrendingUp size={48} color="#00ffaa" strokeWidth={3} />
-            <h1 className="text-gradient brand-logo-animated" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, letterSpacing: '2px' }}>QuantStake</h1>
+            <h1 className="text-gradient brand-logo-animated" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, letterSpacing: '2px' }}>QuantStakes</h1>
           </div>
           
           <div style={{ width: '300px', height: '4px', background: 'var(--adaptive-white-05)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
@@ -253,7 +253,7 @@ function App() {
   }
 
   const hasMockSession = isMock && sessionStorage.getItem('mock_session') === 'true';
-  const userToUse = session || (hasMockSession ? { user: { email: 'mock@quantstake.com', id: 'mock-uuid' } } : null);
+  const userToUse = session || (hasMockSession ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : null);
 
   return (
     <Router>

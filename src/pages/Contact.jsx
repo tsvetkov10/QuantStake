@@ -25,13 +25,13 @@ export default function Contact() {
               <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Enterprise Inquiries</h3>
               <p className="text-secondary" style={{ marginBottom: '1rem' }}>Interested in API access or white-label solutions for your syndicate?</p>
               <div className="flex items-center gap-2 text-gradient">
-                <Mail size={16} /> enterprise@quantstake.com
+                <Mail size={16} /> enterprise@quantstakes.com
               </div>
             </div>
 
             <div className="glass-card">
               <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Headquarters</h3>
-              <p className="text-secondary" style={{ marginBottom: '1rem' }}>QuantStake Technologies LLC</p>
+              <p className="text-secondary" style={{ marginBottom: '1rem' }}>QuantStakes Technologies LLC</p>
               <div className="flex items-center gap-2 text-secondary">
                 <MapPin size={16} /> 100 Cyber Avenue, Silicon Valley, CA 94025
               </div>

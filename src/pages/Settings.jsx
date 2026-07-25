@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { AlertCircle, CheckCircle, X, ShieldCheck, User, Globe, Image as ImageIcon, Zap, Activity } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, ShieldCheck, User, Globe, Image as ImageIcon, Zap, Activity, Check, Lock, Sparkles, RefreshCw, RotateCcw, Trash2 } from 'lucide-react';
 
 export default function Settings({ session, profile: initialProfile, onProfileUpdate }) {
   const [profile, setProfile] = useState(initialProfile || { username: '', region: '', nationality: '', age: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
@@ -13,12 +13,15 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
   const [showCheckout, setShowCheckout] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState({ card: '', expiry: '', cvv: '', name: '' });
   const [paymentLoading, setPaymentLoading] = useState(false);
-  
+
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+
   const [stats, setStats] = useState({ totalBets: 0, wined: 0 });
   const isMock = import.meta.env.VITE_SUPABASE_URL === undefined;
 
   useEffect(() => {
-    document.title = "My Profile | QuantStake";
+    document.title = "My Profile | QuantStakes";
     if (initialProfile) {
       setProfile(initialProfile);
       setOriginalProfile(initialProfile);
@@ -182,266 +185,652 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
     }, 1500);
   };
 
-  const InfoItem = ({ label, value, highlight }) => (
-    <div className="flex-col gap-1 mb-6">
-      <span style={{ fontSize: '0.65rem', letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: '700', color: 'rgba(255,255,255,0.4)' }}>{label}</span>
-      <span style={{ fontSize: '1.15rem', fontWeight: '500', color: highlight ? 'var(--accent-cyan)' : '#fff', textShadow: highlight ? '0 0 10px rgba(0, 243, 255, 0.4)' : 'none' }}>{value}</span>
-    </div>
-  );
+  const handleResetStats = async () => {
+    setIsResetting(true);
+    setErrorMsg(null);
+    setSuccessMsg(null);
+    try {
+      if (isMock) {
+        sessionStorage.setItem('mock_bets', JSON.stringify([]));
+        setStats({ totalBets: 0, wined: 0 });
+        setSuccessMsg('All betting statistics and records have been successfully reset.');
+      } else if (session?.user?.id) {
+        const { error } = await supabase.from('bets').delete().eq('user_id', session.user.id);
+        if (error) throw error;
+        setStats({ totalBets: 0, wined: 0 });
+        setSuccessMsg('All betting statistics and records have been successfully reset.');
+      }
+      setShowResetConfirm(false);
+    } catch (err) {
+      console.error("Failed to reset stats:", err);
+      setErrorMsg("Failed to reset stats: " + (err.message || err));
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
+  const winRate = stats.totalBets > 0 ? ((stats.wined / stats.totalBets) * 100).toFixed(1) : '0.0';
+  const isAnalyst = profile.profile_mode === 'analyst';
 
   return (
-    <div className="flex-col gap-8 w-full h-full max-w-[1600px] mx-auto pt-4" style={{ animation: 'fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', maxWidth: '1400px', margin: '0 auto', paddingTop: '0.5rem', paddingBottom: '3rem', animation: 'fade-in 0.4s ease-out' }}>
       
-      {/* Header */}
-      <div className="flex justify-between items-end flex-shrink-0">
-        <div className="flex-col gap-1">
-          <h2 style={{ fontSize: '2.5rem', fontWeight: '300', margin: 0, color: '#fff', letterSpacing: '-0.5px' }}>
-            Profile <span style={{ fontWeight: '700', background: 'linear-gradient(90deg, var(--accent-cyan), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Dashboard</span>
-          </h2>
-          <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.5)' }}>Manage your identity and network tier.</p>
+      {/* Header Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div>
+          <h1 style={{ fontSize: '2rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            Profile <span style={{ background: 'linear-gradient(90deg, #00f3ff, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
+          </h1>
+          <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', margin: '0.25rem 0 0 0' }}>Manage your identity, public stats, and network tier.</p>
         </div>
-        <div className="flex items-center gap-6">
-          {errorMsg && <div style={{ color: '#ef4444', fontSize: '0.9rem', fontWeight: '500' }}>{errorMsg}</div>}
-          {successMsg && <div style={{ color: '#10b981', fontSize: '0.9rem', fontWeight: '500' }}>{successMsg}</div>}
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {errorMsg && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: '600', color: '#ef4444', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.4rem 0.8rem', borderRadius: '30px' }}>
+              <AlertCircle size={14} /> {errorMsg}
+            </div>
+          )}
+          {successMsg && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: '600', color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '0.4rem 0.8rem', borderRadius: '30px' }}>
+              <CheckCircle size={14} /> {successMsg}
+            </div>
+          )}
           <button 
-            className="hover-highlight" 
             onClick={handleSave} 
             disabled={loading} 
-            style={{ 
-              background: '#fff', 
-              color: '#000', 
-              padding: '0.8rem 2.5rem', 
-              borderRadius: '40px', 
-              fontWeight: '800', 
-              fontSize: '0.95rem',
+            style={{
+              background: '#ffffff',
+              color: '#000000',
+              fontWeight: '800',
+              fontSize: '0.875rem',
+              padding: '0.7rem 1.75rem',
+              borderRadius: '40px',
               border: 'none',
               cursor: 'pointer',
-              boxShadow: '0 10px 30px rgba(255, 255, 255, 0.2)',
-              transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              boxShadow: '0 4px 20px rgba(255, 255, 255, 0.15)',
+              transition: 'all 0.2s ease',
+              opacity: loading ? 0.6 : 1
             }}
+            className="hover-highlight"
           >
+            {loading ? <RefreshCw size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Check size={16} />}
             {loading ? 'Saving...' : 'Save Profile'}
           </button>
         </div>
       </div>
 
-      {/* 
-        Massive Unified Glass Panel 
-        Fixed background to be uniformly glass to avoid the awkward opaque corners
-      */}
-      <div style={{ 
-        background: 'rgba(15, 18, 25, 0.65)', 
-        backdropFilter: 'blur(30px)', 
-        WebkitBackdropFilter: 'blur(30px)',
-        borderRadius: '32px', 
-        border: '1px solid rgba(255,255,255,0.06)', 
-        boxShadow: '0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)', 
-        flexGrow: 1, 
-        minHeight: 0,
-        overflow: 'hidden'
-      }}>
+      {/* Main Grid: Responsive 2 Columns */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
         
-        {/* 
-          Grid Layout: Redesigned columns.
-          1.2fr for Preview, 1.6fr for Network Tier (Middle emphasis), 1fr for Identity, 1fr for KYC.
-        */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.6fr 1fr 1fr', height: '100%' }}>
+        {/* LEFT COLUMN: Profile Summary & Demographics */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           
-          {/* Section 1: Overview / Public Preview */}
-          <div style={{ padding: '3.5rem 2.5rem', position: 'relative', borderRight: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {/* Subtle glow behind avatar */}
-            <div style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translate(-50%, -50%)', width: '200px', height: '200px', background: profile.profile_mode === 'analyst' ? 'rgba(161, 59, 247, 0.15)' : 'rgba(0, 243, 255, 0.15)', filter: 'blur(60px)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none' }}></div>
+          {/* Card 1: User Profile Card */}
+          <div style={{ 
+            background: 'rgba(15, 18, 25, 0.75)', 
+            backdropFilter: 'blur(24px)', 
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '24px', 
+            border: '1px solid rgba(255,255,255,0.08)', 
+            padding: '2rem 1.5rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            textAlign: 'center',
+            position: 'relative',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+          }}>
             
-            <div style={{ width: '100%', display: 'flex', justifySelf: 'start', marginBottom: '2.5rem', zIndex: 1 }}>
-               <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.4rem 1rem', borderRadius: '30px', fontSize: '0.65rem', fontWeight: '800', color: '#fff', letterSpacing: '1.5px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <User size={12} /> PUBLIC ID
-               </div>
+            {/* Top Badges */}
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <span style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: '800', color: '#ccc', letterSpacing: '1px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <User size={12} color="#00f3ff" /> Public ID
+              </span>
+              <span style={{ 
+                background: isAnalyst ? 'rgba(161, 59, 247, 0.15)' : 'rgba(0, 243, 255, 0.15)', 
+                border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.3)' : '1px solid rgba(0, 243, 255, 0.3)', 
+                color: isAnalyst ? '#a13bf7' : '#00f3ff', 
+                padding: '0.3rem 0.75rem', 
+                borderRadius: '20px', 
+                fontSize: '0.7rem', 
+                fontWeight: '800', 
+                letterSpacing: '1px', 
+                textTransform: 'uppercase',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem'
+              }}>
+                {isAnalyst ? <Zap size={12} /> : <Activity size={12} />}
+                {isAnalyst ? 'Analyst' : 'Tracker'}
+              </span>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ width: '150px', height: '150px', borderRadius: '50%', background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, #1f2937, #111827)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '3.5rem', fontWeight: '300', overflow: 'hidden', boxShadow: '0 15px 40px rgba(0,0,0,0.5)' }}>
-                 {!profile.avatar_url && (profile.username?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
+            {/* Avatar Circle */}
+            <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
+              <div style={{ 
+                width: '110px', 
+                height: '110px', 
+                borderRadius: '50%', 
+                border: '2px solid rgba(255,255,255,0.12)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                color: '#fff', 
+                fontSize: '2.5rem', 
+                fontWeight: '300', 
+                overflow: 'hidden', 
+                boxShadow: isAnalyst ? '0 0 25px rgba(161, 59, 247, 0.25)' : '0 0 25px rgba(0, 243, 255, 0.2)',
+                background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, #1e293b, #0f172a)'
+              }}>
+                {!profile.avatar_url && (profile.username?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
               </div>
+
               <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} id="avatar-upload" />
-              <label htmlFor="avatar-upload" style={{ position: 'absolute', bottom: '0px', right: '0px', background: 'var(--accent-cyan)', width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 20px rgba(0, 243, 255, 0.5)', border: '4px solid #111' }} className="hover-highlight">
-                <ImageIcon size={20} color="#000" />
+              <label 
+                htmlFor="avatar-upload" 
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '2px', 
+                  right: '2px', 
+                  width: '36px', 
+                  height: '36px', 
+                  borderRadius: '50%', 
+                  background: '#00f3ff', 
+                  color: '#000', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  cursor: 'pointer', 
+                  boxShadow: '0 4px 15px rgba(0, 243, 255, 0.4)', 
+                  border: '3px solid #0a0a0f' 
+                }}
+                className="hover-highlight"
+                title="Change Avatar"
+              >
+                <ImageIcon size={16} />
               </label>
             </div>
-            
-            <div className="mt-6 text-center" style={{ zIndex: 1 }}>
-               <h3 style={{ fontSize: '2rem', fontWeight: '400', color: '#fff', margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', letterSpacing: '-0.5px' }}>
-                 {profile.username || 'Anonymous'}
-                 {profile.profile_mode === 'analyst' && <ShieldCheck size={24} color="var(--accent-purple)" style={{ filter: 'drop-shadow(0 0 8px rgba(161, 59, 247, 0.5))' }} />}
-               </h3>
-               <p style={{ fontSize: '1rem', marginTop: '0.4rem', color: profile.profile_mode === 'analyst' ? 'var(--accent-purple)' : 'var(--text-secondary)', fontWeight: '500' }}>
-                 {profile.profile_mode === 'analyst' ? 'Verified Analyst' : 'Quant Tracker'}
-               </p>
+
+            {/* Name & Handle */}
+            <h2 style={{ fontSize: '1.35rem', fontWeight: '700', color: '#fff', margin: '0 0 0.25rem 0', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              {profile.username || 'Anonymous'}
+              {isAnalyst && <ShieldCheck size={20} color="#a13bf7" />}
+            </h2>
+            <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0 0 1.25rem 0' }}>
+              {isAnalyst ? 'Verified Signal Publisher' : 'Private Portfolio Tracker'}
+            </p>
+
+            {/* Stats Banner */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '0.85rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', color: 'rgba(255,255,255,0.4)' }}>Signals</span>
+                <span style={{ fontSize: '1.4rem', fontWeight: '600', color: '#fff', marginTop: '0.2rem' }}>{stats.totalBets}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', color: 'rgba(255,255,255,0.4)' }}>Win Rate</span>
+                <span style={{ fontSize: '1.4rem', fontWeight: '600', color: '#00f3ff', marginTop: '0.2rem', textShadow: '0 0 10px rgba(0,243,255,0.3)' }}>{winRate}%</span>
+              </div>
             </div>
 
-            <div className="flex gap-10 mt-12 pt-8 w-full justify-center" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', zIndex: 1 }}>
-               <div className="flex-col items-center gap-1">
-                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800', color: 'rgba(255,255,255,0.4)' }}>Signals</span>
-                  <span style={{ fontSize: '2rem', fontWeight: '300', color: '#fff' }}>{stats.totalBets}</span>
-               </div>
-               <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
-               <div className="flex-col items-center gap-1">
-                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800', color: 'rgba(255,255,255,0.4)' }}>Win Rate</span>
-                  <span style={{ fontSize: '2rem', fontWeight: '300', color: stats.totalBets > 0 ? 'var(--accent-cyan)' : '#fff', textShadow: stats.totalBets > 0 ? '0 0 15px rgba(0, 243, 255, 0.3)' : 'none' }}>
-                    {stats.totalBets > 0 ? ((stats.wined / stats.totalBets) * 100).toFixed(1) : '0.0'}%
-                  </span>
-               </div>
-            </div>
-            
             {profile.avatar_url && (
-              <button type="button" onClick={() => { if (checkAvatarCooldown()) setProfile({ ...profile, avatar_url: '' }) }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: '600', marginTop: 'auto', paddingTop: '2rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                Remove Photo
+              <button 
+                type="button" 
+                onClick={() => { if (checkAvatarCooldown()) setProfile({ ...profile, avatar_url: '' }) }} 
+                style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', fontWeight: '600', marginTop: '1.25rem', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px' }}
+              >
+                Remove Custom Photo
               </button>
             )}
           </div>
 
-          {/* Section 2: Network Tier (Moved to center and made a hero section) */}
-          <div style={{ padding: '3.5rem 3rem', borderRight: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}>
-            {/* Background accent for emphasis */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '100%', background: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)', pointerEvents: 'none' }}></div>
-            
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '600', margin: '0 0 3rem 0', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <ShieldCheck size={20} color="var(--success)" /> Network Tier
+          {/* Card 2: Demographics */}
+          <div style={{ 
+            background: 'rgba(15, 18, 25, 0.75)', 
+            backdropFilter: 'blur(24px)', 
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '24px', 
+            border: '1px solid rgba(255,255,255,0.08)', 
+            padding: '1.5rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '1rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+          }}>
+            <h3 style={{ fontSize: '0.85rem', fontWeight: '700', color: 'rgba(255,255,255,0.7)', margin: 0, textTransform: 'uppercase', letterSpacing: '1.5px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Globe size={16} color="#a13bf7" /> Demographics & KYC
             </h3>
-            
-            <div className="flex-col gap-6 relative z-10">
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <div style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.05)', padding: '0.75rem', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.4)' }}>Currency</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#fff', marginTop: '0.2rem' }}>{profile.currency || 'USD'}</div>
+              </div>
+
+              <div style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.05)', padding: '0.75rem', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.4)' }}>Region</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#fff', marginTop: '0.2rem' }}>{profile.region || 'Unknown'}</div>
+              </div>
+
+              <div style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.05)', padding: '0.75rem', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.4)' }}>Nationality</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#fff', marginTop: '0.2rem' }}>{profile.nationality || 'Unknown'}</div>
+              </div>
+
+              <div style={{ background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '0.75rem', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: '#10b981' }}>KYC Verification</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: '600', color: '#34d399', marginTop: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <CheckCircle size={12} /> Age Verified 18+
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.04)', padding: '0.75rem', borderRadius: '12px', marginTop: '0.25rem' }}>
+              <Lock size={14} color="rgba(255,255,255,0.4)" style={{ marginTop: '2px', flexShrink: 0 }} />
+              <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', margin: 0, lineHeight: 1.5 }}>
+                Demographic details were permanently verified during KYC onboarding and are strictly immutable.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: Settings Form */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1 }}>
+          
+          {/* Section 1: Account Identity */}
+          <div style={{ 
+            background: 'rgba(15, 18, 25, 0.75)', 
+            backdropFilter: 'blur(24px)', 
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '24px', 
+            border: '1px solid rgba(255,255,255,0.08)', 
+            padding: '2rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '1.25rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}>
+              <div style={{ padding: '0.6rem', background: 'rgba(0, 243, 255, 0.1)', border: '1px solid rgba(0, 243, 255, 0.2)', borderRadius: '12px', color: '#00f3ff' }}>
+                <User size={20} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#fff', margin: 0 }}>Network Handle & Identity</h3>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0.2rem 0 0 0' }}>Your unique handle on the QuantStakes network.</p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.7rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', color: 'rgba(255,255,255,0.6)' }}>
+                Network Username
+              </label>
+              <input 
+                type="text" 
+                value={profile.username || ''}
+                onChange={(e) => setProfile({...profile, username: e.target.value})}
+                style={{ 
+                  width: '100%', 
+                  background: 'rgba(0,0,0,0.4)', 
+                  border: '1px solid rgba(255,255,255,0.12)', 
+                  color: '#fff', 
+                  fontSize: '1.1rem', 
+                  fontWeight: '500',
+                  padding: '0.9rem 1.2rem', 
+                  borderRadius: '14px', 
+                  outline: 'none', 
+                  transition: 'all 0.2s ease',
+                  boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.5)' 
+                }}
+                onFocus={e => { e.target.style.borderColor = '#00f3ff'; e.target.style.boxShadow = '0 0 0 3px rgba(0, 243, 255, 0.15), inset 0 2px 8px rgba(0,0,0,0.5)'; }}
+                onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'inset 0 2px 8px rgba(0,0,0,0.5)'; }}
+                placeholder="Enter a unique username"
+              />
+              <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0.4rem 0 0 0', lineHeight: 1.5 }}>
+                Your username serves as your primary identifier on the network. For security, changes are restricted to once every 30 days.
+              </p>
+            </div>
+          </div>
+
+          {/* Section 2: Network Tier Selection */}
+          <div style={{ 
+            background: 'rgba(15, 18, 25, 0.75)', 
+            backdropFilter: 'blur(24px)', 
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '24px', 
+            border: '1px solid rgba(255,255,255,0.08)', 
+            padding: '2rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}>
+              <div style={{ padding: '0.6rem', background: 'rgba(161, 59, 247, 0.1)', border: '1px solid rgba(161, 59, 247, 0.2)', borderRadius: '12px', color: '#a13bf7' }}>
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#fff', margin: 0 }}>Network Operating Tier</h3>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0.2rem 0 0 0' }}>Select your privacy level and network monetization features.</p>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
               
               {/* Tracker Card */}
               <div 
                 onClick={() => setProfile({ ...profile, profile_mode: 'tracker' })} 
                 style={{ 
-                  padding: '2rem', 
-                  borderRadius: '20px', 
-                  background: (profile.profile_mode || 'tracker') !== 'analyst' ? 'linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(0, 0, 0, 0))' : 'rgba(255,255,255,0.02)', 
-                  border: (profile.profile_mode || 'tracker') !== 'analyst' ? '1px solid rgba(0, 243, 255, 0.3)' : '1px solid rgba(255,255,255,0.05)', 
+                  padding: '1.5rem', 
+                  borderRadius: '18px', 
+                  background: !isAnalyst ? 'linear-gradient(135deg, rgba(0, 243, 255, 0.08), rgba(0, 0, 0, 0.4))' : 'rgba(255,255,255,0.02)', 
+                  border: !isAnalyst ? '1px solid rgba(0, 243, 255, 0.4)' : '1px solid rgba(255,255,255,0.08)', 
                   cursor: 'pointer', 
                   transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: (profile.profile_mode || 'tracker') !== 'analyst' ? '0 10px 30px rgba(0, 243, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.1)' : 'none'
+                  boxShadow: !isAnalyst ? '0 8px 25px rgba(0, 243, 255, 0.15)' : 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justify: 'space-between'
                 }}
               >
-                <div className="flex justify-between items-start mb-3">
-                   <div className="flex items-center gap-3">
-                      <div style={{ padding: '0.6rem', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                         <Activity size={20} color={(profile.profile_mode || 'tracker') !== 'analyst' ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.5)'} />
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                      <div style={{ padding: '0.5rem', background: !isAnalyst ? 'rgba(0,243,255,0.1)' : 'rgba(255,255,255,0.05)', borderRadius: '10px', color: !isAnalyst ? '#00f3ff' : 'rgba(255,255,255,0.4)' }}>
+                        <Activity size={18} />
                       </div>
-                      <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.3rem', letterSpacing: '-0.5px' }}>Quant Tracker</div>
-                   </div>
-                   {(profile.profile_mode || 'tracker') !== 'analyst' && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--accent-cyan)', boxShadow: '0 0 15px var(--accent-cyan)' }}></div>}
+                      <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.05rem' }}>Quant Tracker</div>
+                    </div>
+
+                    {!isAnalyst && (
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f3ff', boxShadow: '0 0 10px #00f3ff' }}></div>
+                    )}
+                  </div>
+
+                  <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: '0 0 1.25rem 0' }}>
+                    Maintain a private, unlisted ledger. Your trading activity and win rate remain completely hidden from public leaderboards.
+                  </p>
                 </div>
-                <div style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginTop: '1rem' }}>
-                  Maintain a private ledger. Your activity is hidden from the public leaderboard. Perfect for personal portfolio tracking.
+
+                <div style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255,255,255,0.4)' }}>Free Tier</span>
+                  <span style={{ 
+                    fontSize: '0.75rem', 
+                    fontWeight: '800', 
+                    padding: '0.25rem 0.75rem', 
+                    borderRadius: '20px', 
+                    background: !isAnalyst ? '#00f3ff' : 'rgba(255,255,255,0.05)', 
+                    color: !isAnalyst ? '#000' : 'rgba(255,255,255,0.4)' 
+                  }}>
+                    {!isAnalyst ? 'Active' : 'Select'}
+                  </span>
                 </div>
               </div>
-              
+
               {/* Analyst Card */}
               <div 
                 onClick={handleSwitchToAnalyst} 
                 style={{ 
-                  padding: '2rem', 
-                  borderRadius: '20px', 
-                  background: profile.profile_mode === 'analyst' ? 'linear-gradient(135deg, rgba(161, 59, 247, 0.1), rgba(0, 0, 0, 0))' : 'rgba(255,255,255,0.02)', 
-                  border: profile.profile_mode === 'analyst' ? '1px solid rgba(161, 59, 247, 0.3)' : '1px solid rgba(255,255,255,0.05)', 
+                  padding: '1.5rem', 
+                  borderRadius: '18px', 
+                  background: isAnalyst ? 'linear-gradient(135deg, rgba(161, 59, 247, 0.1), rgba(0, 0, 0, 0.4))' : 'rgba(255,255,255,0.02)', 
+                  border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.4)' : '1px solid rgba(255,255,255,0.08)', 
                   cursor: 'pointer', 
                   transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: profile.profile_mode === 'analyst' ? '0 10px 30px rgba(161, 59, 247, 0.15), inset 0 1px 0 rgba(255,255,255,0.1)' : 'none'
+                  boxShadow: isAnalyst ? '0 8px 25px rgba(161, 59, 247, 0.2)' : 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justify: 'space-between'
                 }}
               >
-                <div className="flex justify-between items-start mb-3">
-                   <div className="flex items-center gap-3">
-                      <div style={{ padding: '0.6rem', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                         <Zap size={20} color={profile.profile_mode === 'analyst' ? 'var(--accent-purple)' : 'rgba(255,255,255,0.5)'} />
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                      <div style={{ padding: '0.5rem', background: isAnalyst ? 'rgba(161,59,247,0.15)' : 'rgba(255,255,255,0.05)', borderRadius: '10px', color: isAnalyst ? '#a13bf7' : 'rgba(255,255,255,0.4)' }}>
+                        <Zap size={18} />
                       </div>
-                      <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.3rem', letterSpacing: '-0.5px' }}>Quant Analyst</div>
-                   </div>
-                   {profile.profile_mode === 'analyst' && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--accent-purple)', boxShadow: '0 0 15px var(--accent-purple)' }}></div>}
+                      <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        Quant Analyst <Sparkles size={14} color="#a13bf7" />
+                      </div>
+                    </div>
+
+                    {isAnalyst && (
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#a13bf7', boxShadow: '0 0 10px #a13bf7' }}></div>
+                    )}
+                  </div>
+
+                  <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: '0 0 1.25rem 0' }}>
+                    Publish your verified signals to the public network leaderboard. Build a track record and allow users to subscribe for €50/mo.
+                  </p>
                 </div>
-                <div style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginTop: '1rem' }}>
-                  Publish your stats & signals to the network. Build a reputation and allow users to subscribe to your feed for €50/mo.
+
+                <div style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#c084fc' }}>€50.00 / year</span>
+                  <span style={{ 
+                    fontSize: '0.75rem', 
+                    fontWeight: '800', 
+                    padding: '0.25rem 0.75rem', 
+                    borderRadius: '20px', 
+                    background: isAnalyst ? '#a13bf7' : 'rgba(161, 59, 247, 0.15)', 
+                    color: isAnalyst ? '#fff' : '#c084fc',
+                    border: isAnalyst ? 'none' : '1px solid rgba(161, 59, 247, 0.3)'
+                  }}>
+                    {isAnalyst ? 'Active' : 'Upgrade'}
+                  </span>
                 </div>
               </div>
+
             </div>
           </div>
 
-          {/* Section 3: Identity Configuration */}
-          <div style={{ padding: '3.5rem 2.5rem', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '600', margin: '0 0 3rem 0', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <User size={20} color="var(--accent-cyan)" /> Identity
-            </h3>
-            
-            <div className="mt-8">
-              <label style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: '800', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '1rem' }}>Network Username</label>
-              <input 
-                type="text" 
-                value={profile.username || ''}
-                onChange={(e) => setProfile({...profile, username: e.target.value})}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '1.2rem', padding: '1.2rem', borderRadius: '16px', outline: 'none', transition: 'all 0.3s ease', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)' }}
-                onFocus={e => { e.target.style.borderColor = 'var(--accent-cyan)'; e.target.style.boxShadow = '0 0 0 3px rgba(0, 243, 255, 0.1), inset 0 2px 10px rgba(0,0,0,0.5)'; }}
-                onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'inset 0 2px 10px rgba(0,0,0,0.5)'; }}
-                placeholder="Enter a unique username"
-              />
-              <p style={{ fontSize: '0.85rem', marginTop: '1.2rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.4)', padding: '0 0.5rem' }}>
-                Your username is your primary identifier on the network. For security, changes are restricted to once every 30 days.
-              </p>
+          {/* Section 3: Danger Zone / Performance Data Reset */}
+          <div style={{ 
+            background: 'rgba(239, 68, 68, 0.03)', 
+            backdropFilter: 'blur(24px)', 
+            WebkitBackdropFilter: 'blur(24px)',
+            borderRadius: '24px', 
+            border: '1px solid rgba(239, 68, 68, 0.2)', 
+            padding: '2rem', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '1.25rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(239, 68, 68, 0.15)', paddingBottom: '1rem' }}>
+              <div style={{ padding: '0.6rem', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '12px', color: '#ef4444' }}>
+                <Trash2 size={20} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#fff', margin: 0 }}>Danger Zone & Portfolio Data</h3>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0.2rem 0 0 0' }}>Manage portfolio records and clear betting history.</p>
+              </div>
             </div>
-          </div>
 
-          {/* Section 4: Immutable Demographics */}
-          <div style={{ padding: '3.5rem 2.5rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '600', margin: '0 0 3rem 0', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <Globe size={20} color="var(--accent-purple)" /> Demographics
-            </h3>
-            
-            <div className="flex-col">
-              <InfoItem label="Primary Currency" value={profile.currency || 'USD'} />
-              <InfoItem label="Trading Region" value={profile.region || 'Unknown'} />
-              <InfoItem label="Nationality" value={profile.nationality || 'Unknown'} />
-              <InfoItem label="Verification" value="Age Verified (18+)" highlight={true} />
-            </div>
-            
-            <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-               <p style={{ fontSize: '0.8rem', lineHeight: 1.5, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
-                 These details are strictly immutable and were permanently set during KYC onboarding.
-               </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <div style={{ fontSize: '0.95rem', fontWeight: '700', color: '#fff' }}>Reset All Betting Statistics</div>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', margin: '0.25rem 0 0 0', lineHeight: 1.5 }}>
+                  Permanently delete all recorded bets, win/loss history, and performance analytics from the database.
+                </p>
+              </div>
+
+              <button 
+                type="button"
+                onClick={() => setShowResetConfirm(true)}
+                style={{ 
+                  padding: '0.75rem 1.25rem', 
+                  borderRadius: '30px', 
+                  background: 'rgba(239, 68, 68, 0.15)', 
+                  border: '1px solid rgba(239, 68, 68, 0.4)', 
+                  color: '#ef4444', 
+                  fontSize: '0.85rem', 
+                  fontWeight: '700', 
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.2s ease'
+                }}
+                className="hover-highlight"
+              >
+                <RotateCcw size={15} />
+                <span>Reset Stats</span>
+              </button>
             </div>
           </div>
 
         </div>
+
       </div>
 
       {/* Analyst Checkout Modal */}
       {showCheckout && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-          <div style={{ width: '100%', maxWidth: '420px', background: '#0a0a0f', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.1)', padding: '2.5rem', position: 'relative', animation: 'fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 30px 60px rgba(0,0,0,0.6)' }}>
-            <button onClick={() => setShowCheckout(false)} style={{ position: 'absolute', top: '2rem', right: '2rem', background: 'rgba(255,255,255,0.05)', border: 'none', color: 'rgba(255,255,255,0.6)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s' }} className="hover-highlight">
+        <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+          <div style={{ width: '100%', maxWidth: '420px', background: '#0a0a0f', borderRadius: '28px', border: '1px solid rgba(255,255,255,0.12)', padding: '2rem', position: 'relative', animation: 'fade-in 0.3s ease-out', boxShadow: '0 25px 60px rgba(0,0,0,0.7)' }}>
+            <button 
+              onClick={() => setShowCheckout(false)} 
+              style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.05)', border: 'none', color: 'rgba(255,255,255,0.6)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+              className="hover-highlight"
+            >
               <X size={18} />
             </button>
-            <div className="flex items-center gap-4 mb-6">
-              <div style={{ padding: '0.8rem', background: 'rgba(161, 59, 247, 0.1)', borderRadius: '16px', border: '1px solid rgba(161, 59, 247, 0.2)' }}>
-                 <Zap size={28} color="var(--accent-purple)" />
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              <div style={{ padding: '0.75rem', background: 'rgba(161, 59, 247, 0.15)', borderRadius: '14px', border: '1px solid rgba(161, 59, 247, 0.3)', color: '#a13bf7' }}>
+                <Zap size={24} />
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: '700', margin: 0, color: '#fff', letterSpacing: '-0.5px' }}>Analyst License</h3>
+              <div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff', margin: 0 }}>Analyst License Activation</h3>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', margin: '0.2rem 0 0 0' }}>Monetize your signal feed on QuantStakes.</p>
+              </div>
             </div>
-            
-            <p style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>
-              Publishing your stats allows users to subscribe to you for <strong style={{color: '#fff'}}>€50/mo</strong>. A commercial license costs <strong style={{color: 'var(--accent-purple)'}}>€50.00 / year</strong>.
+
+            <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: '1.5rem', background: 'rgba(255,255,255,0.02)', padding: '0.85rem', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              Publishing verified signals allows users to subscribe to you for <strong style={{ color: '#fff' }}>€50/mo</strong>. The Analyst license fee is <strong style={{ color: '#a13bf7' }}>€50.00 / year</strong>.
             </p>
 
-            <form onSubmit={processPayment} className="flex-col gap-4">
-              <input type="text" required placeholder="Cardholder Name" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '1.2rem', fontSize: '1rem', borderRadius: '16px', color: '#fff', outline: 'none' }} value={paymentDetails.name} onChange={e => setPaymentDetails({ ...paymentDetails, name: e.target.value })} onFocus={e => e.target.style.borderColor = 'var(--accent-purple)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-              <input type="text" required placeholder="Card Number" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '1.2rem', fontSize: '1rem', borderRadius: '16px', color: '#fff', outline: 'none' }} value={paymentDetails.card} onChange={e => setPaymentDetails({ ...paymentDetails, card: e.target.value })} onFocus={e => e.target.style.borderColor = 'var(--accent-purple)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-              <div className="grid grid-cols-2 gap-4">
-                <input type="text" required placeholder="MM/YY" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '1.2rem', fontSize: '1rem', borderRadius: '16px', color: '#fff', outline: 'none' }} value={paymentDetails.expiry} onChange={e => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })} onFocus={e => e.target.style.borderColor = 'var(--accent-purple)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-                <input type="text" required placeholder="CVV" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '1.2rem', fontSize: '1rem', borderRadius: '16px', color: '#fff', outline: 'none' }} value={paymentDetails.cvv} onChange={e => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })} onFocus={e => e.target.style.borderColor = 'var(--accent-purple)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
+            <form onSubmit={processPayment} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.7rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.5)', marginBottom: '0.4rem', display: 'block' }}>Cardholder Name</label>
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="John Doe" 
+                  style={{ width: '100%', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.12)', padding: '0.8rem 1rem', fontSize: '0.95rem', borderRadius: '12px', color: '#fff', outline: 'none' }}
+                  value={paymentDetails.name} 
+                  onChange={e => setPaymentDetails({ ...paymentDetails, name: e.target.value })} 
+                />
               </div>
 
-              <button type="submit" disabled={paymentLoading} style={{ width: '100%', marginTop: '1.5rem', background: '#fff', color: '#000', cursor: 'pointer', padding: '1.2rem', fontSize: '1.05rem', fontWeight: '800', borderRadius: '40px', border: 'none', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 10px 30px rgba(255, 255, 255, 0.2)' }} className="hover-highlight">
-                {paymentLoading ? 'Processing...' : 'Pay €50.00'}
+              <div>
+                <label style={{ fontSize: '0.7rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.5)', marginBottom: '0.4rem', display: 'block' }}>Card Number</label>
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="4532 •••• •••• 8892" 
+                  style={{ width: '100%', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.12)', padding: '0.8rem 1rem', fontSize: '0.95rem', borderRadius: '12px', color: '#fff', outline: 'none' }}
+                  value={paymentDetails.card} 
+                  onChange={e => setPaymentDetails({ ...paymentDetails, card: e.target.value })} 
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.7rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.5)', marginBottom: '0.4rem', display: 'block' }}>Expiry</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="MM/YY" 
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.12)', padding: '0.8rem 1rem', fontSize: '0.95rem', borderRadius: '12px', color: '#fff', outline: 'none' }}
+                    value={paymentDetails.expiry} 
+                    onChange={e => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })} 
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.7rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.5)', marginBottom: '0.4rem', display: 'block' }}>CVV</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="123" 
+                    style={{ width: '100%', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.12)', padding: '0.8rem 1rem', fontSize: '0.95rem', borderRadius: '12px', color: '#fff', outline: 'none' }}
+                    value={paymentDetails.cvv} 
+                    onChange={e => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })} 
+                  />
+                </div>
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={paymentLoading} 
+                style={{ width: '100%', marginTop: '0.75rem', background: '#a13bf7', color: '#fff', cursor: 'pointer', padding: '0.9rem', fontSize: '0.95rem', fontWeight: '800', borderRadius: '30px', border: 'none', transition: 'all 0.2s ease', boxShadow: '0 8px 25px rgba(161, 59, 247, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                className="hover-highlight"
+              >
+                {paymentLoading ? <RefreshCw size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Zap size={16} />}
+                {paymentLoading ? 'Processing...' : 'Pay €50.00 & Activate'}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Confirmation Modal */}
+      {showResetConfirm && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+          <div style={{ width: '100%', maxWidth: '440px', background: '#0a0a0f', borderRadius: '28px', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '2rem', position: 'relative', animation: 'fade-in 0.3s ease-out', boxShadow: '0 25px 60px rgba(0,0,0,0.7)' }}>
+            <button 
+              onClick={() => setShowResetConfirm(false)}
+              style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.05)', border: 'none', color: 'rgba(255,255,255,0.6)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+              className="hover-highlight"
+            >
+              <X size={18} />
+            </button>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              <div style={{ padding: '0.75rem', background: 'rgba(239, 68, 68, 0.15)', borderRadius: '14px', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444' }}>
+                <Trash2 size={24} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance Stats?</h3>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', margin: '0.2rem 0 0 0' }}>This action cannot be undone.</p>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: '1.5rem', background: 'rgba(0,0,0,0.2)', padding: '0.85rem', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              Are you sure you want to delete all recorded bets? This will permanently wipe your betting history, PnL analytics, and performance stats from the database.
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button 
+                onClick={() => setShowResetConfirm(false)}
+                style={{ padding: '0.7rem 1.25rem', fontSize: '0.85rem', fontWeight: '600', color: '#fff', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '30px', cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleResetStats}
+                disabled={isResetting}
+                style={{ 
+                  padding: '0.7rem 1.25rem', 
+                  fontSize: '0.85rem', 
+                  fontWeight: '800', 
+                  background: '#ef4444', 
+                  color: '#ffffff', 
+                  border: 'none', 
+                  borderRadius: '30px', 
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)',
+                  opacity: isResetting ? 0.6 : 1
+                }}
+              >
+                {isResetting ? <RefreshCw size={15} style={{ animation: 'spin 1s linear infinite' }} /> : <Trash2 size={15} />}
+                {isResetting ? 'Deleting...' : 'Yes, Delete All Data'}
+              </button>
+            </div>
           </div>
         </div>
       )}

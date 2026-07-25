@@ -459,6 +459,12 @@ export default function BetHistory({ session, profile }) {
         quality: 1.0,
         pixelRatio: 2,
         cacheBust: true,
+        backgroundColor: '#0d0f17',
+        style: {
+          background: '#0d0f17',
+          backgroundColor: '#0d0f17',
+          color: '#ffffff'
+        },
         filter: (node) => {
           return node.getAttribute ? node.getAttribute('data-html2canvas-ignore') !== 'true' : true;
         }
@@ -475,7 +481,7 @@ export default function BetHistory({ session, profile }) {
         );
       } catch (clipErr) {
         console.warn('Clipboard write failed, downloading instead...', clipErr);
-        download(blob, `QuantStake_Slip_${hash.slice(0, 8)}.png`);
+        download(blob, `QuantStakes_Slip_${hash.slice(0, 8)}.png`);
         showToastMsg(
           'LEDGER EXPORT COMPLETE',
           'Image export blocked by browser. Slip exported to downloads folder instead.'
@@ -488,7 +494,7 @@ export default function BetHistory({ session, profile }) {
 
   // Scoreboard layout parsing for teams matchup
   const renderMatchupsBlock = (teamsString, sportColor) => {
-    if (!teamsString) return <span style={{ color: 'var(--text-secondary)', opacity: 0.5, fontSize: '0.85rem' }}>[Pending Selection Input]</span>;
+    if (!teamsString) return <span style={{ color: 'rgba(255, 255, 255, 0.4)', opacity: 0.5, fontSize: '0.85rem' }}>[Pending Selection Input]</span>;
     const legs = teamsString.split(' | ');
     return (
       <div className="flex-col gap-3 mt-1">
@@ -504,8 +510,8 @@ export default function BetHistory({ session, profile }) {
               <div 
                 key={idx}
                 style={{ 
-                  background: 'var(--adaptive-white-02)', 
-                  border: '1px solid var(--adaptive-white-04)',
+                  background: 'rgba(255, 255, 255, 0.04)', 
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
                   borderRadius: '12px', 
                   padding: '12px 16px', 
                   position: 'relative',
@@ -520,40 +526,39 @@ export default function BetHistory({ session, profile }) {
                 <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: sportColor }} />
                 
                 {/* Micro tech label */}
-                <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   <span>SELECTION LEG #{idx + 1}</span>
                   <span style={{ color: sportColor }}>ACTIVE RUNTIME</span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '2px' }}>
                   <div className="flex-col" style={{ minWidth: 0, flex: 1 }}>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[0]}</span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Home Team</span>
+                    <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[0]}</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Home Team</span>
                   </div>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ 
                       fontSize: '0.55rem', 
-                      color: 'var(--text-primary)', 
-                      background: 'var(--adaptive-white-04)', 
-                      border: `1px solid var(--adaptive-white-10)`, 
+                      color: '#ffffff', 
+                      background: 'rgba(255, 255, 255, 0.08)', 
+                      border: '1px solid rgba(255, 255, 255, 0.15)', 
                       padding: '2px 8px', 
                       borderRadius: '4px', 
                       fontWeight: 'bold', 
                       fontFamily: 'monospace',
-                      letterSpacing: '1px',
-                      textShadow: '0 0 5px rgba(255,255,255,0.2)'
+                      letterSpacing: '1px'
                     }}>VS</span>
                   </div>
 
                   <div className="flex-col text-right" style={{ minWidth: 0, flex: 1 }}>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[1]}</span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Away Team</span>
+                    <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[1]}</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Away Team</span>
                   </div>
                 </div>
 
-                <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed var(--adaptive-white-05)', display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.6rem', color: 'var(--accent-cyan)', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+                <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.6rem', color: '#00f3ff', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
                 </div>
               </div>
             );
@@ -563,8 +568,8 @@ export default function BetHistory({ session, profile }) {
             <div 
               key={idx}
               style={{ 
-                background: 'var(--adaptive-white-02)', 
-                border: '1px solid var(--adaptive-white-04)',
+                background: 'rgba(255, 255, 255, 0.04)', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
                 borderRadius: '12px', 
                 padding: '12px 16px', 
                 position: 'relative',
@@ -577,20 +582,20 @@ export default function BetHistory({ session, profile }) {
             >
               <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: sportColor }} />
               
-              <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                 <span>SELECTION LEG #{idx + 1}</span>
                 <span style={{ color: sportColor }}>ACTIVE RUNTIME</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '2px', flex: 1 }}>
                 <div className="flex-col" style={{ minWidth: 0, flex: 1 }}>
-                  <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{leg}</span>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Selection</span>
+                  <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{leg}</span>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Selection</span>
                 </div>
               </div>
 
-              <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed var(--adaptive-white-05)', display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.6rem', color: 'var(--accent-cyan)', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+              <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.6rem', color: '#00f3ff', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
               </div>
             </div>
           );
@@ -1038,120 +1043,89 @@ export default function BetHistory({ session, profile }) {
                 onClick={() => openBetDetailsModal(bet)}
                 className="glass-panel lost-slip-hover" 
                 style={{ 
-                  padding: '2rem 1.5rem', 
+                  padding: '1.75rem 1.5rem', 
                   position: 'relative', 
                   overflow: 'hidden', 
                   border: slipBorder,
                   boxShadow: slipShadow,
                   opacity: slipOpacity,
                   cursor: 'pointer',
-                  background: 'var(--bg-invert)',
-                  borderRadius: '12px'
+                  background: '#0d0f17',
+                  color: '#ffffff',
+                  borderRadius: '24px'
                 }}
               >
-                {/* Background Graphic Glows */}
-                <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.12) 0%, transparent 70%)', filter: 'blur(30px)', pointerEvents: 'none', zIndex: 0 }} />
-                <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none', zIndex: 0 }} />
-                
-                {/* Grid Overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  backgroundImage: 'linear-gradient(var(--adaptive-white-02) 1px, transparent 1px), linear-gradient(90deg, var(--adaptive-white-02) 1px, transparent 1px)',
-                  backgroundSize: '24px 24px',
-                  pointerEvents: 'none',
-                  zIndex: 0
-                }} />
-
-                {/* Content Container */}
-                <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-                  {/* Branded Logo */}
-                  <div 
-                    style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      gap: '12px', 
-                      marginBottom: '1.5rem',
-                      borderBottom: '1px dashed var(--adaptive-white-15)',
-                      paddingBottom: '1rem',
-                      width: '100%'
-                    }}
-                  >
-                    <TrendingUp size={28} className="logo-icon" strokeWidth={3} style={{ flexShrink: 0 }} />
-                    <h2 className="logo-text" style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>QuantStake</h2>
-                  </div>
-
-                {/* Physical ink validation stamp watermark */}
+                {/* Status Stamp in exact center of betslip */}
                 {isWon && (
                   <div style={{
-                    position: 'absolute', top: '8.5rem',
-                    right: '1.25rem',
-                    border: '3px double rgba(0, 255, 136, 0.7)',
-                    color: '#00ff88',
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
+                    position: 'absolute', top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-12deg)',
+                    border: '3px double #10b981',
+                    color: '#10b981',
+                    fontSize: '0.95rem',
+                    fontWeight: '900',
                     fontFamily: 'monospace',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    transform: 'rotate(-12deg)',
-                    zIndex: 10,
-                    letterSpacing: '2px',
+                    padding: '0.4rem 1.2rem',
+                    borderRadius: '10px',
+                    zIndex: 15,
+                    letterSpacing: '3px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 10px rgba(0, 255, 136, 0.4)',
-                    boxShadow: 'inset 0 0 4px rgba(0, 255, 136, 0.2)',
-                    background: 'var(--item-gradient-1)'
+                    textShadow: '0 0 12px rgba(16, 185, 129, 0.5)',
+                    boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)',
+                    background: 'rgba(13, 15, 23, 0.95)',
+                    whiteSpace: 'nowrap'
                   }}>
                     SETTLED • WIN
                   </div>
                 )}
                 {isLost && (
                   <div style={{
-                    position: 'absolute', top: '8.5rem',
-                    right: '1.25rem',
-                    border: '3px double rgba(255, 51, 102, 0.5)',
-                    color: '#ff3366',
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
+                    position: 'absolute', top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-12deg)',
+                    border: '3px double #ef4444',
+                    color: '#ef4444',
+                    fontSize: '0.95rem',
+                    fontWeight: '900',
                     fontFamily: 'monospace',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    transform: 'rotate(-12deg)',
-                    zIndex: 10,
-                    letterSpacing: '2px',
+                    padding: '0.4rem 1.2rem',
+                    borderRadius: '10px',
+                    zIndex: 15,
+                    letterSpacing: '3px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 10px rgba(255, 51, 102, 0.3)',
-                    boxShadow: 'inset 0 0 4px rgba(255, 51, 102, 0.1)',
-                    background: 'var(--item-gradient-1)'
+                    textShadow: '0 0 12px rgba(239, 68, 68, 0.5)',
+                    boxShadow: '0 0 25px rgba(239, 68, 68, 0.25)',
+                    background: 'rgba(13, 15, 23, 0.95)',
+                    whiteSpace: 'nowrap'
                   }}>
                     SETTLED • LOSS
                   </div>
                 )}
                 {isCashed && (
                   <div style={{
-                    position: 'absolute', top: '8.5rem',
-                    right: '1.25rem',
-                    border: '3px double rgba(255, 185, 0, 0.6)',
-                    color: '#ffb900',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
+                    position: 'absolute', top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-12deg)',
+                    border: '3px double #FFD700',
+                    color: '#FFD700',
+                    fontSize: '0.9rem',
+                    fontWeight: '900',
                     fontFamily: 'monospace',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    transform: 'rotate(-12deg)',
-                    zIndex: 10,
-                    letterSpacing: '1px',
+                    padding: '0.4rem 1.2rem',
+                    borderRadius: '10px',
+                    zIndex: 15,
+                    letterSpacing: '2px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 10px rgba(255, 185, 0, 0.3)',
-                    boxShadow: 'inset 0 0 4px rgba(255, 185, 0, 0.1)',
-                    background: 'var(--item-gradient-1)'
+                    textShadow: '0 0 12px rgba(255, 215, 0, 0.5)',
+                    boxShadow: '0 0 25px rgba(255, 215, 0, 0.25)',
+                    background: 'rgba(13, 15, 23, 0.95)',
+                    whiteSpace: 'nowrap'
                   }}>
                     CASHED OUT
                   </div>
                 )}
 
-                {/* Pulsing indicator banner */}
-                <div className="flex justify-between items-center mb-5">
-                  <div className="flex items-center gap-2">
+                {/* Status & Date Banner */}
+                <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.3rem 0.75rem', borderRadius: '30px' }}>
                     <div style={{
                       width: '6px',
                       height: '6px',
@@ -1159,109 +1133,53 @@ export default function BetHistory({ session, profile }) {
                       backgroundColor: statusInfo.color,
                       boxShadow: statusInfo.shadow
                     }} />
-                    <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: statusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: statusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>
                       {statusInfo.label}
                     </span>
                   </div>
                   
-                  <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: 'var(--text-secondary)' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontWeight: '600' }}>
                     {new Date(bet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                   </span>
-                </div>
-
-                {/* Title / Header */}
-                <div className="flex-col gap-1 text-center mb-5" style={{ borderBottom: '1px dashed var(--adaptive-white-08)', paddingBottom: '1rem' }}>
-                    <h4 style={{ fontFamily: 'monospace', fontSize: '0.95rem', color: 'var(--text-primary)', letterSpacing: '3px', margin: 0, fontWeight: 'bold' }}>
-                      BET SLIP
-                    </h4>
-                  <p style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', margin: 0, textTransform: 'uppercase' }}>
-                    CRYPTOGRAPHIC BLOCK RECORD
-                  </p>
                 </div>
 
                 {/* Details list */}
                 <div className="flex-col gap-3" style={{ fontSize: '0.8rem', display: 'flex', flex: 1 }}>
                   <div className="flex justify-between items-center">
-                    <span className="text-secondary">SPORT</span>
-                    <span style={{ fontWeight: 'bold', color: activeSportColor, background: 'var(--adaptive-white-03)', padding: '0.15rem 0.5rem', borderRadius: '4px', textTransform: 'uppercase', fontSize: '0.75rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>SPORT</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '800', color: activeSportColor, background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.2rem 0.6rem', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                       {bet.sport}
                     </span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-secondary">BOOKMAKER</span>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>{bet.bookmaker || 'N/A'}</span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BOOKMAKER</span>
+                    <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{bet.bookmaker || 'N/A'}</span>
                   </div>
 
-                  {/* Beautified Selection Panel */}
+                  {/* Matchup Content */}
                   <div className="flex-col gap-1.5 mt-1">
                     {renderMatchupsBlock(bet.teams, activeSportColor)}
                   </div>
 
-                  <div style={{ borderTop: '2px dashed var(--adaptive-white-08)', marginTop: 'auto', paddingTop: '1rem', marginBottom: '0.5rem' }} />
+                  <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.1)', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
 
                   {/* Financial Panel */}
-                  <div className="flex-col gap-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-secondary">Total Stake</span>
-                      <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>{sym}{Number(bet.stake).toFixed(2)}</span>
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Total Stake</span>
+                      <span style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700', fontFamily: 'monospace' }}>{sym}{Number(bet.stake).toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-secondary">Odds</span>
-                      <span style={{ fontWeight: 'bold', color: 'var(--accent-cyan)' }}>@{Number(bet.odds).toFixed(2)}</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Odds</span>
+                      <span style={{ fontSize: '1.05rem', color: '#00f3ff', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(bet.odds).toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-between items-center mt-1 p-1.5 rounded-md" style={{ background: 'rgba(0, 243, 255, 0.02)', border: '1px solid rgba(0, 243, 255, 0.1)' }}>
-                      <span className="text-secondary" style={{ fontSize: '0.75rem' }}>Est. Return</span>
-                      <span style={{ fontWeight: 'bold', color: '#00ffaa' }}>{sym}{estPayout.toFixed(2)}</span>
+                    <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)' }}>Est. Return</span>
+                      <span style={{ fontSize: '1.25rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace', textShadow: '0 0 12px rgba(16, 185, 129, 0.3)' }}>{sym}{estPayout.toFixed(2)}</span>
                     </div>
-
-                    <div className="flex justify-between items-center mt-1 p-1.5 rounded-md" style={{ 
-                      background: isWon ? 'rgba(0, 255, 136, 0.04)' : isLost ? 'rgba(255, 51, 102, 0.04)' : 'var(--adaptive-white-02)', 
-                      border: `1px solid ${isWon ? 'rgba(0, 255, 136, 0.15)' : isLost ? 'rgba(255, 51, 102, 0.15)' : 'var(--adaptive-white-05)'}`
-                    }}>
-                      <span className="text-secondary" style={{ fontSize: '0.75rem', fontWeight: '600' }}>PnL Return</span>
-                      <span style={{ fontWeight: 'bold', color: netProfitVal > 0 ? 'var(--success)' : netProfitVal < 0 ? 'var(--danger)' : '#FFD700' }}>
-                        {netProfitVal > 0 ? '+' : ''}{sym}{netProfitVal.toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Micro Barcode & Hash */}
-                  <div className="flex-col items-center gap-1.5 mt-4 pt-3" style={{ borderTop: '1px solid var(--adaptive-white-05)' }}>
-                    <div style={{
-                      width: '100%',
-                      height: '30px',
-                      display: 'flex',
-                      alignItems: 'stretch',
-                      background: 'var(--adaptive-white-01)',
-                      padding: '2px',
-                      borderRadius: '2px',
-                      overflow: 'hidden',
-                      justifyContent: 'center'
-                    }}>
-                      {uniqueHash.split('').slice(0, 46).map((char, index) => {
-                        const val = parseInt(char, 16);
-                        const width = val < 8 ? '1px' : val < 12 ? '1.5px' : '2.5px';
-                        const marginRight = `${(val % 2) + 1}px`;
-                        return (
-                          <div
-                            key={index}
-                            style={{
-                              width: width,
-                              marginRight: marginRight,
-                              backgroundColor: 'var(--text-invert)',
-                              opacity: 0.18,
-                              flexShrink: 0
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                    <span style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', opacity: 0.4, display: 'block', textAlign: 'center', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    0x{uniqueHash.slice(0, 16)}
-                    </span>
                   </div>
 
                   {/* Copy to Clipboard Button */}
@@ -1271,15 +1189,13 @@ export default function BetHistory({ session, profile }) {
                     style={{
                       marginTop: '1rem',
                       width: '100%',
-                      padding: '0.6rem',
-                      background: 'rgba(0, 255, 170, 0.06)',
-                      border: '1px solid rgba(0, 255, 170, 0.2)',
-                      borderRadius: '8px',
-                      color: '#00ffaa',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      fontFamily: 'monospace',
-                      letterSpacing: '1px',
+                      padding: '0.65rem',
+                      background: 'rgba(0, 243, 255, 0.06)',
+                      border: '1px solid rgba(0, 243, 255, 0.2)',
+                      borderRadius: '10px',
+                      color: '#00f3ff',
+                      fontSize: '0.8rem',
+                      fontWeight: '700',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -1287,16 +1203,15 @@ export default function BetHistory({ session, profile }) {
                       gap: '8px',
                       transition: 'all 0.2s ease'
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 255, 170, 0.12)'; e.currentTarget.style.borderColor = 'rgba(0, 255, 170, 0.4)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 255, 170, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 255, 170, 0.2)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.15)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.4)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.2)'; }}
                   >
                     <Copy size={14} />
-                    COPY SLIP
+                    <span>Copy Slip</span>
                   </button>
 
                 </div>
               </div>
-            </div>
             );
           })}
         </div>
@@ -1584,115 +1499,128 @@ export default function BetHistory({ session, profile }) {
                   id={`slip-card-modal`}
                   className="glass-panel" 
                   style={{ 
-                    padding: '2rem 1.5rem', 
+                    padding: '1.75rem 1.5rem', 
                     position: 'relative', 
                     overflow: 'hidden', 
-                    border: selectedBet.status === 'Won' ? '2px solid rgba(0, 255, 136, 0.4)' : 
-                            selectedBet.status === 'Lost' ? '2px solid rgba(255, 51, 102, 0.25)' : 
-                            selectedBet.status === 'Cashed Out' ? '2px solid rgba(255, 185, 0, 0.35)' : 
-                            '1.5px solid var(--border-glass)',
-                    boxShadow: selectedBet.status === 'Won' ? '0 0 25px rgba(0, 255, 136, 0.08)' : 'none',
-                    background: 'rgba(0, 0, 0, 0.2)',
-                    borderRadius: '12px'
+                    border: selectedBet.status === 'Won' ? '2px solid rgba(16, 185, 129, 0.4)' : 
+                            selectedBet.status === 'Lost' ? '2px solid rgba(239, 68, 68, 0.3)' : 
+                            selectedBet.status === 'Cashed Out' ? '2px solid rgba(255, 215, 0, 0.4)' : 
+                            '1px solid rgba(255, 255, 255, 0.12)',
+                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
+                    background: '#0d0f17',
+                    color: '#ffffff',
+                    borderRadius: '24px'
                   }}
                 >
-                  {/* Branded Logo */}
-                  <div 
-                    style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      gap: '12px', 
-                      marginBottom: '1.5rem',
-                      borderBottom: '1px dashed var(--adaptive-white-15)',
-                      paddingBottom: '1rem',
-                      width: '100%'
-                    }}
-                  >
-                    <TrendingUp size={28} className="logo-icon" strokeWidth={3} style={{ flexShrink: 0 }} />
-                    <h2 className="logo-text" style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>QuantStake</h2>
-                  </div>
-
+                  {/* Status Stamp centered in modal betslip */}
                   {selectedBet.status === 'Won' && (
-                    <div style={{ position: 'absolute', top: '8.5rem', right: '1.25rem', border: '3px double rgba(0, 255, 136, 0.7)', color: '#00ff88', fontSize: '0.8rem', fontWeight: 'bold', fontFamily: 'monospace', padding: '0.2rem 0.5rem', borderRadius: '4px', transform: 'rotate(-12deg)', zIndex: 10, letterSpacing: '2px', textShadow: '0 0 10px rgba(0, 255, 136, 0.4)', boxShadow: 'inset 0 0 4px rgba(0, 255, 136, 0.2)', background: 'var(--bg-modal)' }}>SETTLED • WIN</div>
+                    <div style={{
+                      position: 'absolute', top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%) rotate(-12deg)',
+                      border: '3px double #10b981',
+                      color: '#10b981',
+                      fontSize: '0.95rem',
+                      fontWeight: '900',
+                      fontFamily: 'monospace',
+                      padding: '0.4rem 1.2rem',
+                      borderRadius: '10px',
+                      zIndex: 15,
+                      letterSpacing: '3px',
+                      pointerEvents: 'none',
+                      textShadow: '0 0 12px rgba(16, 185, 129, 0.5)',
+                      boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)',
+                      background: 'rgba(13, 15, 23, 0.95)',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      SETTLED • WIN
+                    </div>
                   )}
                   {selectedBet.status === 'Lost' && (
-                    <div style={{ position: 'absolute', top: '8.5rem', right: '1.25rem', border: '3px double rgba(255, 51, 102, 0.5)', color: '#ff3366', fontSize: '0.8rem', fontWeight: 'bold', fontFamily: 'monospace', padding: '0.2rem 0.5rem', borderRadius: '4px', transform: 'rotate(-12deg)', zIndex: 10, letterSpacing: '2px', textShadow: '0 0 10px rgba(255, 51, 102, 0.3)', background: 'var(--bg-modal)' }}>SETTLED • LOSS</div>
+                    <div style={{
+                      position: 'absolute', top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%) rotate(-12deg)',
+                      border: '3px double #ef4444',
+                      color: '#ef4444',
+                      fontSize: '0.95rem',
+                      fontWeight: '900',
+                      fontFamily: 'monospace',
+                      padding: '0.4rem 1.2rem',
+                      borderRadius: '10px',
+                      zIndex: 15,
+                      letterSpacing: '3px',
+                      pointerEvents: 'none',
+                      textShadow: '0 0 12px rgba(239, 68, 68, 0.5)',
+                      boxShadow: '0 0 25px rgba(239, 68, 68, 0.25)',
+                      background: 'rgba(13, 15, 23, 0.95)',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      SETTLED • LOSS
+                    </div>
                   )}
                   {selectedBet.status === 'Cashed Out' && (
-                    <div style={{ position: 'absolute', top: '8.5rem', right: '1.25rem', border: '3px double rgba(255, 185, 0, 0.6)', color: '#ffb900', fontSize: '0.75rem', fontWeight: 'bold', fontFamily: 'monospace', padding: '0.2rem 0.5rem', borderRadius: '4px', transform: 'rotate(-12deg)', zIndex: 10, letterSpacing: '1px', textShadow: '0 0 10px rgba(255, 185, 0, 0.3)', background: 'var(--bg-modal)' }}>CASHED OUT</div>
+                    <div style={{
+                      position: 'absolute', top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%) rotate(-12deg)',
+                      border: '3px double #FFD700',
+                      color: '#FFD700',
+                      fontSize: '0.9rem',
+                      fontWeight: '900',
+                      fontFamily: 'monospace',
+                      padding: '0.4rem 1.2rem',
+                      borderRadius: '10px',
+                      zIndex: 15,
+                      letterSpacing: '2px',
+                      pointerEvents: 'none',
+                      textShadow: '0 0 12px rgba(255, 215, 0, 0.5)',
+                      boxShadow: '0 0 25px rgba(255, 215, 0, 0.25)',
+                      background: 'rgba(13, 15, 23, 0.95)',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      CASHED OUT
+                    </div>
                   )}
 
                   {/* Pulsing indicator banner */}
-                  <div className="flex justify-between items-center mb-5">
-                    <div className="flex items-center gap-2">
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.3rem 0.75rem', borderRadius: '30px' }}>
                       <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: modalStatusInfo.color, boxShadow: modalStatusInfo.shadow }} />
-                      <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: modalStatusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>{modalStatusInfo.label}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: modalStatusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>{modalStatusInfo.label}</span>
                     </div>
                     
-                    <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: 'var(--text-secondary)' }}>{new Date(selectedBet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}</span>
-                  </div>
-
-                  {/* Title / Header */}
-                  <div className="flex-col gap-1 text-center mb-5" style={{ borderBottom: '1px dashed var(--adaptive-white-08)', paddingBottom: '1rem' }}>
-                    <h4 style={{ fontFamily: 'monospace', fontSize: '0.95rem', color: 'var(--text-primary)', letterSpacing: '3px', margin: 0, fontWeight: 'bold' }}>BET SLIP</h4>
-                    <p style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', margin: 0, textTransform: 'uppercase' }}>CRYPTOGRAPHIC BLOCK RECORD</p>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontWeight: '600' }}>{new Date(selectedBet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}</span>
                   </div>
 
                   {/* Details */}
                   <div className="flex-col gap-3" style={{ fontSize: '0.8rem' }}>
                     <div className="flex justify-between items-center">
-                      <span className="text-secondary">SPORT</span>
-                      <span style={{ fontWeight: 'bold', color: modalSportColor, background: 'var(--adaptive-white-03)', padding: '0.15rem 0.5rem', borderRadius: '4px', textTransform: 'uppercase', fontSize: '0.75rem' }}>{selectedBet.sport}</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>SPORT</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '800', color: modalSportColor, background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.2rem 0.6rem', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{selectedBet.sport}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-secondary">BOOKMAKER</span>
-                      <span style={{ color: 'var(--text-primary)', fontWeight: '500' }}>{selectedBet.bookmaker || 'N/A'}</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BOOKMAKER</span>
+                      <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{selectedBet.bookmaker || 'N/A'}</span>
                     </div>
 
-                    {/* Beautified Matchup Panel */}
+                    {/* Matchup Content */}
                     <div className="flex-col gap-1.5 mt-1">
                       {renderMatchupsBlock(selectedBet.teams, modalSportColor)}
                     </div>
 
-                    <div style={{ borderTop: '2px dashed var(--adaptive-white-08)', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
+                    <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.1)', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
 
                     {/* Financial Panel */}
-                    <div className="flex-col gap-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-secondary">Total Stake</span>
-                        <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>{sym}{Number(selectedBet.stake).toFixed(2)}</span>
+                    <div style={{ background: 'rgba(0, 0, 0, 0.3)', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Total Stake</span>
+                        <span style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700', fontFamily: 'monospace' }}>{sym}{Number(selectedBet.stake).toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-secondary">Odds</span>
-                        <span style={{ fontWeight: 'bold', color: 'var(--accent-cyan)' }}>@{Number(selectedBet.odds).toFixed(2)}</span>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Odds</span>
+                        <span style={{ fontSize: '1.05rem', color: '#00f3ff', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(selectedBet.odds).toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between items-center mt-1 p-1.5 rounded-md" style={{ background: 'rgba(0, 243, 255, 0.02)', border: '1px solid rgba(0, 243, 255, 0.1)' }}>
-                        <span className="text-secondary" style={{ fontSize: '0.75rem' }}>Est. Return</span>
-                        <span style={{ fontWeight: 'bold', color: '#00ffaa' }}>{sym}{(selectedBet.stake * selectedBet.odds).toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between items-center mt-1 p-1.5 rounded-md" style={{ 
-                        background: selectedBet.status === 'Won' ? 'rgba(0, 255, 136, 0.04)' : selectedBet.status === 'Lost' ? 'rgba(255, 51, 102, 0.04)' : 'var(--adaptive-white-02)', 
-                        border: `1px solid ${selectedBet.status === 'Won' ? 'rgba(0, 255, 136, 0.15)' : selectedBet.status === 'Lost' ? 'rgba(255, 51, 102, 0.15)' : 'var(--adaptive-white-05)'}`
-                      }}>
-                        <span className="text-secondary" style={{ fontSize: '0.75rem', fontWeight: '600' }}>PnL Return</span>
-                        <span style={{ fontWeight: 'bold', color: modalNetProfitVal > 0 ? 'var(--success)' : modalNetProfitVal < 0 ? 'var(--danger)' : '#FFD700' }}>
-                          {modalNetProfitVal > 0 ? '+' : ''}{sym}{modalNetProfitVal.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Barcode */}
-                    <div className="flex-col items-center gap-1.5 mt-4 pt-3" style={{ borderTop: '1px solid var(--adaptive-white-05)' }}>
-                      <div style={{ width: '100%', height: '30px', display: 'flex', alignItems: 'stretch', background: 'var(--adaptive-white-01)', padding: '2px', borderRadius: '2px', overflow: 'hidden', justifyContent: 'center' }}>
-                        {sha256(`${selectedBet.sport}-${selectedBet.bookmaker || 'N/A'}-${selectedBet.type}-${selectedBet.created_at}-${selectedBet.stake}-${selectedBet.odds}-${selectedBet.teams || ''}`).toUpperCase().split('').slice(0, 46).map((char, index) => {
-                          const val = parseInt(char, 16);
-                          const width = val < 8 ? '1px' : val < 12 ? '1.5px' : '2.5px';
-                          const marginRight = `${(val % 2) + 1}px`;
-                          return (
-                            <div key={index} style={{ width: width, marginRight: marginRight, backgroundColor: 'var(--text-invert)', opacity: 0.18, flexShrink: 0 }} />
-                          );
-                        })}
+                      <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)' }}>Est. Return</span>
+                        <span style={{ fontSize: '1.25rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace', textShadow: '0 0 12px rgba(16, 185, 129, 0.3)' }}>{sym}{(selectedBet.stake * selectedBet.odds).toFixed(2)}</span>
                       </div>
                     </div>
 
@@ -1718,7 +1646,7 @@ export default function BetHistory({ session, profile }) {
                             showToastMsg('EXPORT COMPLETE', 'Positions slip copied to clipboard.');
                           } catch (clipErr) {
                             console.warn('Clipboard write failed, downloading instead...', clipErr);
-                            download(blob, `QuantStake_Slip_${selectedBet.id.substring(0, 8)}.png`);
+                            download(blob, `QuantStakes_Slip_${selectedBet.id.substring(0, 8)}.png`);
                             showToastMsg('EXPORT COMPLETE', 'Positions slip exported to downloads folder.');
                           }
                         } catch (err) {
@@ -1728,15 +1656,13 @@ export default function BetHistory({ session, profile }) {
                       style={{
                         marginTop: '1rem',
                         width: '100%',
-                        padding: '0.6rem',
-                        background: 'rgba(0, 255, 170, 0.06)',
-                        border: '1px solid rgba(0, 255, 170, 0.2)',
-                        borderRadius: '8px',
-                        color: '#00ffaa',
-                        fontSize: '0.75rem',
-                        fontWeight: '600',
-                        fontFamily: 'monospace',
-                        letterSpacing: '1px',
+                        padding: '0.65rem',
+                        background: 'rgba(0, 243, 255, 0.06)',
+                        border: '1px solid rgba(0, 243, 255, 0.2)',
+                        borderRadius: '10px',
+                        color: '#00f3ff',
+                        fontSize: '0.8rem',
+                        fontWeight: '700',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -1744,20 +1670,19 @@ export default function BetHistory({ session, profile }) {
                         gap: '8px',
                         transition: 'all 0.2s ease'
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 255, 170, 0.12)'; e.currentTarget.style.borderColor = 'rgba(0, 255, 170, 0.4)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 255, 170, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 255, 170, 0.2)'; }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.15)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.4)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.2)'; }}
                     >
                       <Copy size={14} />
-                      COPY SLIP
+                      <span>Copy Slip</span>
                     </button>
 
                   </div>
                 </div>
               </div>
-              </div>
-
             </div>
           </div>
+        </div>
       )}
 
       {/* Cashout Submodal */}

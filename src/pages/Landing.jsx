@@ -38,7 +38,7 @@ export default function Landing() {
       <header className="flex justify-between items-center" style={{ padding: '1.5rem 4rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
           <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
-          <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStake</h1>
+          <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h1>
         </div>
         <nav className="flex gap-8 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
@@ -64,7 +64,7 @@ export default function Landing() {
           <span className="text-gradient">Sports Portfolio Management.</span>
         </h2>
         <p className="text-secondary mb-10" style={{ fontSize: '1.25rem', maxWidth: '700px', lineHeight: '1.6', zIndex: 1 }}>
-          QuantStake replaces scattered spreadsheets with a unified, AI-driven terminal. Upload your bet slips to generate cryptographic proof of your edge, build your public track record, and monetize your analytics like a hedge fund.
+          QuantStakes replaces scattered spreadsheets with a unified, AI-driven terminal. Upload your bet slips to generate cryptographic proof of your edge, build your public track record, and monetize your analytics like a hedge fund.
         </p>
         <div className="flex gap-4 flex-wrap md-flex-col justify-center" style={{ zIndex: 1 }}>
           <Link to="/auth" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '1.2rem 3rem', borderRadius: '12px' }}>
@@ -86,7 +86,7 @@ export default function Landing() {
       {/* Two Paths Section */}
       <section className="flex-col items-center" style={{ padding: '8rem 2rem 4rem 2rem' }}>
         <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center' }}>Choose Your Path</h3>
-        <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp bettor proving your edge, or an investor looking for alpha, QuantStake is built for you.</p>
+        <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp bettor proving your edge, or an investor looking for alpha, QuantStakes is built for you.</p>
         
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: '1100px', width: '100%' }}>
           {/* Analyst Path */}
@@ -238,7 +238,7 @@ export default function Landing() {
                 onMouseMove={handleMouseMove} 
                 onMouseLeave={handleMouseLeave} 
                 onClick={() => {
-                  navigator.clipboard.writeText('enterprise@quantstake.com');
+                  navigator.clipboard.writeText('enterprise@quantstakes.com');
                   setCopied(true);
                   setTimeout(() => setCopied(false), 2000);
                 }}
@@ -253,7 +253,7 @@ export default function Landing() {
                     </>
                   ) : (
                     <>
-                      <Mail size={20} /> enterprise@quantstake.com
+                      <Mail size={20} /> enterprise@quantstakes.com
                     </>
                   )}
                 </div>
@@ -261,7 +261,7 @@ export default function Landing() {
 
               <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'var(--adaptive-white-04)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
                 <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>Infrastructure</h3>
-                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>QuantStake Technologies is a 100% online-based platform with fully integrated AI processing.</p>
+                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>QuantStakes Technologies is a 100% online-based platform with fully integrated AI processing.</p>
                 <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '1.1rem', pointerEvents: 'none' }}>
                   <BrainCircuit size={20} /> Distributed Cloud Nodes
                 </div>
@@ -307,7 +307,7 @@ export default function Landing() {
           <div style={{ maxWidth: '350px' }}>
             <div className="flex items-center gap-3 mb-6">
               <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
-              <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStake</h2>
+              <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h2>
             </div>
             <p className="text-secondary" style={{ fontSize: '1rem', lineHeight: '1.8' }}>
               The premium marketplace for sharp bettors and sports syndicates to track, analyze, and monetize their portfolios with algorithmic precision and cryptographic proof.
@@ -339,8 +339,8 @@ export default function Landing() {
 
         <div style={{ borderTop: '1px solid var(--adaptive-white-05)', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap' }}>
           <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-            © {new Date().getFullYear()} QuantStake Technologies LLC. All rights reserved. <br/>
-            QuantStake is not a sportsbook and does not accept wagers.
+            © {new Date().getFullYear()} QuantStakes Technologies LLC. All rights reserved. <br/>
+            QuantStakes is not a sportsbook and does not accept wagers.
           </p>
           <div className="flex items-center gap-4 text-secondary" style={{ fontSize: '0.9rem' }}>
             <Shield size={16} color="var(--success)" /> SECURE SSL ENCRYPTION

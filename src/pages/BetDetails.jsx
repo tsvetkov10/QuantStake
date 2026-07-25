@@ -352,6 +352,12 @@ export default function BetDetails({ session, profile }) {
         quality: 1.0,
         pixelRatio: 2,
         cacheBust: true,
+        backgroundColor: '#0d0f17',
+        style: {
+          background: '#0d0f17',
+          backgroundColor: '#0d0f17',
+          color: '#ffffff'
+        },
         filter: (node) => {
           return node.getAttribute ? node.getAttribute('data-html2canvas-ignore') !== 'true' : true;
         }
@@ -369,7 +375,7 @@ export default function BetDetails({ session, profile }) {
           `Draft slip copied to clipboard as PNG! (TX: 0x${generatedHash.slice(0, 8)})`
         );
       } catch (clipErr) {
-        await navigator.clipboard.writeText(`QuantStake Edit Slip: 0x${generatedHash}`);
+        await navigator.clipboard.writeText(`QuantStakes Edit Slip: 0x${generatedHash}`);
         showToastMsg(
           'HASH COPIED',
           'Image export blocked. Transaction hash text copied instead.'
@@ -421,7 +427,7 @@ export default function BetDetails({ session, profile }) {
 
   // Scoreboard layout parsing for teams matchup
   const renderMatchupsBlock = (teamsString, sportColor) => {
-    if (!teamsString) return <span style={{ color: 'var(--text-secondary)', opacity: 0.5, fontSize: '0.85rem' }}>[Pending Selection Input]</span>;
+    if (!teamsString) return <span style={{ color: 'rgba(255, 255, 255, 0.4)', opacity: 0.5, fontSize: '0.85rem' }}>[Pending Selection Input]</span>;
     const legs = teamsString.split(' | ');
     return (
       <div className="flex-col gap-3 mt-1">
@@ -433,51 +439,49 @@ export default function BetDetails({ session, profile }) {
               <div 
                 key={idx}
                 style={{ 
-                  background: 'linear-gradient(135deg, var(--item-gradient-1) 0%, var(--item-gradient-2) 100%)', 
-                  border: '1px solid var(--adaptive-white-04)',
+                  background: 'rgba(255, 255, 255, 0.04)', 
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
                   borderRadius: '12px', 
                   padding: '12px 16px', 
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '6px',
-                  overflow: 'hidden',
-                  boxShadow: 'inset 0 1px 1px var(--adaptive-white-05), 0 4px 12px var(--adaptive-white-02)'
+                  overflow: 'hidden'
                 }}
               >
                 {/* Tech glowing left accent line */}
                 <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: sportColor }} />
                 
                 {/* Micro tech label */}
-                <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <div className="flex justify-between items-center" style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   <span>SELECTION LEG #{idx + 1}</span>
                   <span style={{ color: sportColor }}>ACTIVE RUNTIME</span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '2px' }}>
                   <div className="flex-col" style={{ minWidth: 0, flex: 1 }}>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[0]}</span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Home Team</span>
+                    <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[0]}</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Home Team</span>
                   </div>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ 
                       fontSize: '0.55rem', 
-                      color: 'var(--text-primary)', 
-                      background: 'var(--adaptive-white-04)', 
-                      border: `1px solid var(--adaptive-white-10)`, 
+                      color: '#ffffff', 
+                      background: 'rgba(255, 255, 255, 0.08)', 
+                      border: '1px solid rgba(255, 255, 255, 0.15)', 
                       padding: '2px 8px', 
                       borderRadius: '4px', 
                       fontWeight: 'bold', 
                       fontFamily: 'monospace',
-                      letterSpacing: '1px',
-                      textShadow: '0 0 5px rgba(255,255,255,0.2)'
+                      letterSpacing: '1px'
                     }}>VS</span>
                   </div>
 
                   <div className="flex-col text-right" style={{ minWidth: 0, flex: 1 }}>
-                    <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[1]}</span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Away Team</span>
+                    <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{teams[1]}</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.6rem', fontFamily: 'monospace', textTransform: 'uppercase' }}>Away Team</span>
                   </div>
                 </div>
               </div>
@@ -488,8 +492,8 @@ export default function BetDetails({ session, profile }) {
             <div 
               key={idx}
               style={{ 
-                background: 'linear-gradient(135deg, var(--item-gradient-1) 0%, var(--item-gradient-2) 100%)', 
-                border: '1px solid var(--adaptive-white-04)',
+                background: 'rgba(255, 255, 255, 0.04)', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
                 borderRadius: '12px', 
                 padding: '12px 16px', 
                 position: 'relative',
@@ -499,10 +503,10 @@ export default function BetDetails({ session, profile }) {
               }}
             >
               <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px', background: sportColor }} />
-              <div style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <div style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                 SELECTION LEG #{idx + 1}
               </div>
-              <span style={{ color: 'var(--text-primary)', fontWeight: '800', fontSize: '0.9rem', marginTop: '2px' }}>{leg}</span>
+              <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', marginTop: '2px' }}>{leg}</span>
             </div>
           );
         })}
@@ -645,6 +649,7 @@ export default function BetDetails({ session, profile }) {
                 <div>
                   <label className="label">Bookmaker</label>
                   <select className="input-field mt-1" value={editForm.bookmaker} onChange={e => setEditForm({ ...editForm, bookmaker: e.target.value })}>
+                    <option value="Polymarket">Polymarket</option>
                     <option value="Bet365">Bet365</option>
                     <option value="Betano">Betano</option>
                     <option value="Inbet">Inbet</option>
@@ -726,42 +731,133 @@ export default function BetDetails({ session, profile }) {
             </form>
           </div>
 
-          {/* Right Column: Live Premium Ticket Preview */}
-          <div style={{ width: '380px', flexShrink: 0, position: 'sticky', top: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          {/* Right Column: Dynamic Bet Slip Preview */}
+          <div style={{ width: '360px', flexShrink: 0, position: 'sticky', top: '1.5rem', display: 'flex', flexDirection: 'column' }}>
             <div 
               id="live-slip-preview"
               className="glass-panel" 
               style={{ 
-                padding: '2rem 1.75rem', 
+                padding: '1.5rem', 
                 position: 'relative', 
                 overflow: 'hidden', 
-                border: `1.5px solid ${activeStake > 0 ? activeSportColor : 'var(--border-glass)'}`,
-                boxShadow: activeStake > 0 ? `0 0 30px rgba(0, 243, 255, 0.03)` : 'none',
+                borderRadius: '24px',
+                border: `1px solid ${activeStake > 0 ? activeSportColor : 'rgba(255, 255, 255, 0.12)'}`,
+                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
                 transition: 'all 0.3s ease',
-                background: 'linear-gradient(180deg, var(--slip-gradient-1) 0%, var(--slip-gradient-2) 100%)'
+                background: '#0d0f17',
+                color: '#ffffff'
               }}
             >
-              {/* Branded Logo (Only visible during image export) */}
-              <div 
-                id="live-slip-logo" 
-                style={{ 
-                  display: 'none', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  gap: '12px', 
-                  marginBottom: '1.5rem',
-                  borderBottom: '1px dashed var(--adaptive-white-15)',
-                  paddingBottom: '1rem',
-                  width: '100%'
-                }}
-              >
-                <TrendingUp size={28} className="logo-icon" strokeWidth={3} style={{ flexShrink: 0 }} />
-                <h2 className="logo-text" style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, fontFamily: 'sans-serif' }}>QuantStake</h2>
+              {/* Status Stamp centered in live betslip */}
+              {editForm.status === 'Won' && (
+                <div style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(-12deg)',
+                  border: '3px double #10b981',
+                  color: '#10b981',
+                  fontSize: '0.95rem',
+                  fontWeight: '900',
+                  fontFamily: 'monospace',
+                  padding: '0.4rem 1.2rem',
+                  borderRadius: '10px',
+                  zIndex: 15,
+                  letterSpacing: '3px',
+                  pointerEvents: 'none',
+                  textShadow: '0 0 12px rgba(16, 185, 129, 0.5)',
+                  boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)',
+                  background: 'rgba(13, 15, 23, 0.95)',
+                  whiteSpace: 'nowrap'
+                }}>
+                  SETTLED • WIN
+                </div>
+              )}
+              {editForm.status === 'Lost' && (
+                <div style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(-12deg)',
+                  border: '3px double #ef4444',
+                  color: '#ef4444',
+                  fontSize: '0.95rem',
+                  fontWeight: '900',
+                  fontFamily: 'monospace',
+                  padding: '0.4rem 1.2rem',
+                  borderRadius: '10px',
+                  zIndex: 15,
+                  letterSpacing: '3px',
+                  pointerEvents: 'none',
+                  textShadow: '0 0 12px rgba(239, 68, 68, 0.5)',
+                  boxShadow: '0 0 25px rgba(239, 68, 68, 0.25)',
+                  background: 'rgba(13, 15, 23, 0.95)',
+                  whiteSpace: 'nowrap'
+                }}>
+                  SETTLED • LOSS
+                </div>
+              )}
+              {editForm.status === 'Cashed Out' && (
+                <div style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(-12deg)',
+                  border: '3px double #FFD700',
+                  color: '#FFD700',
+                  fontSize: '0.9rem',
+                  fontWeight: '900',
+                  fontFamily: 'monospace',
+                  padding: '0.4rem 1.2rem',
+                  borderRadius: '10px',
+                  zIndex: 15,
+                  letterSpacing: '2px',
+                  pointerEvents: 'none',
+                  textShadow: '0 0 12px rgba(255, 215, 0, 0.5)',
+                  boxShadow: '0 0 25px rgba(255, 215, 0, 0.25)',
+                  background: 'rgba(13, 15, 23, 0.95)',
+                  whiteSpace: 'nowrap'
+                }}>
+                  CASHED OUT
+                </div>
+              )}
+
+              {/* Top Accent Line */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, ${activeSportColor}, rgba(0, 243, 255, 0.5))` }} />
+
+              {/* Brand Header */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px dashed rgba(255, 255, 255, 0.1)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <TrendingUp size={20} color="#00f3ff" strokeWidth={3} />
+                  <span style={{ fontSize: '1.1rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>
+                    Quant<span style={{ color: '#00f3ff' }}>Stake</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5" data-html2canvas-ignore="true">
+                  <button
+                    type="button"
+                    onClick={copyLiveSlipAsImage}
+                    title="Copy Slip Image to Clipboard"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '8px',
+                      padding: '0.35rem 0.6rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#00f3ff'; e.currentTarget.style.color = '#ffffff'; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'; e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'; }}
+                  >
+                    <Copy size={12} />
+                    <span>Copy Slip</span>
+                  </button>
+                </div>
               </div>
 
-              {/* Pulsing indicator banner */}
-              <div className="flex justify-between items-center mb-6">
-                <div className="flex items-center gap-2">
+              {/* Status & Date Banner */}
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.3rem 0.75rem', borderRadius: '30px' }}>
                   <div style={{
                     width: '8px',
                     height: '8px',
@@ -770,158 +866,79 @@ export default function BetDetails({ session, profile }) {
                     boxShadow: statusInfo.shadow,
                     animation: 'pulse 1.5s infinite'
                   }} />
-                  <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: statusInfo.color, letterSpacing: '2px', fontWeight: 'bold' }}>
+                  <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: statusInfo.color, letterSpacing: '1.5px', fontWeight: 'bold' }}>
                     {statusInfo.label}
                   </span>
                 </div>
                 
-                {/* Copy Option */}
-                <div className="flex items-center gap-1.5" data-html2canvas-ignore="true">
-                  <button
-                    type="button"
-                    onClick={copyLiveSlipAsImage}
-                    title="Copy Live Slip Image to Clipboard"
-                    style={{
-                      background: 'var(--adaptive-white-02)',
-                      border: '1px solid var(--border-glass)',
-                      borderRadius: '4px',
-                      padding: '0.25rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--text-secondary)',
-                      transition: 'all 0.2s',
-                      marginRight: '0.25rem'
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-cyan)'; e.currentTarget.style.color = 'white'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                  >
-                    <Copy size={13} />
-                  </button>
-                  <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                    EDIT DRAFT
-                  </span>
-                </div>
-              </div>
-
-              {/* Title / Header */}
-              <div className="flex-col gap-1 text-center mb-6" style={{ borderBottom: '1px dashed var(--adaptive-white-10)', paddingBottom: '1.25rem' }}>
-                <h3 style={{ fontFamily: 'monospace', fontSize: '1.15rem', color: 'var(--text-primary)', letterSpacing: '4px', margin: 0, fontWeight: 'bold' }}>
-                  QUANTSTAKE INDEX
-                </h3>
-                <p style={{ fontFamily: 'monospace', fontSize: '0.7rem', color: 'var(--text-secondary)', margin: 0, textTransform: 'uppercase' }}>
-                  Modifying Cryptographic Record
-                </p>
+                <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: '600' }}>
+                  {editForm.created_at}
+                </span>
               </div>
 
               {/* Ticket Info Rows */}
-              <div className="flex-col gap-4">
+              <div className="flex-col gap-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-secondary" style={{ fontSize: '0.8rem' }}>SPORT</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: activeSportColor, background: 'var(--adaptive-white-03)', padding: '0.2rem 0.6rem', borderRadius: '4px', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>SPORT</span>
+                  <span 
+                    style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '800', 
+                      color: activeSportColor, 
+                      background: 'rgba(255, 255, 255, 0.05)', 
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      padding: '0.2rem 0.6rem', 
+                      borderRadius: '20px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
                     {editForm.sport}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-secondary" style={{ fontSize: '0.8rem' }}>BET TYPE</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '500' }}>{editForm.type}</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BET TYPE</span>
+                  <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{editForm.type}</span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-secondary" style={{ fontSize: '0.8rem' }}>BOOKMAKER</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '500' }}>{editForm.bookmaker}</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BOOKMAKER</span>
+                  <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{editForm.bookmaker}</span>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <span className="text-secondary" style={{ fontSize: '0.8rem' }}>LEDGER DATE</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Calendar size={14} className="text-secondary" /> {editForm.created_at}
-                  </span>
-                </div>
-
-                {/* Beautified Matchup Content */}
+                {/* Matchup Content */}
                 <div className="flex-col gap-1.5 mt-1">
                   {renderMatchupsBlock(editForm.teams, activeSportColor)}
                 </div>
 
                 {/* Dotted border separator */}
-                <div style={{ borderTop: '2px dashed var(--adaptive-white-10)', marginTop: '0.75rem', marginBottom: '0.75rem' }} />
+                <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.1)', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
 
-                {/* Financial panel */}
-                <div className="flex-col gap-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-secondary" style={{ fontSize: '0.85rem', display: 'flex', items: 'center', gap: '4px' }}>
-                      <Coins size={14} /> Total Wagered
+                {/* Financial panel - Compact Breakdown */}
+                <div style={{ background: 'rgba(0, 0, 0, 0.3)', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Coins size={14} color="rgba(255, 255, 255, 0.6)" /> Total Wagered
                     </span>
-                    <span style={{ fontSize: '1.15rem', color: 'var(--text-primary)', fontWeight: 'bold' }}>
+                    <span style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700', fontFamily: 'monospace' }}>
                       {sym}{activeStake.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center">
-                    <span className="text-secondary" style={{ fontSize: '0.85rem', display: 'flex', items: 'center', gap: '4px' }}>
-                      <BadgePercent size={14} /> Decimal Odds
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <BadgePercent size={14} color="#00f3ff" /> Decimal Odds
                     </span>
-                    <span style={{ fontSize: '1.15rem', color: 'var(--accent-cyan)', fontWeight: 'bold' }}>
+                    <span style={{ fontSize: '1.05rem', color: '#00f3ff', fontWeight: '700', fontFamily: 'monospace' }}>
                       @{activeOdds.toFixed(2)}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center mt-1 p-2 rounded-lg" style={{ background: 'rgba(0, 243, 255, 0.02)', border: '1px solid rgba(0, 243, 255, 0.1)' }}>
-                    <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: '600' }}>
-                      Est. Return
-                    </span>
-                    <span style={{ fontSize: '1.3rem', color: '#00ffaa', fontWeight: 'bold', textShadow: '0 0 10px rgba(0, 255, 170, 0.2)' }}>
+                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)' }}>Est. Return</span>
+                    <span style={{ fontSize: '1.25rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace', textShadow: '0 0 12px rgba(16, 185, 129, 0.3)' }}>
                       {sym}{estPayout.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between items-center mt-1 p-2 rounded-lg" style={{ background: 'rgba(0, 243, 255, 0.05)', border: '1px solid rgba(0, 243, 255, 0.2)' }}>
-                    <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: '700' }}>
-                      PnL Return
-                    </span>
-                    <span style={{ fontSize: '1.4rem', color: netProfitVal >= 0 ? 'var(--success)' : 'var(--danger)', fontWeight: 'bold', textShadow: `0 0 12px ${netProfitVal >= 0 ? 'rgba(0, 255, 170, 0.3)' : 'rgba(255, 51, 102, 0.3)'}` }}>
-                      {netProfitVal >= 0 ? '+' : ''}{sym}{netProfitVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Barcode & Hash Footer */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--adaptive-white-05)' }}>
-                  <div style={{
-                    width: '100%',
-                    height: '42px',
-                    display: 'flex',
-                    alignItems: 'stretch',
-                    background: 'var(--adaptive-white-01)',
-                    padding: '4px',
-                    borderRadius: '4px',
-                    overflow: 'hidden',
-                    justifyContent: 'center'
-                  }}>
-                    {generatedHash.split('').slice(0, 52).map((char, index) => {
-                      const val = parseInt(char, 16);
-                      const width = val < 8 ? '1px' : val < 12 ? '2px' : '3.5px';
-                      const marginRight = `${(val % 2) + 1}px`;
-                      return (
-                        <div
-                          key={index}
-                          style={{
-                            width: width,
-                            marginRight: marginRight,
-                            backgroundColor: 'var(--text-invert)',
-                            opacity: 0.18,
-                            flexShrink: 0
-                          }}
-                        />
-                      );
-                    })}
-                  </div>
-                  <div className="flex justify-center w-full" style={{ marginTop: '0.25rem' }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: 0.5, letterSpacing: '1px', textAlign: 'center' }}>
-                      0x{generatedHash}
                     </span>
                   </div>
                 </div>

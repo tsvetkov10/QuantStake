@@ -177,7 +177,7 @@ export default function Social({ session, profile }) {
   };
 
   useEffect(() => {
-    document.title = "Social Feed | QuantStake";
+    document.title = "Social Feed | QuantStakes";
     fetchData();
   }, [session, isMock]);
 
@@ -499,7 +499,7 @@ export default function Social({ session, profile }) {
                       )}
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', fontSize: '0.8rem', color: '#b0b3b8', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                      Verified Bet Slip • QuantStake Ledger
+                      Verified Bet Slip • QuantStakes Ledger
                     </div>
                   </div>
                 )}

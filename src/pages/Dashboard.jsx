@@ -1,112 +1,232 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
-import { ComposedChart, Line, AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LabelList, Legend } from 'recharts';
+import { ComposedChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LabelList, Legend } from 'recharts';
 import { DollarSign, Percent, Target, Euro, PoundSterling, Banknote, Filter, TrendingDown, TrendingUp, Activity, AlertTriangle, Zap, BarChart2, Share2, Copy, X, Download, Check, Plus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ShareCard from '../components/ShareCard';
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
+const BetCardPopup = ({ rawBet, sym }) => {
+  if (!rawBet) return null;
+  const statusInfo = rawBet.status === 'Won' ? { color: '#10b981', label: 'SETTLED • WIN', shadow: '0 0 12px rgba(16,185,129,0.4)' } : 
+                     rawBet.status === 'Lost' ? { color: '#ef4444', label: 'SETTLED • LOSS', shadow: '0 0 12px rgba(239,68,68,0.4)' } : 
+                     rawBet.status === 'Cashed Out' ? { color: '#FFD700', label: 'SETTLED • CASHOUT', shadow: '0 0 12px rgba(255,215,0,0.4)' } : 
+                     { color: '#00f3ff', label: 'PENDING', shadow: 'none' };
+  
+  const matchupParts = rawBet.teams ? rawBet.teams.split('vs').map(s => s.trim()) : ['Unknown'];
+  const isWin = rawBet.status === 'Won';
+  const isCashout = rawBet.status === 'Cashed Out';
+  const isLoss = rawBet.status === 'Lost';
+  const returnAmount = isWin ? rawBet.stake * rawBet.odds : isCashout ? rawBet.cashout_amount || 0 : 0;
+  const netProfitVal = isWin ? returnAmount - rawBet.stake : isCashout ? returnAmount - rawBet.stake : isLoss ? -rawBet.stake : 0;
+
+  return (
+    <div 
+      className="glass-panel" 
+      style={{ 
+        width: '320px', 
+        background: '#0d0f17',
+        border: `1.5px solid ${statusInfo.color}`,
+        borderRadius: '16px',
+        padding: '1.25rem',
+        boxShadow: `0 15px 40px rgba(0,0,0,0.8)`,
+        overflow: 'hidden',
+        color: '#ffffff'
+      }}
+    >
+      <div className="flex justify-between items-center mb-3">
+        <div className="flex items-center gap-2">
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: statusInfo.color, boxShadow: statusInfo.shadow }} />
+          <span style={{ fontFamily: 'monospace', fontSize: '0.7rem', color: statusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>
+            {statusInfo.label}
+          </span>
+        </div>
+        <span style={{ fontFamily: 'monospace', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+          {new Date(rawBet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+        </span>
+      </div>
+
+      <div className="flex-col gap-3">
+        <div className="flex justify-between items-center">
+          <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: '#00f3ff', background: 'rgba(255, 255, 255, 0.05)', padding: '0.2rem 0.6rem', borderRadius: '20px', textTransform: 'uppercase' }}>
+            {rawBet.sport || 'OTHER'}
+          </span>
+          <span style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '600' }}>{rawBet.bookmaker || 'Unknown'}</span>
+        </div>
+
+        <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '0.75rem' }}>
+          <div className="flex justify-between items-center mb-1.5">
+            <span style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'rgba(255, 255, 255, 0.5)', letterSpacing: '1px' }}>SELECTION</span>
+            <span style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'rgba(255, 255, 255, 0.5)', letterSpacing: '1px' }}>{rawBet.type?.toUpperCase() || 'SINGLE'}</span>
+          </div>
+          {matchupParts.length === 2 ? (
+            <div className="flex items-center justify-between gap-1">
+              <div className="flex-col" style={{ flex: 1 }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#ffffff' }}>{matchupParts[0]}</span>
+                <span style={{ fontSize: '0.5rem', color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>HOME</span>
+              </div>
+              <div style={{ padding: '0.1rem 0.3rem', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', fontSize: '0.6rem', color: 'rgba(255, 255, 255, 0.6)', fontWeight: 'bold' }}>vs</div>
+              <div className="flex-col text-right" style={{ flex: 1 }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#ffffff' }}>{matchupParts[1]}</span>
+                <span style={{ fontSize: '0.5rem', color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>AWAY</span>
+              </div>
+            </div>
+          ) : (
+            <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#ffffff' }}>{rawBet.teams}</span>
+          )}
+        </div>
+
+        <div className="flex-col gap-1.5 mt-1" style={{ background: 'rgba(0,0,0,0.4)', padding: '0.75rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex justify-between items-center" style={{ fontSize: '0.8rem' }}>
+            <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Stake & Odds</span>
+            <span style={{ fontFamily: 'monospace', fontWeight: 'bold', color: '#ffffff' }}>{sym}{Number(rawBet.stake).toFixed(2)} @ {Number(rawBet.odds).toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between items-center" style={{ fontSize: '0.85rem', paddingTop: '0.35rem', borderTop: '1px dashed rgba(255, 255, 255, 0.1)' }}>
+            <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: '600' }}>PnL Return</span>
+            <span style={{ fontFamily: 'monospace', fontWeight: '800', fontSize: '1rem', color: netProfitVal > 0 ? '#10b981' : netProfitVal < 0 ? '#ef4444' : '#ffffff' }}>
+              {netProfitVal > 0 ? '+' : ''}{sym}{netProfitVal.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BankrollCandlestickChart = ({ data, sym }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  if (!data || data.length === 0) {
+    return <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div>;
+  }
+
+  const allLows = data.map(d => d.low);
+  const allHighs = data.map(d => d.high);
+  const minVal = Math.min(...allLows, 0);
+  const maxVal = Math.max(...allHighs, 100);
+
+  // If minVal is >= 0, yMin is strictly 0 (never show negative numbers if bankroll stayed >= 0)
+  const yMin = minVal < 0 ? Math.floor(minVal * 1.15) : 0;
+  const yMax = Math.ceil(Math.max(maxVal * 1.15, 100));
+  const yRange = (yMax - yMin) || 100;
+
+  const totalCount = data.length;
+  const viewWidth = 1000;
+  const viewHeight = 300;
+  const slotWidth = viewWidth / Math.max(1, totalCount);
+  const candleWidth = Math.max(3, Math.min(16, slotWidth * 0.65));
+
+  const gridSteps = [0.15, 0.38, 0.62, 0.85];
+  const activeItem = hoveredIndex !== null ? data[hoveredIndex] : null;
+
+  return (
+    <div style={{ width: '100%', height: '100%', position: 'relative', userSelect: 'none' }}>
+      <svg width="100%" height="100%" viewBox={`0 0 ${viewWidth} ${viewHeight}`} preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+        {/* Horizontal Dashed Reference Gridlines */}
+        {gridSteps.map((pct, idx) => {
+          const yPos = viewHeight * pct;
+          const val = yMax - (yRange * pct);
+          if (val < 0 && minVal >= 0) return null; // Never display negative ticks if bankroll >= 0
+          return (
+            <g key={idx}>
+              <line x1="0" y1={yPos} x2={viewWidth} y2={yPos} stroke="rgba(255, 255, 255, 0.08)" strokeDasharray="3 3" strokeWidth="1" />
+              <text x="8" y={yPos - 5} fill="rgba(255, 255, 255, 0.35)" fontSize="11" fontFamily="monospace">
+                {val >= 0 ? '+' : ''}{sym}{val.toFixed(2)}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Zero baseline */}
+        {yMin < 0 && yMax > 0 && (() => {
+          const zeroY = viewHeight - ((0 - yMin) / yRange) * viewHeight;
+          return <line x1="0" y1={zeroY} x2={viewWidth} y2={zeroY} stroke="rgba(0, 243, 255, 0.3)" strokeDasharray="4 4" strokeWidth="1.5" />;
+        })()}
+
+        {/* Candlestick Bars */}
+        {data.map((item, index) => {
+          const cx = slotWidth * index + slotWidth / 2;
+          const openY = viewHeight - ((item.open - yMin) / yRange) * viewHeight;
+          const closeY = viewHeight - ((item.close - yMin) / yRange) * viewHeight;
+          const highY = viewHeight - ((item.high - yMin) / yRange) * viewHeight;
+          const lowY = viewHeight - ((item.low - yMin) / yRange) * viewHeight;
+
+          const isBull = item.close >= item.open;
+          const candleColor = isBull ? '#ff8c00' : '#8b5cf6';
+
+          const bodyTop = Math.min(openY, closeY);
+          const bodyHeight = Math.max(3, Math.abs(openY - closeY));
+          const isHovered = hoveredIndex === index;
+
+          return (
+            <g 
+              key={index} 
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              style={{ cursor: 'pointer' }}
+            >
+              {/* Wick Line */}
+              <line 
+                x1={cx} y1={highY} 
+                x2={cx} y2={lowY} 
+                stroke={candleColor} 
+                strokeWidth={isHovered ? 2.5 : 1.5} 
+                opacity={isHovered ? 1 : 0.9}
+              />
+              {/* Candle Body Rect */}
+              <rect 
+                x={cx - (isHovered ? candleWidth * 1.2 : candleWidth) / 2} 
+                y={bodyTop} 
+                width={isHovered ? candleWidth * 1.2 : candleWidth} 
+                height={bodyHeight} 
+                fill={candleColor} 
+                rx={1}
+                stroke={isHovered ? '#ffffff' : 'none'}
+                strokeWidth={1}
+              />
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Hover Info Bet Slip Card Popup */}
+      {activeItem && activeItem.rawBet && (
+        <div style={{
+          position: 'absolute',
+          top: '10px',
+          right: '16px',
+          zIndex: 30,
+          pointerEvents: 'none',
+          animation: 'fade-in 0.15s ease'
+        }}>
+          <BetCardPopup rawBet={activeItem.rawBet} sym={sym} />
+        </div>
+      )}
+    </div>
+  );
+};
+
 const CustomTooltip = ({ active, payload, sym }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
-    if (data.date === 'Start') {
-      return (
-        <div style={{ background: 'var(--bg-glass-hover)', border: '1px solid var(--accent-cyan)', borderRadius: '12px', padding: '1rem', backdropFilter: 'blur(10px)', color: 'var(--text-primary)', minWidth: '200px' }}>
-          <p className="text-secondary" style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Initial Balance</p>
-          <p style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>Profit: {sym}{payload[0].value.toFixed(2)}</p>
-        </div>
-      );
-    }
-
-    const currentBet = data.rawBet;
-    if (!currentBet) return null;
-
-    const statusInfo = currentBet.status === 'Won' ? { color: '#00ffaa', label: 'SETTLED • WIN', shadow: '0 0 10px #00ffaa' } : currentBet.status === 'Lost' ? { color: '#ff3366', label: 'SETTLED • LOSS', shadow: '0 0 10px #ff3366' } : currentBet.status === 'Cashed Out' ? { color: '#FFD700', label: 'SETTLED • CASHOUT', shadow: '0 0 10px #FFD700' } : { color: '#aaa', label: 'PENDING', shadow: 'none' };
-    let hashStr = currentBet.id ? currentBet.id.replace(/-/g, '').toUpperCase() : 'PENDING';
-    const matchupParts = currentBet.teams ? currentBet.teams.split('vs').map(s => s.trim()) : ['Unknown'];
-    const isWin = currentBet.status === 'Won';
-    const isCashout = currentBet.status === 'Cashed Out';
-    const isLoss = currentBet.status === 'Lost';
-    const returnAmount = isWin ? currentBet.stake * currentBet.odds : isCashout ? currentBet.cashout_amount || 0 : 0;
-    const netProfitVal = isWin ? returnAmount - currentBet.stake : isCashout ? returnAmount - currentBet.stake : isLoss ? -currentBet.stake : 0;
-
     return (
-      <div 
-        className="glass-panel" 
-        style={{ 
-          width: '320px', 
-          background: 'linear-gradient(180deg, var(--slip-gradient-1) 0%, var(--slip-gradient-2) 100%)',
-          border: `1.5px solid ${statusInfo.color}`,
-          borderRadius: '12px',
-          padding: '1.25rem',
-          boxShadow: `0 0 30px rgba(${isWin ? '0,255,170' : isLoss ? '255,51,102' : isCashout ? '255,215,0' : '255,255,255'}, 0.05)`,
-          overflow: 'hidden'
-        }}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-2">
-            <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: statusInfo.color, boxShadow: statusInfo.shadow, animation: 'pulse 1.5s infinite' }} />
-            <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: statusInfo.color, letterSpacing: '1px', fontWeight: 'bold' }}>
-              {statusInfo.label}
-            </span>
-          </div>
-          <span style={{ fontFamily: 'monospace', fontSize: '0.65rem', color: 'var(--text-secondary)' }}>
-            {new Date(currentBet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
-          </span>
+      <div style={{
+        background: '#0d0f17',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '8px',
+        padding: '0.4rem 0.75rem',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
+        color: '#ffffff',
+        fontSize: '0.8rem',
+        fontFamily: 'monospace',
+        pointerEvents: 'none'
+      }}>
+        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.65rem', marginBottom: '2px' }}>
+          {data.date === 'Start' ? 'Start Balance' : data.date}
         </div>
-
-        <div className="flex-col gap-3">
-          <div className="flex justify-between items-center">
-            <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-secondary)', background: 'var(--adaptive-white-03)', padding: '0.15rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase' }}>
-              {currentBet.sport || 'OTHER'}
-            </span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', fontWeight: '500' }}>{currentBet.bookmaker || 'Unknown'}</span>
-          </div>
-
-          <div style={{ background: 'var(--adaptive-white-02)', border: '1px solid var(--adaptive-white-05)', borderRadius: '8px', padding: '0.75rem' }}>
-            <div className="flex justify-between items-center mb-1.5">
-              <span style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', letterSpacing: '1px' }}>SELECTION</span>
-              <span style={{ fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', letterSpacing: '1px' }}>{currentBet.type.toUpperCase()}</span>
-            </div>
-            {matchupParts.length === 2 ? (
-              <div className="flex items-center justify-between gap-1">
-                <div className="flex-col" style={{ flex: 1 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>{matchupParts[0]}</span>
-                  <span style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>HOME</span>
-                </div>
-                <div style={{ padding: '0.1rem 0.25rem', background: 'var(--adaptive-white-05)', borderRadius: '4px', fontSize: '0.6rem', color: 'var(--text-secondary)', fontWeight: 'bold' }}>vs</div>
-                <div className="flex-col text-right" style={{ flex: 1 }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>{matchupParts[1]}</span>
-                  <span style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>AWAY</span>
-                </div>
-              </div>
-            ) : (
-              <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>{currentBet.teams}</span>
-            )}
-          </div>
-
-          <div className="flex-col gap-2 mt-1">
-            <div className="flex justify-between items-center p-1.5 rounded" style={{ background: 'rgba(0, 243, 255, 0.02)', border: '1px solid rgba(0, 243, 255, 0.1)' }}>
-              <span className="text-secondary" style={{ fontSize: '0.7rem', fontWeight: '600' }}>Stake x Odds</span>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 'bold' }}>{sym}{parseFloat(currentBet.stake).toFixed(2)} @{parseFloat(currentBet.odds).toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between items-center p-1.5 rounded" style={{ background: statusInfo.color === '#aaa' ? 'var(--adaptive-white-05)' : `rgba(${isWin ? '0, 255, 170' : isLoss ? '255, 51, 102' : '255, 215, 0'}, 0.05)`, border: `1px solid ${statusInfo.color === '#aaa' ? 'rgba(255, 255, 255, 0.2)' : statusInfo.color}` }}>
-              <span className="text-secondary" style={{ fontSize: '0.75rem', fontWeight: '700' }}>PnL Return</span>
-              <span style={{ fontSize: '1rem', color: statusInfo.color, fontWeight: 'bold', textShadow: `0 0 10px ${statusInfo.color}` }}>
-                {netProfitVal > 0 ? '+' : ''}{sym}{netProfitVal.toFixed(2)}
-              </span>
-            </div>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--adaptive-white-05)' }}>
-            <div style={{ width: '100%', height: '24px', display: 'flex', alignItems: 'stretch', background: 'var(--adaptive-white-01)', padding: '2px', borderRadius: '4px', overflow: 'hidden', justifyContent: 'center' }}>
-              {hashStr.split('').slice(0, 40).map((char, index) => {
-                const val = parseInt(char, 16) || 0;
-                return <div key={index} style={{ width: val < 8 ? '1px' : '2px', marginRight: `${(val % 2) + 1}px`, backgroundColor: 'var(--text-invert)', opacity: 0.18, flexShrink: 0 }} />;
-              })}
-            </div>
-          </div>
+        <div style={{ fontWeight: 'bold', color: '#00f3ff', fontSize: '0.95rem' }}>
+          {sym}{Number(data.balance).toFixed(2)}
         </div>
       </div>
     );
@@ -114,12 +234,14 @@ const CustomTooltip = ({ active, payload, sym }) => {
   return null;
 };
 
+
 export default function Dashboard({ session, profile }) {
   const [bets, setBets] = useState([]);
   const [filterSport, setFilterSport] = useState('All');
   const [filterBookmaker, setFilterBookmaker] = useState('All');
   const [filterType, setFilterType] = useState('All');
   const [timeframe, setTimeframe] = useState('ALL');
+  const [chartType, setChartType] = useState('line'); // 'line' or 'candlestick'
   const [calendarMonth, setCalendarMonth] = useState(new Date());
   const [isGeneratingShare, setIsGeneratingShare] = useState(false);
   const [showSharePreview, setShowSharePreview] = useState(false);
@@ -332,6 +454,37 @@ export default function Dashboard({ session, profile }) {
     });
   });
 
+  const candlestickData = [];
+  let prevBal = baseProfit;
+  filteredBets.forEach((bet) => {
+    const stake = parseFloat(bet.stake);
+    let betPnL = -stake;
+    if (bet.status === 'Won') {
+       betPnL += (stake * parseFloat(bet.odds));
+    } else if (bet.status === 'Cashed Out') {
+       betPnL += parseFloat(bet.cashout_amount || 0);
+    }
+    
+    const openVal = prevBal;
+    const closeVal = prevBal + betPnL;
+    prevBal = closeVal;
+
+    const absPnL = Math.abs(betPnL);
+    const wickExtension = absPnL > 0 ? absPnL * 0.25 : 5;
+    const highVal = Math.max(openVal, closeVal) + wickExtension;
+    const lowVal = Math.min(openVal, closeVal) - wickExtension;
+
+    candlestickData.push({
+      date: new Date(bet.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      open: parseFloat(openVal.toFixed(2)),
+      close: parseFloat(closeVal.toFixed(2)),
+      high: parseFloat(highVal.toFixed(2)),
+      low: parseFloat(lowVal.toFixed(2)),
+      betPnL: parseFloat(betPnL.toFixed(2)),
+      rawBet: bet
+    });
+  });
+
   let mostBettedSport = 'N/A';
   let maxSportCount = 0;
   const sportCounts = {};
@@ -476,7 +629,7 @@ export default function Dashboard({ session, profile }) {
       setIsGeneratingShare(true);
       const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
       const timestamp = Math.floor(Date.now() / 1000);
-      download(dataUrl, `QuantStake_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
+      download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
       console.error('Failed to generate image', err);
     } finally {
@@ -496,7 +649,7 @@ export default function Dashboard({ session, profile }) {
       } catch (clipErr) {
         console.warn('Clipboard write failed, downloading instead...', clipErr);
         const timestamp = Math.floor(Date.now() / 1000);
-        download(blob, `QuantStake_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
+        download(blob, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
         alert('Image exported to downloads folder.');
       }
     } catch (err) {
@@ -507,11 +660,12 @@ export default function Dashboard({ session, profile }) {
     }
   };
 
-  const maxAbsBalance = chartData.length > 1 ? chartData.slice(1).reduce((max, d) => Math.max(max, Math.abs(d.balance)), 0) : 0;
-  const maxAbsPnL = chartData.length > 1 ? chartData.slice(1).reduce((max, d) => Math.max(max, Math.abs(d.betPnL || 0)), 0) : 0;
-  
-  const globalMax = Math.max(maxAbsBalance, maxAbsPnL);
-  const yGlobalMax = Math.ceil(globalMax * 1.2) || 100;
+  const allBalances = chartData.map(d => d.balance);
+  const minBalance = Math.min(...allBalances, 0);
+  const maxBalance = Math.max(...allBalances, 0);
+
+  const chartYMin = minBalance < 0 ? Math.floor(minBalance * 1.15) : 0;
+  const chartYMax = Math.ceil(Math.max(maxBalance * 1.15, 100));
 
   return (
     <div className="flex-col gap-12 pb-12">
@@ -596,7 +750,7 @@ export default function Dashboard({ session, profile }) {
         
         <div className="flex gap-3 items-end md-flex-col" style={{ animation: 'fade-in 0.3s ease' }}>
           <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', visibility: 'hidden', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Share</label>
+            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', visibility: 'hidden', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Actions</label>
             <button 
               onClick={() => setShowSharePreview(true)}
               className="btn btn-secondary" 
@@ -667,7 +821,7 @@ export default function Dashboard({ session, profile }) {
             <DollarSign size={20} color="var(--accent-cyan)" />
           </div>
           {filteredBets.length === 0 ? <NoData /> : (
-            <h3 className={`relative z-10 ${netProfit >= 0 ? 'glow-text-success' : 'glow-text-danger'}`} style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>
+            <h3 className={`relative z-10 ${netProfit >= 0 ? 'glow-text-success' : 'glow-text-danger'}`} style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>
               {netProfit >= 0 ? '+' : ''}{sym}{netProfit.toFixed(2)}
             </h3>
           )}
@@ -681,7 +835,7 @@ export default function Dashboard({ session, profile }) {
             <Target size={20} color="var(--accent-magenta)" />
           </div>
           {filteredBets.length === 0 ? <NoData /> : (
-            <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>{winRate.toFixed(1)}%</h3>
+            <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{winRate.toFixed(1)}%</h3>
           )}
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>{wonBets.length} / {resolvedBets.length} Won</p>
         </div>
@@ -693,7 +847,7 @@ export default function Dashboard({ session, profile }) {
             <Percent size={20} color="var(--success)" />
           </div>
           {filteredBets.length === 0 ? <NoData /> : (
-            <h3 className={`relative z-10 ${roi >= 0 ? 'glow-text-success' : 'glow-text-danger'}`} style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>{roi > 0 ? '+' : ''}{roi.toFixed(1)}%</h3>
+            <h3 className={`relative z-10 ${roi >= 0 ? 'glow-text-success' : 'glow-text-danger'}`} style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{roi > 0 ? '+' : ''}{roi.toFixed(1)}%</h3>
           )}
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>True Edge</p>
         </div>
@@ -705,7 +859,7 @@ export default function Dashboard({ session, profile }) {
             <Banknote size={20} color="#a13bf7" />
           </div>
           {filteredBets.length === 0 ? <NoData /> : (
-            <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>{sym}{totalStaked.toFixed(2)}</h3>
+            <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{sym}{totalStaked.toFixed(2)}</h3>
           )}
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Total Turnover</p>
         </div>
@@ -719,7 +873,7 @@ export default function Dashboard({ session, profile }) {
             <Activity size={16} color="var(--accent-cyan)" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', fontFamily: 'monospace' }}>{profitFactor.toFixed(2)}</h3>
+            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{profitFactor.toFixed(2)}</h3>
           )}
           <p className="text-secondary" style={{ fontSize: '0.8rem' }}>{profitFactor > 1 ? 'Profitable Strategy' : 'Losing Strategy'}</p>
         </div>
@@ -730,7 +884,7 @@ export default function Dashboard({ session, profile }) {
             <TrendingUp size={16} color="var(--accent-cyan)" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>{mostBettedSport}</h3>
+            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{mostBettedSport}</h3>
           )}
           <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Top Volume Sport</p>
         </div>
@@ -741,7 +895,7 @@ export default function Dashboard({ session, profile }) {
             <Euro size={16} color="var(--accent-magenta)" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', fontFamily: 'monospace' }}>{sym}{avgStake.toFixed(2)}</h3>
+            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{sym}{avgStake.toFixed(2)}</h3>
           )}
           <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Avg Bet Size</p>
         </div>
@@ -772,46 +926,105 @@ export default function Dashboard({ session, profile }) {
           <div className="flex justify-between items-center mb-6">
             <div>
               <h3 className="label mb-0 text-gradient" style={{ fontSize: '1.5rem' }}>Bankroll Trajectory</h3>
-              <p className="text-secondary" style={{ fontSize: '0.9rem' }}>Cumulative PnL over time.</p>
+              <p className="text-secondary" style={{ fontSize: '0.9rem' }}>Cumulative PnL growth & trajectory over time.</p>
             </div>
-            <div className="flex gap-2 p-1" style={{ background: 'var(--adaptive-white-05)', borderRadius: '8px', border: '1px solid var(--border-glass)' }}>
-              {['1D', '1M', '1Y', 'ALL'].map(tf => (
-                <button 
-                  key={tf}
-                  onClick={() => setTimeframe(tf)}
-                  style={{ 
-                    padding: '0.25rem 0.75rem', fontSize: '0.8rem', fontWeight: 'bold', borderRadius: '6px',
-                    background: timeframe === tf ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-                    color: timeframe === tf ? '#fff' : 'var(--text-secondary)',
-                    border: 'none', cursor: 'pointer', transition: 'all 0.2s'
+            
+            <div className="flex gap-3 items-center flex-wrap">
+              {/* Graph Type Toggle */}
+              <div style={{ display: 'flex', gap: '3px', background: 'rgba(255,255,255,0.04)', padding: '3px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <button
+                  type="button"
+                  onClick={() => setChartType('line')}
+                  style={{
+                    padding: '0.3rem 0.75rem',
+                    borderRadius: '6px',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    background: chartType === 'line' ? 'linear-gradient(135deg, var(--accent-cyan), #3b82f6)' : 'transparent',
+                    color: chartType === 'line' ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    transition: 'all 0.2s'
                   }}
                 >
-                  {tf}
+                  <TrendingUp size={14} /> Line Graph
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => setChartType('candlestick')}
+                  style={{
+                    padding: '0.3rem 0.75rem',
+                    borderRadius: '6px',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    background: chartType === 'candlestick' ? 'linear-gradient(135deg, #ff8c00, #8b5cf6)' : 'transparent',
+                    color: chartType === 'candlestick' ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <BarChart2 size={14} /> Candlesticks
+                </button>
+              </div>
+
+              {/* Timeframe selector */}
+              <div className="flex gap-1 p-1" style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                {['1D', '1M', '1Y', 'ALL'].map(tf => (
+                  <button 
+                    key={tf}
+                    onClick={() => setTimeframe(tf)}
+                    style={{ 
+                      padding: '0.25rem 0.75rem', fontSize: '0.8rem', fontWeight: 'bold', borderRadius: '6px',
+                      background: timeframe === tf ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+                      color: timeframe === tf ? '#fff' : 'var(--text-secondary)',
+                      border: 'none', cursor: 'pointer', transition: 'all 0.2s'
+                    }}
+                  >
+                    {tf}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+
           <div style={{ height: '350px' }}>
-            {filteredBets.length === 0 ? <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div> : (
+            {filteredBets.length === 0 ? (
+              <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div>
+            ) : chartType === 'line' ? (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={chartData.slice(1)} margin={{ top: 20, right: 10, left: 0, bottom: 0 }}>
+                <AreaChart data={chartData} margin={{ top: 20, right: 10, left: 0, bottom: 0 }}>
                   <defs>
-                    <linearGradient id="colorBalance" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={netProfit >= 0 ? "var(--success)" : "var(--danger)"} stopOpacity={0.8}/>
-                      <stop offset="100%" stopColor={netProfit >= 0 ? "var(--success)" : "var(--danger)"} stopOpacity={0.1}/>
+                    <linearGradient id="colorBalanceGraph" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={netProfit >= 0 ? "#00f3ff" : "#ef4444"} stopOpacity={0.4}/>
+                      <stop offset="75%" stopColor={netProfit >= 0 ? "#3b82f6" : "#ef4444"} stopOpacity={0.05}/>
+                      <stop offset="100%" stopColor="#000000" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} dy={10} />
-                  <YAxis yAxisId="left" stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${sym}${value}`} dx={-10} domain={[-yGlobalMax, yGlobalMax]} />
-                  <Tooltip content={<CustomTooltip sym={sym} />} cursor={{ fill: 'transparent' }} />
-                  <Bar yAxisId="left" dataKey="waterfallRange" radius={4} fillOpacity={0.75} activeBar={{ fillOpacity: 1 }} style={{ outline: 'none' }}>
-                    {chartData.slice(1).map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.betPnL > 0 ? 'var(--success)' : entry.betPnL < 0 ? 'var(--danger)' : 'var(--text-secondary)'} />
-                    ))}
-                  </Bar>
-                  <Line yAxisId="left" type="monotone" dataKey="balance" stroke="var(--accent-cyan)" strokeWidth={3} dot={{ r: 4, fill: 'var(--bg-primary)', stroke: 'var(--accent-cyan)', strokeWidth: 2 }} activeDot={{ r: 6, fill: 'var(--accent-cyan)', stroke: 'none', outline: 'none' }} />
-                </ComposedChart>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.08)" vertical={false} />
+                  <XAxis dataKey="date" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} dy={10} />
+                  <YAxis yAxisId="left" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${sym}${value}`} dx={-10} domain={[chartYMin, chartYMax]} />
+                  <Tooltip content={<CustomTooltip sym={sym} />} cursor={{ stroke: 'rgba(0, 243, 255, 0.4)', strokeDasharray: '3 3' }} />
+                  <Area 
+                    yAxisId="left" 
+                    type="monotone" 
+                    dataKey="balance" 
+                    stroke={netProfit >= 0 ? "#00f3ff" : "#ef4444"} 
+                    strokeWidth={3} 
+                    fill="url(#colorBalanceGraph)" 
+                    dot={{ r: 4, fill: '#0d0f17', stroke: netProfit >= 0 ? "#00f3ff" : "#ef4444", strokeWidth: 2 }} 
+                    activeDot={{ r: 7, fill: netProfit >= 0 ? "#00f3ff" : "#ef4444", stroke: '#ffffff', strokeWidth: 2 }} 
+                  />
+                </AreaChart>
               </ResponsiveContainer>
+            ) : (
+              <BankrollCandlestickChart data={candlestickData} sym={sym} />
             )}
           </div>
         </div>

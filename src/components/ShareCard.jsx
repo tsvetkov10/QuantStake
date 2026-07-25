@@ -45,12 +45,12 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
             <div>
               <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: 0, letterSpacing: '-1px' }}>{profile?.username || 'Trader'}</h1>
-              <span style={{ color: '#888888', fontSize: '1.5rem' }}>QuantStake Verified</span>
+              <span style={{ color: '#888888', fontSize: '1.5rem' }}>QuantStakes Verified</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <TrendingUp size={40} className="logo-icon" strokeWidth={3} />
-            <h2 className="logo-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>QuantStake</h2>
+            <h2 className="logo-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>QuantStakes</h2>
           </div>
         </div>
 
@@ -100,7 +100,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
           </div>
           <div style={{ textAlign: 'right' }}>
             <p style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: '0 0 5px 0', lineHeight: '32px' }}>Join the elite community.</p>
-            <p style={{ fontSize: '1.8rem', color: '#3b82f6', margin: 0, fontWeight: '900' }}>app.quantstake.com</p>
+            <p style={{ fontSize: '1.8rem', color: '#3b82f6', margin: 0, fontWeight: '900' }}>app.quantstakes.com</p>
           </div>
         </div>
 

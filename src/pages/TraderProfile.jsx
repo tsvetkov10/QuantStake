@@ -162,7 +162,7 @@ export default function TraderProfile({ session, profile }) {
             <p className="label">Total Profit</p>
             <DollarSign size={20} color="var(--accent-cyan)" />
           </div>
-          <h3 className="relative z-10 glow-text-success" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>
+          <h3 className="relative z-10 glow-text-success" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
             {trader.netProfit >= 0 ? '+' : ''}{sym}{trader.netProfit.toLocaleString()}
           </h3>
           <p className="relative z-10 text-secondary" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Net Earnings</p>
@@ -174,7 +174,7 @@ export default function TraderProfile({ session, profile }) {
             <p className="label">Win Rate</p>
             <Target size={20} color="var(--accent-magenta)" />
           </div>
-          <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>
+          <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
             {trader.winRate.toFixed(1)}%
           </h3>
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Efficiency</p>
@@ -186,7 +186,7 @@ export default function TraderProfile({ session, profile }) {
             <p className="label">Yield (ROI)</p>
             <Percent size={20} color="var(--success)" />
           </div>
-          <h3 className="relative z-10 glow-text-success" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>
+          <h3 className="relative z-10 glow-text-success" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
             {trader.roi >= 0 ? '+' : ''}{trader.roi.toFixed(1)}%
           </h3>
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Average Edge</p>
@@ -198,7 +198,7 @@ export default function TraderProfile({ session, profile }) {
             <p className="label">Total Signals</p>
             <Banknote size={20} color="#a13bf7" />
           </div>
-          <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-1px', fontFamily: 'monospace' }}>
+          <h3 className="relative z-10 glow-text-neutral" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', fontWeight: '900', letterSpacing: '-0.5px', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
             {trader.totalBets}
           </h3>
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Completed Signals</p>
