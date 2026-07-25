@@ -255,7 +255,7 @@ function App() {
   }
 
   const hasMockSession = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';
-  const userToUse = session || (hasMockSession ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : isMock ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : null);
+  const userToUse = session || (hasMockSession ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : null);
 
   return (
     <Router>
