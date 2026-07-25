@@ -4,7 +4,7 @@ import { TrendingUp, ArrowLeft } from 'lucide-react';
 
 export default function Terms() {
   return (
-    <div className="flex-col" style={{ minHeight: '100vh', width: '100vw', backgroundColor: 'var(--bg-dark)' }}>
+    <div className="flex-col" style={{ minHeight: '100vh', width: '100%', backgroundColor: 'var(--bg-dark)' }}>
       {/* Header - Fixed to always stay on top */}
       <header className="flex justify-between items-center" style={{ padding: '1.5rem 4rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">

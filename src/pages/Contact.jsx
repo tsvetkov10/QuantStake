@@ -6,7 +6,7 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="flex-col" style={{ minHeight: '100vh', width: '100vw', padding: '4rem 2rem' }}>
+    <div className="flex-col" style={{ minHeight: '100vh', width: '100%', padding: '4rem 2rem' }}>
       <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         <Link to="/" className="flex items-center gap-2 text-secondary mb-8" style={{ textDecoration: 'none', display: 'inline-flex' }}>

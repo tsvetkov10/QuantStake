@@ -238,7 +238,7 @@ function App() {
   if (loading) {
     if (isInitializing) {
       return (
-        <div style={{height: '100vh', width: '100vw', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <div className="flex items-center gap-3 mb-10">
             <TrendingUp size={48} color="#00ffaa" strokeWidth={3} />
             <h1 className="text-gradient brand-logo-animated" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, letterSpacing: '2px' }}>QuantStakes</h1>
@@ -251,7 +251,7 @@ function App() {
         </div>
       );
     }
-    return <div style={{height: '100vh', width: '100vw', background: 'var(--bg-dark)'}}></div>;
+    return <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)'}}></div>;
   }
 
   const hasMockSession = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';

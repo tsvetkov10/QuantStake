@@ -108,13 +108,21 @@
   padding: 0;
 }
 
-body {
+html, body {
   font-family: 'Space Grotesk', sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
 }
 
 input, button, select, textarea {
@@ -483,13 +491,13 @@ input[type="number"] {
   .auth-left { display: none !important; }
   .auth-right { width: 100% !important; padding: 2rem !important; }
   
-  /* Responsive Overrides */
-  .responsive-padding { padding: 4rem 1rem 2rem 1rem !important; }
-  .hero-padding { padding: 7rem 1rem 4rem 1rem !important; }
-  .responsive-gap { gap: 2rem !important; flex-direction: column !important; }
-  .responsive-header-padding { padding: 1rem !important; justify-content: space-between !important; }
-  .auth-panel-wrapper { padding: 1rem !important; }
-  .features-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  /* Responsive Overrides & Nice Spacing */
+  .responsive-padding { padding: 4rem 1.5rem 3rem 1.5rem !important; }
+  .hero-padding { padding: 6rem 1.5rem 3rem 1.5rem !important; }
+  .responsive-gap { gap: 1.5rem !important; flex-direction: column !important; align-items: center !important; }
+  .responsive-header-padding { padding: 1rem 1.5rem !important; justify-content: space-between !important; }
+  .auth-panel-wrapper { padding: 1.5rem !important; }
+  .features-grid { grid-template-columns: 1fr !important; gap: 2rem !important; padding: 0 0.5rem !important; }
   
   /* Mobile Helpers */
   .desktop-only { display: none !important; }
