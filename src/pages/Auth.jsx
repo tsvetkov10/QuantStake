@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, isMockMode } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { AlertCircle, CheckCircle, TrendingUp, Shield, BarChart3 } from 'lucide-react';
 
@@ -23,14 +23,14 @@ export default function Auth() {
     setErrorMsg(null);
     setSuccessMsg(null);
     
-    if (import.meta.env.VITE_SUPABASE_URL === undefined) {
-      setErrorMsg("Missing Supabase config. Logging in as mock user.");
+    if (isMockMode) {
+      setSuccessMsg("Entering demo terminal session...");
       setTimeout(() => {
         setLoading(false);
         sessionStorage.setItem('mock_session', 'true');
         sessionStorage.setItem('mock_new_login', 'true');
         window.location.href = '/dashboard';
-      }, 1500);
+      }, 1000);
       return;
     }
 
