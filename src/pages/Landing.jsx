@@ -33,9 +33,9 @@ export default function Landing() {
   };
 
   return (
-    <div className="flex-col" style={{ minHeight: '100vh', width: '100vw', backgroundColor: 'var(--bg-dark)' }}>
+    <div className="flex-col" style={{ minHeight: '100vh', width: '100%', backgroundColor: 'var(--bg-dark)' }}>
       {/* Header - Fixed to always stay on top */}
-      <header className="flex justify-between items-center" style={{ padding: '1.5rem 4rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
+      <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
           <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
           <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h1>
@@ -51,7 +51,7 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-col items-center justify-center" style={{ padding: '12rem 2rem 8rem 2rem', textAlign: 'center', position: 'relative' }}>
+      <main className="flex-col items-center justify-center hero-padding" style={{ textAlign: 'center', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '40vw', background: 'radial-gradient(ellipse, rgba(0, 243, 255, 0.15) 0%, transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
         
         <div style={{ background: 'var(--adaptive-white-05)', padding: '0.4rem 1rem', borderRadius: '20px', border: '1px solid var(--border-glass)', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', zIndex: 1 }}>
@@ -77,18 +77,18 @@ export default function Landing() {
       </main>
 
       {/* Trust Banner */}
-      <div style={{ borderTop: '1px solid var(--border-glass)', borderBottom: '1px solid var(--border-glass)', padding: '3rem', background: 'var(--adaptive-white-03)', display: 'flex', justifyContent: 'center', gap: '6rem', opacity: 0.7, flexWrap: 'wrap' }}>
+      <div className="flex justify-center flex-wrap responsive-gap" style={{ borderTop: '1px solid var(--border-glass)', borderBottom: '1px solid var(--border-glass)', padding: '3rem', background: 'var(--adaptive-white-03)', opacity: 0.7 }}>
          <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>APEX<span style={{ color: 'var(--accent-cyan)' }}>CAPITAL</span></div>
          <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>QUANTUM<span style={{ color: 'var(--accent-magenta)' }}>EDGE</span></div>
          <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>SYNDICATE<span style={{ color: 'var(--success)' }}>VENTURES</span></div>
       </div>
 
       {/* Two Paths Section */}
-      <section className="flex-col items-center" style={{ padding: '8rem 2rem 4rem 2rem' }}>
+      <section className="flex-col items-center responsive-padding">
         <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center' }}>Choose Your Path</h3>
         <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp bettor proving your edge, or an investor looking for alpha, QuantStakes is built for you.</p>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: '1100px', width: '100%' }}>
+        <div className="features-grid">
           {/* Analyst Path */}
           <div className="glass-card flex-col" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
             <div style={{ alignSelf: 'flex-start', background: 'rgba(255, 0, 234, 0.1)', padding: '1rem', borderRadius: '12px', display: 'inline-block', marginBottom: '2rem', pointerEvents: 'none' }}>

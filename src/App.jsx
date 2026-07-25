@@ -61,7 +61,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   return (
-    <div className="flex app-container" style={{ minHeight: '100vh', width: '100vw', position: 'relative' }}>
+    <div className="flex app-container" style={{ minHeight: '100vh', width: '100%', position: 'relative' }}>
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
 

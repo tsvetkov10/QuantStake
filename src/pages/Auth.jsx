@@ -96,7 +96,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex items-center justify-center" style={{ minHeight: '100vh', width: '100vw', padding: '2rem' }}>
+    <div className="flex items-center justify-center auth-panel-wrapper" style={{ minHeight: '100vh', width: '100%' }}>
       
       <div className="flex glass-panel auth-panel" style={{ width: '100%', maxWidth: '1000px', padding: 0, borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px var(--shadow-card)' }}>
         
