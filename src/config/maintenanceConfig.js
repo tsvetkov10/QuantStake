@@ -7,5 +7,6 @@ export const MAINTENANCE_CONFIG = {
   tools: true,         // Kelly & Arbitrage Calculators
   addBet: true,        // Bet Slip Parser & Manual Entry
   history: true,       // Bet History & Verification Ledger
-  settings: false,     // Account & Profile Settings (active)
+  settings: true,      // Account & Profile Settings
+  traderProfile: true, // Public Trader Profiles
 };

@@ -145,7 +145,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
         <Routes>
           <Route path="/dashboard" element={<Dashboard session={session} profile={profile} />} />
           <Route path="/leaderboard" element={MAINTENANCE_CONFIG.leaderboard ? <Maintenance title="Analyst Leaderboard" description="We are optimizing cryptographic track record verification algorithms. The analyst leaderboard will return online shortly." /> : <Leaderboard session={session} profile={profile} />} />
-          <Route path="/trader/:username" element={<TraderProfile session={session} profile={profile} />} />
+          <Route path="/trader/:username" element={MAINTENANCE_CONFIG.traderProfile ? <Maintenance title="Trader Profile" description="Trader profile customization and public track record views are currently undergoing scheduled upgrades." /> : <TraderProfile session={session} profile={profile} />} />
           <Route path="/social" element={MAINTENANCE_CONFIG.social ? <Maintenance title="Social Signal Feed" description="Upgrading peer-to-peer signal streams and verification ledgers. The social feed will return online shortly." /> : <Social session={session} profile={profile} />} />
           <Route path="/add" element={MAINTENANCE_CONFIG.addBet ? <Maintenance title="Bet Slip Parser" description="Upgrading OCR parsing engine and image extraction models. This module will return online shortly." /> : <AddBet session={session} profile={profile} />} />
           <Route path="/history" element={MAINTENANCE_CONFIG.history ? <Maintenance title="Bet History & Ledger" description="Optimizing bankroll ledger history indexing. History views will return online shortly." /> : <BetHistory session={session} profile={profile} />} />
