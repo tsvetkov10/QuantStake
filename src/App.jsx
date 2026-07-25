@@ -252,8 +252,8 @@ function App() {
     return <div style={{height: '100vh', width: '100vw', background: 'var(--bg-dark)'}}></div>;
   }
 
-  const hasMockSession = isMock && (sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true');
-  const userToUse = session || (hasMockSession ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : isMock ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : null);
+  const hasMockSession = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';
+  const userToUse = session || (hasMockSession ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : isMock ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : null);
 
   return (
     <Router>
