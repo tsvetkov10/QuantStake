@@ -487,9 +487,12 @@ input[type="number"] {
   .responsive-padding { padding: 4rem 1rem 2rem 1rem !important; }
   .hero-padding { padding: 7rem 1rem 4rem 1rem !important; }
   .responsive-gap { gap: 2rem !important; flex-direction: column !important; }
-  .responsive-header-padding { padding: 1rem !important; justify-content: center !important; }
+  .responsive-header-padding { padding: 1rem !important; justify-content: space-between !important; }
   .auth-panel-wrapper { padding: 1rem !important; }
   .features-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  
+  /* Mobile Helpers */
+  .desktop-only { display: none !important; }
   
   /* Ledger Table Wrapper */
   .table-responsive {
