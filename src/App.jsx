@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, PlusCircle, History, LogOut, Settings as SettingsIcon, TrendingUp, Target, Trophy, Globe, Moon, Sun } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import { supabase, isMockMode } from './lib/supabase';
 import Dashboard from './pages/Dashboard';
 import AddBet from './pages/AddBet';
@@ -271,6 +272,7 @@ function App() {
           }
         }} onProfileUpdate={(newProfile) => setProfile(newProfile)} /> : <Navigate to="/" replace />} />
       </Routes>
+      <Analytics />
     </Router>
   );
 }
