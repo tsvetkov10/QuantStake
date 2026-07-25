@@ -16,6 +16,8 @@ import Tools from './pages/Tools';
 import Leaderboard from './pages/Leaderboard';
 import TraderProfile from './pages/TraderProfile';
 import Social from './pages/Social';
+import Maintenance from './components/Maintenance';
+import { MAINTENANCE_CONFIG } from './config/maintenanceConfig';
 import './index.css';
 
 function NavLink({ to, icon: Icon, children }) {
@@ -142,13 +144,13 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       <main className="main-content" style={{ flexGrow: 1, padding: '3rem', height: '100vh', overflowY: 'auto' }}>
         <Routes>
           <Route path="/dashboard" element={<Dashboard session={session} profile={profile} />} />
-          <Route path="/leaderboard" element={<Leaderboard session={session} profile={profile} />} />
+          <Route path="/leaderboard" element={MAINTENANCE_CONFIG.leaderboard ? <Maintenance title="Analyst Leaderboard" description="We are optimizing cryptographic track record verification algorithms. The analyst leaderboard will return online shortly." /> : <Leaderboard session={session} profile={profile} />} />
           <Route path="/trader/:username" element={<TraderProfile session={session} profile={profile} />} />
-          <Route path="/social" element={<Social session={session} profile={profile} />} />
-          <Route path="/add" element={<AddBet session={session} profile={profile} />} />
-          <Route path="/history" element={<BetHistory session={session} profile={profile} />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/settings" element={<Settings session={session} profile={profile} onProfileUpdate={onProfileUpdate} />} />
+          <Route path="/social" element={MAINTENANCE_CONFIG.social ? <Maintenance title="Social Signal Feed" description="Upgrading peer-to-peer signal streams and verification ledgers. The social feed will return online shortly." /> : <Social session={session} profile={profile} />} />
+          <Route path="/add" element={MAINTENANCE_CONFIG.addBet ? <Maintenance title="Bet Slip Parser" description="Upgrading OCR parsing engine and image extraction models. This module will return online shortly." /> : <AddBet session={session} profile={profile} />} />
+          <Route path="/history" element={MAINTENANCE_CONFIG.history ? <Maintenance title="Bet History & Ledger" description="Optimizing bankroll ledger history indexing. History views will return online shortly." /> : <BetHistory session={session} profile={profile} />} />
+          <Route path="/tools" element={MAINTENANCE_CONFIG.tools ? <Maintenance title="Calculators & Analytics" description="Upgrading Kelly Criterion and arbitrage computation engines." /> : <Tools />} />
+          <Route path="/settings" element={MAINTENANCE_CONFIG.settings ? <Maintenance title="Account Settings" description="System configuration upgrades in progress." /> : <Settings session={session} profile={profile} onProfileUpdate={onProfileUpdate} />} />
           <Route path="/bet/:id" element={<BetDetails session={session} profile={profile} />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
