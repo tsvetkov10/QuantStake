@@ -28,6 +28,7 @@ export default function Auth() {
       setTimeout(() => {
         setLoading(false);
         sessionStorage.setItem('mock_session', 'true');
+        localStorage.setItem('mock_session', 'true');
         sessionStorage.setItem('mock_new_login', 'true');
         window.location.href = '/dashboard';
       }, 1000);

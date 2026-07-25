@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, PlusCircle, History, LogOut, Settings as SettingsIcon, TrendingUp, Target, Trophy, Globe, Moon, Sun } from 'lucide-react';
-import { supabase } from './lib/supabase';
+import { supabase, isMockMode } from './lib/supabase';
 import Dashboard from './pages/Dashboard';
 import AddBet from './pages/AddBet';
 import BetHistory from './pages/BetHistory';
@@ -81,13 +81,13 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
             </div>
           </Link>
           <LogOut size={20} color="var(--danger)" onClick={async () => {
-            if (isMock) {
-              sessionStorage.removeItem('mock_session');
-              sessionStorage.removeItem('mock_profile');
-              window.location.replace('/');
-            } else {
+            sessionStorage.removeItem('mock_session');
+            localStorage.removeItem('mock_session');
+            sessionStorage.removeItem('mock_profile');
+            if (!isMock) {
               await supabase.auth.signOut();
             }
+            window.location.replace('/');
           }} style={{ cursor: 'pointer' }} />
         </div>
       </div>
@@ -124,13 +124,13 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
             onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
             onMouseLeave={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)'}
             onClick={async () => {
-              if (isMock) {
-                sessionStorage.removeItem('mock_session');
-                sessionStorage.removeItem('mock_profile');
-                window.location.replace('/');
-              } else {
+              sessionStorage.removeItem('mock_session');
+              localStorage.removeItem('mock_session');
+              sessionStorage.removeItem('mock_profile');
+              if (!isMock) {
                 await supabase.auth.signOut();
               }
+              window.location.replace('/');
             }}
           >
             <LogOut size={18} /> Disconnect
@@ -163,7 +163,7 @@ function App() {
   const [isInitializing, setIsInitializing] = useState(false);
   const [profile, setProfile] = useState(null);
   const currentUserId = useRef(null);
-  const isMock = import.meta.env.VITE_SUPABASE_URL === undefined;
+  const isMock = isMockMode;
 
   useEffect(() => {
     const checkProfile = async (currentSession, isNewSignIn = false) => {
@@ -252,8 +252,8 @@ function App() {
     return <div style={{height: '100vh', width: '100vw', background: 'var(--bg-dark)'}}></div>;
   }
 
-  const hasMockSession = isMock && sessionStorage.getItem('mock_session') === 'true';
-  const userToUse = session || (hasMockSession ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : null);
+  const hasMockSession = isMock && (sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true');
+  const userToUse = session || (hasMockSession ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : isMock ? { user: { email: 'mock@quantstakes.com', id: 'mock-uuid' } } : null);
 
   return (
     <Router>
