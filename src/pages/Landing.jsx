@@ -51,7 +51,7 @@ export default function Landing() {
 
       {/* Hero Section */}
       <main className="flex-col items-center justify-center hero-padding" style={{ textAlign: 'center', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '40vw', background: 'radial-gradient(ellipse, rgba(72, 51, 181, 0.15) 0%, transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
+        <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '40vw', background: 'radial-gradient(ellipse, rgba(6, 182, 212, 0.15) 0%, transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
         
         <div style={{ background: 'var(--adaptive-white-05)', padding: '0.4rem 1rem', borderRadius: '20px', border: '1px solid var(--border-glass)', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', zIndex: 1 }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--success)', boxShadow: '0 0 10px var(--success)' }}></span>
@@ -114,7 +114,7 @@ export default function Landing() {
             <div style={{ marginTop: 'auto' }}>
               <Link to="/auth" className="btn" style={{ 
                 width: '100%', pointerEvents: 'auto', padding: '1.2rem', fontSize: '1.05rem', fontWeight: '600',
-                background: 'linear-gradient(135deg, #d946ef, #4833b5)',
+                background: 'linear-gradient(135deg, #d946ef, #06b6d4)',
                 color: 'var(--text-primary)',
                 border: 'none',
                 boxShadow: '0 4px 20px rgba(217, 70, 239, 0.3)'
@@ -124,7 +124,7 @@ export default function Landing() {
 
           {/* Follower Path */}
           <div className="glass-card flex-col" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
-            <div style={{ alignSelf: 'flex-start', background: 'rgba(72, 51, 181, 0.1)', padding: '1rem', borderRadius: '12px', display: 'inline-block', marginBottom: '2rem', pointerEvents: 'none' }}>
+            <div style={{ alignSelf: 'flex-start', background: 'rgba(6, 182, 212, 0.1)', padding: '1rem', borderRadius: '12px', display: 'inline-block', marginBottom: '2rem', pointerEvents: 'none' }}>
               <Users size={32} color="var(--accent-cyan)" />
             </div>
             <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', fontWeight: 'bold', pointerEvents: 'none', color: 'var(--text-primary)' }}>Become an Investor</h3>
@@ -174,7 +174,7 @@ export default function Landing() {
           
           {/* Card 2 */}
           <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
-            <div style={{ background: 'rgba(72, 51, 181, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
+            <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <ShieldCheck size={24} color="var(--accent-cyan)" />
             </div>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Cryptographic Slips</h3>
@@ -267,8 +267,8 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="glass-panel" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 10, 16, 0.85)', border: '1px solid rgba(72, 51, 181, 0.15)', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle at top right, rgba(72, 51, 181, 0.08), transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
+            <div className="glass-panel" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 10, 16, 0.85)', border: '1px solid rgba(6, 182, 212, 0.15)', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle at top right, rgba(6, 182, 212, 0.08), transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
               {sent ? (
                 <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem', position: 'relative', zIndex: 1 }}>
                   <Send size={56} className="text-success mb-6" />
@@ -289,7 +289,7 @@ export default function Landing() {
                     <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
                     <textarea className="input-field" placeholder="How can we help you?" required rows="4" style={{ resize: 'vertical', background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }}></textarea>
                   </div>
-                  <button className="btn btn-primary" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #4833b5 0%, #29187a 100%)', color: '#000', border: 'none', borderRadius: '12px', cursor: 'pointer', boxShadow: '0 0 25px rgba(72, 51, 181, 0.3)' }}>
+                  <button className="btn btn-primary" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #06b6d4 0%, #083344 100%)', color: '#000', border: 'none', borderRadius: '12px', cursor: 'pointer', boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
                     Send Transmission
                   </button>
                 </form>

@@ -5,8 +5,8 @@
   --bg-glass: #0a0a0a;
   --bg-glass-hover: #111111;
   --border-glass: #222222;
-  --accent-cyan: #9d8df0; /* Remapped to light violet */
-  --accent-magenta: #4833b5;
+  --accent-cyan: #22d3ee; /* Remapped to light violet */
+  --accent-magenta: #06b6d4;
   --accent-purple: #6366f1;
   --text-primary: #ffffff;
   --text-secondary: #888888;
@@ -76,17 +76,17 @@
 }
 
 [data-theme='light'] .text-gradient {
-  background: linear-gradient(90deg, #4833b5, #6366f1);
+  background: linear-gradient(90deg, #06b6d4, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 [data-theme='light'] .logo-icon {
-  color: #4833b5 !important;
+  color: #06b6d4 !important;
 }
 
 [data-theme='light'] .logo-text {
-  background: linear-gradient(90deg, #4833b5, #6366f1) !important;
+  background: linear-gradient(90deg, #06b6d4, #6366f1) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -160,7 +160,7 @@ input, button, select, textarea {
 
 .spinner {
   border: 3px solid rgba(255,255,255,0.1);
-  border-top-color: #9d8df0;
+  border-top-color: #22d3ee;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -228,7 +228,7 @@ input, button, select, textarea {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4833b5, #29187a);
+  background: linear-gradient(135deg, #06b6d4, #083344);
   color: #ffffff;
   box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
 }
@@ -287,21 +287,21 @@ input, button, select, textarea {
 
 /* Typography Utilities */
 .text-gradient {
-  background: linear-gradient(90deg, #9d8df0, #4833b5);
+  background: linear-gradient(90deg, #22d3ee, #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .logo-text {
-  background: linear-gradient(90deg, #9d8df0, #4833b5);
+  background: linear-gradient(90deg, #22d3ee, #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .logo-icon {
-  color: #9d8df0;
+  color: #22d3ee;
 }
 
 .text-success { color: var(--success); text-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }

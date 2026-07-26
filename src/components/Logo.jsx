@@ -6,8 +6,8 @@ export default function Logo({ size = 32, animated = false }) {
       <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" style={{ overflow: 'visible' }}>
         <defs>
           <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#9d8df0" />
-            <stop offset="100%" stopColor="#29187a" />
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#083344" />
           </linearGradient>
         </defs>
         {/* Deep Violet Gradient Background Circle */}

@@ -238,7 +238,7 @@ export default function Tools() {
 
           {/* Moderate Profile */}
           <div className="glass-card flex-col gap-4" style={{ padding: '0', overflow: 'hidden' }}>
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(72, 51, 181, 0.05)' }}>
+            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(6, 182, 212, 0.05)' }}>
               <div className="flex justify-between items-center mb-2">
                 <h3 style={{ color: 'var(--accent-cyan)', fontWeight: 'bold', fontSize: '1.2rem' }}>Moderate</h3>
                 <Zap size={20} color="var(--accent-cyan)" />
