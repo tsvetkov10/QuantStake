@@ -21,7 +21,7 @@ export default function Landing() {
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const audioCtxRef = useRef(null);
 
-  const toggleMusic = () => {
+  const toggleMusic = async () => {
     if (isPlayingMusic) {
       if (audioCtxRef.current) {
         audioCtxRef.current.suspend();
@@ -34,32 +34,37 @@ export default function Landing() {
         const ctx = new AudioContextClass();
         audioCtxRef.current = ctx;
 
-        // Build a lush, warm, ambient futuristic synth pad (C minor 9 chord)
-        const freqs = [130.81, 155.56, 196.00, 246.94, 293.66]; // C3, Eb3, G3, B3, D4
+        // Ensure context is resumed (required for Safari & Chrome)
+        if (ctx.state === 'suspended') {
+          await ctx.resume();
+        }
+
+        // Build a rich, lush, ambient futuristic synth pad (C major 9 / C minor 9 chord)
+        const freqs = [130.81, 196.00, 261.63, 329.63, 392.00, 523.25]; // C3, G3, C4, E4, G4, C5
         const masterGain = ctx.createGain();
-        masterGain.gain.value = 0.12; // Comfortable low background volume
+        masterGain.gain.value = 0.35; // Rich, audible background volume
 
         const filter = ctx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.value = 400; // Warm lowpass filter
+        filter.frequency.value = 1200; // Warm, bright lowpass filter
 
         freqs.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
 
-          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.type = idx % 2 === 0 ? 'sine' : 'sawtooth';
           osc.frequency.value = freq;
 
-          // LFO modulation for movement
+          // LFO modulation for organic movement
           const lfo = ctx.createOscillator();
-          lfo.frequency.value = 0.15 + idx * 0.04;
+          lfo.frequency.value = 0.2 + idx * 0.05;
           const lfoGain = ctx.createGain();
-          lfoGain.gain.value = 1.2;
+          lfoGain.gain.value = 2.0;
           lfo.connect(lfoGain);
           lfoGain.connect(osc.frequency);
           lfo.start();
 
-          gain.gain.value = 0.2;
+          gain.gain.value = 0.3;
           osc.connect(gain);
           gain.connect(filter);
           osc.start();
@@ -68,7 +73,9 @@ export default function Landing() {
         filter.connect(masterGain);
         masterGain.connect(ctx.destination);
       } else {
-        audioCtxRef.current.resume();
+        if (audioCtxRef.current.state === 'suspended') {
+          await audioCtxRef.current.resume();
+        }
       }
       setIsPlayingMusic(true);
     }
