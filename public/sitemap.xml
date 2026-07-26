@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://quantstakes.com/</loc>
+    <loc>https://www.quantstakes.com/</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/auth</loc>
+    <loc>https://www.quantstakes.com/auth</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/leaderboard</loc>
+    <loc>https://www.quantstakes.com/leaderboard</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/social</loc>
+    <loc>https://www.quantstakes.com/social</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/tools</loc>
+    <loc>https://www.quantstakes.com/tools</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/terms</loc>
+    <loc>https://www.quantstakes.com/terms</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://quantstakes.com/privacy</loc>
+    <loc>https://www.quantstakes.com/privacy</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
