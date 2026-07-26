@@ -104,9 +104,9 @@ export default function Landing() {
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
-            <h1 className="title-cirform mb-6" style={{ textAlign: 'left' }}>
+            <h1 className="title-cirform mb-6" style={{ textAlign: 'left', letterSpacing: '-2px' }}>
               We create bright <br />
-              future <span className="serif-italic-accent">for Portfolio Management</span>
+              future for Portfolio Management
             </h1>
 
             <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
