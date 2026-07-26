@@ -219,7 +219,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div>
           <h1 style={{ fontSize: '2rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            Profile <span style={{ background: 'linear-gradient(90deg, #F3E5AB, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
+            Profile <span style={{ background: 'linear-gradient(90deg, #FFFFFF, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
           </h1>
           <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', margin: '0.25rem 0 0 0' }}>Manage your identity, public stats, and network tier.</p>
         </div>
@@ -287,12 +287,12 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
             {/* Top Badges */}
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <span style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: '800', color: '#ccc', letterSpacing: '1px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <User size={12} color="#F3E5AB" /> Public ID
+                <User size={12} color="#FFFFFF" /> Public ID
               </span>
               <span style={{ 
-                background: isAnalyst ? 'rgba(161, 59, 247, 0.15)' : 'rgba(212, 175, 55, 0.15)', 
-                border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.3)' : '1px solid rgba(212, 175, 55, 0.3)', 
-                color: isAnalyst ? '#a13bf7' : '#F3E5AB', 
+                background: isAnalyst ? 'rgba(161, 59, 247, 0.15)' : 'rgba(226, 232, 240, 0.15)', 
+                border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.3)' : '1px solid rgba(226, 232, 240, 0.3)', 
+                color: isAnalyst ? '#a13bf7' : '#FFFFFF', 
                 padding: '0.3rem 0.75rem', 
                 borderRadius: '20px', 
                 fontSize: '0.7rem', 
@@ -322,7 +322,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 fontSize: '2.5rem', 
                 fontWeight: '300', 
                 overflow: 'hidden', 
-                boxShadow: isAnalyst ? '0 0 25px rgba(161, 59, 247, 0.25)' : '0 0 25px rgba(212, 175, 55, 0.2)',
+                boxShadow: isAnalyst ? '0 0 25px rgba(161, 59, 247, 0.25)' : '0 0 25px rgba(226, 232, 240, 0.2)',
                 background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, #1e293b, #0f172a)'
               }}>
                 {!profile.avatar_url && (profile.username?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
@@ -338,13 +338,13 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                   width: '36px', 
                   height: '36px', 
                   borderRadius: '50%', 
-                  background: '#F3E5AB', 
+                  background: '#FFFFFF', 
                   color: '#000', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
                   cursor: 'pointer', 
-                  boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)', 
+                  boxShadow: '0 4px 15px rgba(226, 232, 240, 0.4)', 
                   border: '3px solid #0a0a0f' 
                 }}
                 className="hover-highlight"
@@ -371,7 +371,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
                 <span style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', color: 'rgba(255,255,255,0.4)' }}>Win Rate</span>
-                <span style={{ fontSize: '1.4rem', fontWeight: '600', color: '#F3E5AB', marginTop: '0.2rem', textShadow: '0 0 10px rgba(212, 175, 55,0.3)' }}>{winRate}%</span>
+                <span style={{ fontSize: '1.4rem', fontWeight: '600', color: '#FFFFFF', marginTop: '0.2rem', textShadow: '0 0 10px rgba(226, 232, 240,0.3)' }}>{winRate}%</span>
               </div>
             </div>
 
@@ -453,7 +453,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
             boxShadow: '0 10px 30px rgba(0,0,0,0.4)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}>
-              <div style={{ padding: '0.6rem', background: 'rgba(212, 175, 55, 0.1)', border: '1px solid rgba(212, 175, 55, 0.2)', borderRadius: '12px', color: '#F3E5AB' }}>
+              <div style={{ padding: '0.6rem', background: 'rgba(226, 232, 240, 0.1)', border: '1px solid rgba(226, 232, 240, 0.2)', borderRadius: '12px', color: '#FFFFFF' }}>
                 <User size={20} />
               </div>
               <div>
@@ -483,7 +483,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                   transition: 'all 0.2s ease',
                   boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.5)' 
                 }}
-                onFocus={e => { e.target.style.borderColor = '#F3E5AB'; e.target.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.15), inset 0 2px 8px rgba(0,0,0,0.5)'; }}
+                onFocus={e => { e.target.style.borderColor = '#FFFFFF'; e.target.style.boxShadow = '0 0 0 3px rgba(226, 232, 240, 0.15), inset 0 2px 8px rgba(0,0,0,0.5)'; }}
                 onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'inset 0 2px 8px rgba(0,0,0,0.5)'; }}
                 placeholder="Enter a unique username"
               />
@@ -524,11 +524,11 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 style={{ 
                   padding: '1.5rem', 
                   borderRadius: '18px', 
-                  background: !isAnalyst ? 'linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(0, 0, 0, 0.4))' : 'rgba(255,255,255,0.02)', 
-                  border: !isAnalyst ? '1px solid rgba(212, 175, 55, 0.4)' : '1px solid rgba(255,255,255,0.08)', 
+                  background: !isAnalyst ? 'linear-gradient(135deg, rgba(226, 232, 240, 0.08), rgba(0, 0, 0, 0.4))' : 'rgba(255,255,255,0.02)', 
+                  border: !isAnalyst ? '1px solid rgba(226, 232, 240, 0.4)' : '1px solid rgba(255,255,255,0.08)', 
                   cursor: 'pointer', 
                   transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: !isAnalyst ? '0 8px 25px rgba(212, 175, 55, 0.15)' : 'none',
+                  boxShadow: !isAnalyst ? '0 8px 25px rgba(226, 232, 240, 0.15)' : 'none',
                   display: 'flex',
                   flexDirection: 'column',
                   justify: 'space-between'
@@ -537,14 +537,14 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ padding: '0.5rem', background: !isAnalyst ? 'rgba(212, 175, 55,0.1)' : 'rgba(255,255,255,0.05)', borderRadius: '10px', color: !isAnalyst ? '#F3E5AB' : 'rgba(255,255,255,0.4)' }}>
+                      <div style={{ padding: '0.5rem', background: !isAnalyst ? 'rgba(226, 232, 240,0.1)' : 'rgba(255,255,255,0.05)', borderRadius: '10px', color: !isAnalyst ? '#FFFFFF' : 'rgba(255,255,255,0.4)' }}>
                         <Activity size={18} />
                       </div>
                       <div style={{ fontWeight: '700', color: '#fff', fontSize: '1.05rem' }}>Quant Tracker</div>
                     </div>
 
                     {!isAnalyst && (
-                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F3E5AB', boxShadow: '0 0 10px #F3E5AB' }}></div>
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FFFFFF', boxShadow: '0 0 10px #FFFFFF' }}></div>
                     )}
                   </div>
 
@@ -560,7 +560,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                     fontWeight: '800', 
                     padding: '0.25rem 0.75rem', 
                     borderRadius: '20px', 
-                    background: !isAnalyst ? '#F3E5AB' : 'rgba(255,255,255,0.05)', 
+                    background: !isAnalyst ? '#FFFFFF' : 'rgba(255,255,255,0.05)', 
                     color: !isAnalyst ? '#000' : 'rgba(255,255,255,0.4)' 
                   }}>
                     {!isAnalyst ? 'Active' : 'Select'}

@@ -52,7 +52,7 @@ export default function Onboarding({ session, onComplete }) {
     <div className="flex items-center justify-center" style={{ minHeight: '100vh', width: '100%' }}>
       <div className="glass-panel" style={{ width: '100%', maxWidth: '500px', padding: '3rem' }}>
         <div className="flex-col items-center justify-center mb-8">
-          <div style={{ background: 'rgba(212, 175, 55, 0.1)', padding: '1.5rem', borderRadius: '50%', marginBottom: '1rem', boxShadow: 'var(--glow-cyan)' }}>
+          <div style={{ background: 'rgba(226, 232, 240, 0.1)', padding: '1.5rem', borderRadius: '50%', marginBottom: '1rem', boxShadow: 'var(--glow-cyan)' }}>
             <Rocket size={40} color="var(--accent-cyan)" />
           </div>
           <h2 className="text-gradient" style={{ fontSize: '2.5rem', textAlign: 'center' }}>Welcome Aboard</h2>
