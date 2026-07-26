@@ -919,10 +919,7 @@ export default function AddBet({ session, profile }) {
             {/* Brand Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px dashed rgba(255, 255, 255, 0.1)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Sparkles size={20} color="#22d3ee" strokeWidth={3} />
-                <span style={{ fontSize: '1.1rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>
-                  Quant<span style={{ color: '#22d3ee' }}>Stake</span>
-                </span>
+                <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '32px', objectFit: 'contain' }} />
               </div>
               <div className="flex items-center gap-1.5" data-html2canvas-ignore="true">
                 <button
