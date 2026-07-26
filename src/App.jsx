@@ -48,7 +48,11 @@ function NavLink({ to, icon: Icon, children }) {
   );
 }
 
-function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onProfileUpdate }) {
+function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProfileCompleted, onProfileUpdate }) {
+  if (isCheckingProfile && !profile) {
+    return <div style={{ height: '100vh', width: '100%', background: 'var(--bg-dark)' }}></div>;
+  }
+
   if (!profile) {
     return <Onboarding session={session} onComplete={() => setProfileCompleted(true)} />;
   }
@@ -160,6 +164,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
 function App() {
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [isCheckingProfile, setIsCheckingProfile] = useState(true);
   const currentUserId = useRef(null);
   const isMock = isMockMode;
 
@@ -169,17 +174,24 @@ function App() {
         const p = sessionStorage.getItem('mock_profile');
         if (p) {
           setProfile(JSON.parse(p));
+        } else {
+          setProfile({ username: 'QuantAnalyst', winRate: 68.4, roi: 34.2, netProfit: 24850 });
         }
+        setIsCheckingProfile(false);
         return;
       }
 
       if (currentSession) {
+        setIsCheckingProfile(true);
         const { data } = await supabase.from('profiles').select('*').eq('id', currentSession.user.id).single();
         if (data) {
           setProfile(data);
         } else {
           setProfile(null);
         }
+        setIsCheckingProfile(false);
+      } else {
+        setIsCheckingProfile(false);
       }
     };
 
@@ -203,6 +215,7 @@ function App() {
       } else if (event === 'SIGNED_OUT') {
          currentUserId.current = null;
          setProfile(null);
+         setIsCheckingProfile(false);
       }
     });
 
@@ -221,10 +234,14 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/*" element={userToUse ? <AuthenticatedApp session={userToUse} isMock={isMock} profile={profile} setProfileCompleted={(val) => {
+        <Route path="/*" element={userToUse ? <AuthenticatedApp session={userToUse} isMock={isMock} profile={profile} isCheckingProfile={isCheckingProfile} setProfileCompleted={(val) => {
           if (val) {
+            setIsCheckingProfile(true);
             // Re-fetch profile on completion
-            supabase.from('profiles').select('*').eq('id', userToUse.user.id).single().then(({data}) => setProfile(data));
+            supabase.from('profiles').select('*').eq('id', userToUse.user.id).single().then(({data}) => {
+              setProfile(data);
+              setIsCheckingProfile(false);
+            });
           }
         }} onProfileUpdate={(newProfile) => setProfile(newProfile)} /> : <Navigate to="/" replace />} />
       </Routes>
