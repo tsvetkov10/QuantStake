@@ -142,11 +142,8 @@ export default function Landing() {
       </section>
 
       {/* NEW SECTION 1: Dashboard Terminal Sneak Peek */}
-      <section id="preview" className="flex-col items-center responsive-padding" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
+      <section id="preview" className="flex-col items-center responsive-padding" style={{ padding: '4rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <div className="reveal-on-scroll text-center flex-col items-center mb-12">
-          <div className="flex items-center gap-2 mb-3" style={{ background: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#38bdf8', padding: '0.4rem 1rem', borderRadius: '20px', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-            <Eye size={16} /> Interactive Terminal Sneak Peek
-          </div>
           <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
             Built Like a Quantitative Trading Desk
           </h2>
