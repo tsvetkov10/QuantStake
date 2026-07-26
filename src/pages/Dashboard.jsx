@@ -769,40 +769,43 @@ export default function Dashboard({ session, profile }) {
         </div>
         
         <div className="flex gap-4 items-end md-flex-col" style={{ animation: 'fade-in 0.3s ease' }}>
-          <button 
-            onClick={() => setShowSharePreview(true)}
-            className="btn" 
-            style={{ 
-              display: 'inline-flex',
-              alignItems: 'center',
-              justify: 'center',
-              gap: '9px',
-              padding: '0 1.35rem', 
-              height: '38px', 
-              background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)', 
-              border: '1px solid rgba(56, 189, 248, 0.35)', 
-              color: '#ffffff', 
-              fontSize: '0.88rem', 
-              fontWeight: '600',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              transition: 'all 0.25s ease',
-              boxShadow: '0 4px 15px rgba(56, 189, 248, 0.1)'
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(168, 85, 247, 0.2) 100%)';
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(56, 189, 248, 0.25)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)';
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)';
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(56, 189, 248, 0.1)';
-            }}
-          >
-            <Share2 size={16} color="#38bdf8" />
-            <span>Share Performance</span>
-          </button>
+          <div className="flex-col">
+            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', opacity: 0, pointerEvents: 'none', userSelect: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Export</label>
+            <button 
+              onClick={() => setShowSharePreview(true)}
+              className="btn" 
+              style={{ 
+                display: 'inline-flex',
+                alignItems: 'center',
+                justify: 'center',
+                gap: '9px',
+                padding: '0 1.35rem', 
+                height: '38px', 
+                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)', 
+                border: '1px solid rgba(56, 189, 248, 0.35)', 
+                color: '#ffffff', 
+                fontSize: '0.88rem', 
+                fontWeight: '600',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.1)'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(168, 85, 247, 0.2) 100%)';
+                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(56, 189, 248, 0.25)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)';
+                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(56, 189, 248, 0.1)';
+              }}
+            >
+              <Share2 size={16} color="#38bdf8" />
+              <span>Share Performance</span>
+            </button>
+          </div>
 
           <div className="flex-col">
             <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timeframe</label>
