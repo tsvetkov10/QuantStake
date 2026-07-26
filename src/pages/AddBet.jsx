@@ -559,31 +559,31 @@ export default function AddBet({ session, profile }) {
       )}
 
       {/* Page Header */}
-      <div className="flex justify-between items-center flex-wrap gap-4 mb-2">
+      <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
         <div>
-          <h2 className="text-gradient" style={{ fontSize: '1.8rem', margin: 0, fontWeight: 'bold', letterSpacing: '-0.5px' }}>Terminal Ingestion</h2>
-          <p className="text-secondary" style={{ fontSize: '0.85rem', margin: '0.2rem 0 0 0' }}>Commit verified quantitative bets to your public cryptographic ledger index.</p>
+          <h2 className="text-gradient" style={{ fontSize: '2rem', margin: 0, fontWeight: 'bold', letterSpacing: '-0.5px' }}>Terminal Ingestion</h2>
+          <p className="text-secondary" style={{ fontSize: '0.9rem', margin: '0.3rem 0 0 0' }}>Commit verified quantitative bets to your public cryptographic ledger index.</p>
         </div>
 
         {/* Live SHA-256 Ledger Seal Badge */}
-        <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.25)', padding: '0.4rem 0.85rem', borderRadius: '20px', color: '#22d3ee', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 0 15px rgba(6, 182, 212, 0.1)' }}>
-          <Lock size={13} color="#22d3ee" />
+        <div style={{ fontFamily: 'monospace', fontSize: '0.75rem', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.25)', padding: '0.5rem 1rem', borderRadius: '24px', color: '#22d3ee', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 0 20px rgba(6, 182, 212, 0.1)' }}>
+          <Lock size={14} color="#22d3ee" />
           <span>SHA-256 SEAL: {generatedHash.substring(0, 16)}...</span>
         </div>
       </div>
 
-      <div style={{ maxWidth: '980px', width: '100%', paddingBottom: '0.5rem' }}>
+      <div style={{ maxWidth: '960px', width: '100%', paddingBottom: '2rem' }}>
         
         {/* Main Form Container */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
-          {/* Compact OCR Scan Bar */}
-          <div className="glass-panel" style={{ padding: '0.6rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '48px', border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(15, 23, 42, 0.75)' }}>
-            <div className="flex items-center gap-2.5">
-              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Upload size={15} color="#38bdf8" />
+          {/* AI Slip Scan Bar */}
+          <div className="glass-panel" style={{ padding: '0.85rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '56px', border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(15, 23, 42, 0.75)', borderRadius: '14px' }}>
+            <div className="flex items-center gap-3">
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Upload size={16} color="#38bdf8" />
               </div>
-              <span style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: '500' }}>
+              <span style={{ fontSize: '0.88rem', color: '#e2e8f0', fontWeight: '500' }}>
                 {ocrLoading ? `Extracting slip values (${ocrProgress}%)...` : 'AI Slip Scan: Upload any sports slip screenshot for instant 0.5s auto-fill'}
               </span>
             </div>
@@ -593,8 +593,8 @@ export default function AddBet({ session, profile }) {
               htmlFor="screenshot-upload" 
               className="btn-white-pill" 
               style={{ 
-                padding: '0.35rem 1rem', 
-                fontSize: '0.8rem', 
+                padding: '0.45rem 1.1rem', 
+                fontSize: '0.82rem', 
                 height: 'auto', 
                 margin: 0, 
                 cursor: ocrLoading ? 'default' : 'pointer',
@@ -606,27 +606,27 @@ export default function AddBet({ session, profile }) {
           </div>
 
           {/* Core Input Form Card */}
-          <div className="glass-panel" style={{ padding: '1.25rem 1.5rem', background: 'rgba(6, 9, 20, 0.95)' }}>
+          <div className="glass-panel" style={{ padding: '2rem 2.25rem', background: 'rgba(6, 9, 20, 0.95)', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
             {errorMsg && (
-              <div className="flex items-center gap-2 mb-4" style={{ padding: '0.75rem 1rem', background: 'rgba(255, 51, 102, 0.1)', border: '1px solid var(--danger)', color: 'var(--danger)', borderRadius: '8px' }}>
+              <div className="flex items-center gap-2 mb-6" style={{ padding: '0.85rem 1.25rem', background: 'rgba(255, 51, 102, 0.1)', border: '1px solid var(--danger)', color: 'var(--danger)', borderRadius: '10px' }}>
                 <AlertCircle size={18} />
                 <p style={{ fontSize: '0.85rem', margin: 0 }}>{errorMsg}</p>
               </div>
             )}
 
             {successMsg && (
-              <div className="flex items-center gap-2 mb-4" style={{ padding: '0.75rem 1rem', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid var(--success)', color: 'var(--success)', borderRadius: '8px' }}>
+              <div className="flex items-center gap-2 mb-6" style={{ padding: '0.85rem 1.25rem', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid var(--success)', color: 'var(--success)', borderRadius: '10px' }}>
                 <CheckCircle size={18} />
                 <p style={{ fontSize: '0.85rem', margin: 0 }}>{successMsg}</p>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="flex-col gap-3.5">
+            <form onSubmit={handleSubmit} className="flex-col gap-6">
               
               {/* 1. Visual Sport Pills Selector */}
               <div>
-                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Select Sport Discipline</label>
-                <div className="flex gap-2 flex-wrap mt-1.5">
+                <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem', display: 'block' }}>Select Sport Discipline</label>
+                <div className="flex gap-2.5 flex-wrap">
                   {[
                     { id: 'Football', label: '⚽ Football' },
                     { id: 'Basketball', label: '🏀 Basketball' },
@@ -642,14 +642,14 @@ export default function AddBet({ session, profile }) {
                         type="button"
                         onClick={() => setSport(item.id)}
                         style={{
-                          padding: '0.35rem 0.85rem',
+                          padding: '0.45rem 1rem',
                           borderRadius: '20px',
-                          fontSize: '0.8rem',
+                          fontSize: '0.85rem',
                           fontWeight: isSelected ? '700' : '500',
                           background: isSelected ? 'rgba(56, 189, 248, 0.18)' : 'rgba(255, 255, 255, 0.03)',
                           color: isSelected ? '#38bdf8' : 'rgba(255, 255, 255, 0.7)',
                           border: `1px solid ${isSelected ? '#38bdf8' : 'rgba(255, 255, 255, 0.08)'}`,
-                          boxShadow: isSelected ? '0 0 12px rgba(56, 189, 248, 0.25)' : 'none',
+                          boxShadow: isSelected ? '0 0 14px rgba(56, 189, 248, 0.25)' : 'none',
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
                         }}
@@ -662,12 +662,12 @@ export default function AddBet({ session, profile }) {
               </div>
 
               {/* 2. Bet Type & Bookmaker & Date Row */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-4">
                 {/* Bet Type Pills */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Bet Type</label>
+                  <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', marginBottom: '0.4rem', display: 'block' }}>Bet Type</label>
                   <select 
-                    className="input-field mt-1" 
+                    className="input-field" 
                     value={type} 
                     onChange={e => {
                       setType(e.target.value);
@@ -675,7 +675,7 @@ export default function AddBet({ session, profile }) {
                         setMatchups([matchups[0]]);
                       }
                     }}
-                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '44px', minHeight: '44px', boxSizing: 'border-box', borderRadius: '10px', padding: '0.5rem 0.85rem', fontSize: '0.88rem' }}
                   >
                     <option value="Single">Single</option>
                     <option value="Multiple">Multiple (Acca)</option>
@@ -686,12 +686,12 @@ export default function AddBet({ session, profile }) {
 
                 {/* Bookmaker Select */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Bookmaker Platform</label>
+                  <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', marginBottom: '0.4rem', display: 'block' }}>Bookmaker Platform</label>
                   <select 
-                    className="input-field mt-1" 
+                    className="input-field" 
                     value={bookmaker} 
                     onChange={e => setBookmaker(e.target.value)}
-                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '44px', minHeight: '44px', boxSizing: 'border-box', borderRadius: '10px', padding: '0.5rem 0.85rem', fontSize: '0.88rem' }}
                   >
                     <option value="Polymarket">Polymarket</option>
                     <option value="Bet365">Bet365</option>
@@ -709,27 +709,27 @@ export default function AddBet({ session, profile }) {
 
                 {/* Date Select */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Log Date</label>
+                  <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', marginBottom: '0.4rem', display: 'block' }}>Log Date</label>
                   <input 
                     type="date" 
-                    className="input-field mt-1" 
+                    className="input-field" 
                     value={selectedDate} 
                     onChange={e => setSelectedDate(e.target.value)} 
-                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '44px', minHeight: '44px', boxSizing: 'border-box', borderRadius: '10px', padding: '0.5rem 0.85rem', fontSize: '0.88rem' }}
                     required
                   />
                 </div>
               </div>
 
               {/* 3. Matchup & Market Grid */}
-              <div className="flex-col gap-2">
-                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>
+              <div className="flex-col gap-3">
+                <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>
                   Matchup / Selection Teams <span style={{ textTransform: 'none', fontWeight: 'normal', color: 'var(--text-secondary)' }}>(Optional)</span>
                 </label>
-                <div className="flex-col gap-2">
+                <div className="flex-col gap-3">
                   {matchups.map((matchup, idx) => (
-                    <div key={idx} className="flex-col gap-2" style={{ background: 'transparent' }}>
-                      <div className="flex gap-2 items-center w-full">
+                    <div key={idx} className="flex-col gap-2.5" style={{ background: 'transparent' }}>
+                      <div className="flex gap-2.5 items-center w-full">
                         {sport === 'Football' ? (
                           <div className="flex gap-3 items-center w-full">
                             <div className="flex-1">
@@ -744,7 +744,7 @@ export default function AddBet({ session, profile }) {
                                 placeholder="Home Team (Optional)"
                               />
                             </div>
-                            <span style={{ fontWeight: 'bold', fontSize: '0.75rem', color: '#22d3ee', background: 'rgba(34, 211, 238, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(34, 211, 238, 0.2)' }}>VS</span>
+                            <span style={{ fontWeight: 'bold', fontSize: '0.78rem', color: '#22d3ee', background: 'rgba(34, 211, 238, 0.1)', padding: '0.25rem 0.6rem', borderRadius: '6px', border: '1px solid rgba(34, 211, 238, 0.25)' }}>VS</span>
                             <div className="flex-1">
                               <TeamSelector 
                                 value={matchup.split(' vs ')[1] || ''} 
@@ -769,7 +769,7 @@ export default function AddBet({ session, profile }) {
                               newMatchups[idx] = e.target.value;
                               setMatchups(newMatchups);
                             }} 
-                            style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
+                            style={{ height: '44px', minHeight: '44px', padding: '0.5rem 0.85rem', fontSize: '0.88rem' }}
                           />
                         )}
                         {matchups.length > 1 && (
@@ -779,7 +779,7 @@ export default function AddBet({ session, profile }) {
                               setMatchups(matchups.filter((_, i) => i !== idx));
                               setMarkets(markets.filter((_, i) => i !== idx));
                             }} 
-                            style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', padding: '0.3rem', fontSize: '1.1rem', fontWeight: 'bold' }}
+                            style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', padding: '0.4rem', fontSize: '1.2rem', fontWeight: 'bold' }}
                           >
                             ✕
                           </button>
@@ -788,9 +788,9 @@ export default function AddBet({ session, profile }) {
                       
                       {/* Render Market Selection ONLY for Football */}
                       {sport === 'Football' && (
-                        <div className="flex-col gap-1 mt-1 pt-1.5" style={{ borderTop: '1px dashed var(--adaptive-white-05)' }}>
-                          <span className="text-secondary" style={{ fontSize: '0.62rem', fontWeight: 'bold', letterSpacing: '1px' }}>MARKET SELECTION</span>
-                          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                        <div className="flex-col gap-2 mt-2 pt-2" style={{ borderTop: '1px dashed var(--adaptive-white-05)' }}>
+                          <span className="text-secondary" style={{ fontSize: '0.65rem', fontWeight: 'bold', letterSpacing: '1px' }}>MARKET SELECTION</span>
+                          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                             {MARKET_OPTIONS.map(opt => {
                               const isSelected = (markets[idx] || 'Match Winner') === opt;
                               return (
@@ -804,9 +804,9 @@ export default function AddBet({ session, profile }) {
                                   }}
                                   style={{
                                     whiteSpace: 'nowrap',
-                                    padding: '3px 9px',
-                                    borderRadius: '16px',
-                                    fontSize: '0.72rem',
+                                    padding: '5px 12px',
+                                    borderRadius: '18px',
+                                    fontSize: '0.78rem',
                                     fontWeight: isSelected ? 'bold' : '500',
                                     background: isSelected ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
                                     color: isSelected ? 'var(--success)' : 'var(--text-secondary)',
@@ -829,31 +829,31 @@ export default function AddBet({ session, profile }) {
                     <button type="button" onClick={() => {
                       setMatchups([...matchups, '']);
                       setMarkets([...markets, 'Match Winner']);
-                    }} className="btn btn-secondary" style={{ width: 'fit-content', padding: '0.3rem 0.75rem', fontSize: '0.78rem', height: 'auto', border: '1px dashed var(--border-glass)' }}>
+                    }} className="btn btn-secondary" style={{ width: 'fit-content', padding: '0.4rem 0.9rem', fontSize: '0.82rem', height: 'auto', border: '1px dashed var(--border-glass)' }}>
                       + Add Matchup Selection
                     </button>
                   )}
                 </div>
               </div>
 
-              {/* 4. Interactive Financial Calculation & Preset Bar */}
-              <div className="grid grid-cols-2 gap-3" style={{ background: 'rgba(255,255,255,0.02)', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              {/* 4. Financial Calculation & Preset Bar */}
+              <div className="grid grid-cols-2 gap-4" style={{ background: 'rgba(255,255,255,0.02)', padding: '1.25rem 1.5rem', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div>
-                  <div className="flex justify-between items-center">
-                    <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Stake Amount ({currencySymbol})</label>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', margin: 0 }}>Stake Amount ({currencySymbol})</label>
                   </div>
                   <input 
                     type="number" 
-                    className="input-field mt-1" 
+                    className="input-field" 
                     placeholder="0.00" 
                     value={stake} 
                     onChange={e => setStake(e.target.value)} 
                     required 
                     min="0.01" 
                     step="0.01" 
-                    style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem', fontWeight: 'bold' }}
+                    style={{ height: '44px', minHeight: '44px', padding: '0.5rem 0.85rem', fontSize: '0.92rem', fontWeight: 'bold' }}
                   />
-                  <div className="flex gap-1 flex-wrap mt-1.5">
+                  <div className="flex gap-1.5 flex-wrap mt-2">
                     {[5, 10, 20, 50, 100, 250].map(amt => (
                       <button 
                         key={amt} 
@@ -862,10 +862,10 @@ export default function AddBet({ session, profile }) {
                         style={{
                           background: stake === amt.toString() ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.04)',
                           border: `1px solid ${stake === amt.toString() ? '#38bdf8' : 'rgba(255, 255, 255, 0.1)'}`,
-                          borderRadius: '6px',
-                          padding: '0.15rem 0.45rem',
-                          color: stake === amt.toString() ? '#38bdf8' : 'rgba(255, 255, 255, 0.7)',
-                          fontSize: '0.72rem',
+                          borderRadius: '8px',
+                          padding: '0.2rem 0.55rem',
+                          color: stake === amt.toString() ? '#38bdf8' : 'rgba(255, 255, 255, 0.75)',
+                          fontSize: '0.78rem',
                           fontWeight: '600',
                           cursor: 'pointer',
                           transition: 'all 0.2s'
@@ -878,23 +878,23 @@ export default function AddBet({ session, profile }) {
                 </div>
                 
                 <div>
-                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Decimal Odds (@)</label>
+                  <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)', marginBottom: '0.35rem', display: 'block' }}>Decimal Odds (@)</label>
                   <input 
                     type="number" 
-                    className="input-field mt-1" 
+                    className="input-field" 
                     placeholder="2.00" 
                     value={odds} 
                     onChange={e => setOdds(e.target.value)} 
                     required 
                     min="1.01" 
                     step="0.01" 
-                    style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem', fontWeight: 'bold', color: '#22d3ee' }}
+                    style={{ height: '44px', minHeight: '44px', padding: '0.5rem 0.85rem', fontSize: '0.92rem', fontWeight: 'bold', color: '#22d3ee' }}
                   />
 
                   {/* Live Est. Return Pill */}
-                  <div style={{ marginTop: '0.5rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '6px', padding: '0.35rem 0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.7)', fontWeight: '500' }}>Est. Return:</span>
-                    <span style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace' }}>
+                  <div style={{ marginTop: '0.6rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '8px', padding: '0.45rem 0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)', fontWeight: '500' }}>Est. Return:</span>
+                    <span style={{ fontSize: '0.92rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace' }}>
                       {currencySymbol}{(parseFloat(stake || 0) * parseFloat(odds || 0)).toFixed(2)}
                     </span>
                   </div>
@@ -908,14 +908,15 @@ export default function AddBet({ session, profile }) {
                 disabled={loading} 
                 style={{ 
                   width: '100%', 
-                  marginTop: '0.4rem', 
-                  padding: '0.85rem',
-                  fontSize: '0.95rem',
+                  marginTop: '0.75rem', 
+                  padding: '0.95rem',
+                  fontSize: '1rem',
+                  height: '52px',
                   textAlign: 'center',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '10px'
                 }}
               >
                 {loading ? 'Processing Ledger Ingestion...' : (
