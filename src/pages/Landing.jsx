@@ -75,12 +75,6 @@ export default function Landing() {
         </div>
       </main>
 
-      {/* Trust Banner */}
-      <div className="flex justify-center flex-wrap responsive-gap" style={{ borderTop: '1px solid var(--border-glass)', borderBottom: '1px solid var(--border-glass)', padding: '3rem', background: 'var(--adaptive-white-03)', opacity: 0.7 }}>
-         <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>APEX<span style={{ color: 'var(--accent-cyan)' }}>CAPITAL</span></div>
-         <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>QUANTUM<span style={{ color: 'var(--accent-magenta)' }}>EDGE</span></div>
-         <div className="flex items-center gap-2 font-bold" style={{ fontSize: '1.4rem', letterSpacing: '2px', color: '#fff' }}>SYNDICATE<span style={{ color: 'var(--success)' }}>VENTURES</span></div>
-      </div>
 
       {/* Two Paths Section */}
       <section className="flex-col items-center responsive-padding">
@@ -259,10 +253,10 @@ export default function Landing() {
               </div>
 
               <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'var(--adaptive-white-04)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>Infrastructure</h3>
-                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>QuantStakes Technologies is a 100% online-based platform with fully integrated AI processing.</p>
+                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>About QuantStakes</h3>
+                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>A dedicated platform for sports portfolio management and verified performance tracking.</p>
                 <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '1.1rem', pointerEvents: 'none' }}>
-                  <BrainCircuit size={20} /> Distributed Cloud Nodes
+                  <BarChart3 size={20} /> Data-Driven Insights
                 </div>
               </div>
             </div>
@@ -322,9 +316,7 @@ export default function Landing() {
 
             <div className="flex-col gap-4">
               <h4 style={{ color: 'var(--text-primary)', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '1rem', marginBottom: '1rem' }}>Company</h4>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '1rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Contact Us</a>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '1rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Careers</a>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '1rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Press</a>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '1rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Contact</a>
             </div>
 
             <div className="flex-col gap-4">
@@ -337,7 +329,7 @@ export default function Landing() {
 
         <div style={{ borderTop: '1px solid var(--adaptive-white-05)', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap' }}>
           <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-            © {new Date().getFullYear()} QuantStakes Technologies LLC. All rights reserved. <br/>
+            © {new Date().getFullYear()} QuantStakes. All rights reserved. <br/>
             QuantStakes is not a sportsbook and does not accept wagers.
           </p>
           <div className="flex items-center gap-4 text-secondary" style={{ fontSize: '0.9rem' }}>

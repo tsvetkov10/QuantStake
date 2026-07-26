@@ -31,9 +31,9 @@ export default function Contact() {
 
             <div className="glass-card">
               <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Headquarters</h3>
-              <p className="text-secondary" style={{ marginBottom: '1rem' }}>QuantStakes Technologies LLC</p>
+              <p className="text-secondary" style={{ marginBottom: '1rem' }}>QuantStakes</p>
               <div className="flex items-center gap-2 text-secondary">
-                <MapPin size={16} /> 100 Cyber Avenue, Silicon Valley, CA 94025
+                <MapPin size={16} /> Online Only
               </div>
             </div>
           </div>
