@@ -25,6 +25,8 @@ export default async function handler(req, res) {
 
     console.log(`[Signup Notification] New user registered: ${email} at ${timestamp || new Date().toISOString()}`);
 
+    const senderEmail = process.env.SENDER_EMAIL || 'QuantStakes Alerts <alerts@quantstakes.com>';
+
     // If Resend API key is configured in Vercel environment variables, send instant email
     if (resendApiKey && adminEmail) {
       const response = await fetch('https://api.resend.com/emails', {
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'QuantStakes Alerts <onboarding@resend.dev>',
+          from: senderEmail,
           to: [adminEmail],
           subject: `⚡ New QuantStakes User Registration: ${email}`,
           html: `
