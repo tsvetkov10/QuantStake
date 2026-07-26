@@ -391,7 +391,7 @@ export default function Auth() {
                   )}
 
                   <button className="btn-white-pill" type="submit" disabled={loading} style={{ width: '100%', marginTop: '0.75rem', padding: '1rem', fontSize: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {loading ? <div className="spinner"></div> : (isSignUp ? 'Create Account' : 'Sign In')}
+                    {loading ? <div className="spinner"></div> : (isSignUp ? 'Create Account' : 'Log In')}
                   </button>
                 </form>
               </>
