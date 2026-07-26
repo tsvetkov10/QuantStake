@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal } from 'lucide-react';
+import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText } from 'lucide-react';
 
 export default function Landing() {
   // Scroll Reveal Observer for One-Pager Experience
@@ -65,6 +65,8 @@ export default function Landing() {
         
         <nav className="flex gap-10 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
+          <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Sneak Peek</a>
+          <a href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>How It Works</a>
           <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
           
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
@@ -97,8 +99,8 @@ export default function Landing() {
 
               <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
 
-              <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>
-                Learn more
+              <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>
+                Explore Terminal
               </a>
             </div>
           </div>
@@ -139,8 +141,271 @@ export default function Landing() {
 
       </section>
 
+      {/* NEW SECTION 1: Dashboard Terminal Sneak Peek */}
+      <section id="preview" className="flex-col items-center responsive-padding" style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
+        <div className="reveal-on-scroll text-center flex-col items-center mb-12">
+          <div className="flex items-center gap-2 mb-3" style={{ background: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#38bdf8', padding: '0.4rem 1rem', borderRadius: '20px', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <Eye size={16} /> Interactive Terminal Sneak Peek
+          </div>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
+            Built Like a Quantitative Trading Desk
+          </h2>
+          <p className="text-secondary text-center" style={{ fontSize: '1.15rem', maxWidth: '680px', lineHeight: '1.7' }}>
+            Explore how QuantStakes tracks your bankroll trajectory, parses bet slips, and generates immutable cryptographic proof of performance.
+          </p>
+        </div>
+
+        {/* Mock Dashboard Terminal Window */}
+        <div className="reveal-on-scroll delay-100" style={{ maxWidth: '1200px', width: '100%', background: 'rgba(11, 16, 35, 0.9)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '24px', boxShadow: '0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(56, 189, 248, 0.12)', overflow: 'hidden' }}>
+          
+          {/* Terminal Window Header Bar */}
+          <div className="flex justify-between items-center" style={{ padding: '1rem 1.5rem', background: 'rgba(4, 7, 20, 0.8)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <div className="flex items-center gap-2">
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }}></div>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }}></div>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }}></div>
+              <span className="text-secondary" style={{ marginLeft: '1rem', fontSize: '0.85rem', fontWeight: 600 }}>QuantStakes Terminal v2.4</span>
+            </div>
+
+            <div className="flex items-center gap-2" style={{ color: '#34d399', fontSize: '0.8rem', fontWeight: 600, background: 'rgba(16, 185, 129, 0.12)', padding: '0.3rem 0.8rem', borderRadius: '20px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#34d399', animation: 'pulse 1.5s infinite' }}></div>
+              LIVE VERIFICATION ENGINE ACTIVE
+            </div>
+          </div>
+
+          {/* Terminal Body */}
+          <div style={{ padding: '2.5rem' }}>
+            
+            {/* Top Stat Row */}
+            <div className="grid grid-cols-4 gap-6 mb-8" style={{ gap: '1.25rem' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1.25rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Net Profit</span>
+                <h4 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#34d399', margin: '0.3rem 0 0 0' }}>+$24,850.00</h4>
+              </div>
+
+              <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1.25rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Yield (ROI)</span>
+                <h4 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#38bdf8', margin: '0.3rem 0 0 0' }}>+34.2%</h4>
+              </div>
+
+              <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1.25rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Win Rate</span>
+                <h4 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', margin: '0.3rem 0 0 0' }}>68.4%</h4>
+              </div>
+
+              <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1.25rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Sharpe Ratio</span>
+                <h4 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#a855f7', margin: '0.3rem 0 0 0' }}>2.84</h4>
+              </div>
+            </div>
+
+            {/* Performance Curve Chart SVG */}
+            <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.5rem', marginBottom: '2rem', position: 'relative' }}>
+              <div className="flex justify-between items-center mb-4">
+                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ffffff' }}>Bankroll Trajectory & Growth</span>
+                <span className="text-secondary" style={{ fontSize: '0.85rem' }}>30 Day Verified Horizon</span>
+              </div>
+
+              <svg viewBox="0 0 800 180" style={{ width: '100%', height: '180px', overflow: 'visible' }}>
+                <defs>
+                  <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Area Fill */}
+                <path d="M 0,160 L 100,140 L 200,110 L 300,125 L 400,80 L 500,65 L 600,40 L 700,45 L 800,15 L 800,180 L 0,180 Z" fill="url(#chartGradient)" />
+                {/* Curve Line */}
+                <path d="M 0,160 L 100,140 L 200,110 L 300,125 L 400,80 L 500,65 L 600,40 L 700,45 L 800,15" fill="none" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" />
+                {/* Glowing Pulse Dot */}
+                <circle cx="800" cy="15" r="6" fill="#38bdf8" filter="drop-shadow(0 0 10px #38bdf8)" />
+              </svg>
+            </div>
+
+            {/* Live Ledger Table */}
+            <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.25rem', overflowX: 'auto' }}>
+              <div className="flex justify-between items-center mb-3">
+                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#ffffff' }}>Recent Cryptographic Slip Entries</span>
+                <span style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 600 }}>100% Mathematically Sealed</span>
+              </div>
+
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+                <thead>
+                  <tr style={{ color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                    <th style={{ padding: '0.6rem 0' }}>EVENT</th>
+                    <th>SELECTION</th>
+                    <th>ODDS</th>
+                    <th>STAKE</th>
+                    <th>PROFIT</th>
+                    <th>LEDGER STATUS</th>
+                  </tr>
+                </thead>
+                <tbody style={{ color: '#e2e8f0' }}>
+                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <td style={{ padding: '0.8rem 0', fontWeight: 600 }}>NBA Playoffs</td>
+                    <td>Boston Celtics ML</td>
+                    <td>1.95</td>
+                    <td>$500</td>
+                    <td style={{ color: '#34d399', fontWeight: 700 }}>+$475.00</td>
+                    <td><span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 700 }}>VERIFIED</span></td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <td style={{ padding: '0.8rem 0', fontWeight: 600 }}>Premier League</td>
+                    <td>Arsenal vs Chelsea Over 2.5</td>
+                    <td>2.10</td>
+                    <td>$400</td>
+                    <td style={{ color: '#34d399', fontWeight: 700 }}>+$440.00</td>
+                    <td><span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 700 }}>VERIFIED</span></td>
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '0.8rem 0', fontWeight: 600 }}>NFL Regular Season</td>
+                    <td>Kansas City Chiefs -3.5</td>
+                    <td>1.90</td>
+                    <td>$600</td>
+                    <td style={{ color: '#34d399', fontWeight: 700 }}>+$540.00</td>
+                    <td><span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 700 }}>VERIFIED</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 2: How It Works (3-Step Workflow) */}
+      <section id="how-it-works" style={{ padding: '6rem 2rem', background: 'rgba(4, 7, 20, 0.4)', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          
+          <div className="reveal-on-scroll text-center flex-col items-center mb-16">
+            <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
+              How QuantStakes Works
+            </h2>
+            <p className="text-secondary text-center" style={{ fontSize: '1.15rem', maxWidth: '600px', lineHeight: '1.7' }}>
+              Three simple steps to transform your raw predictions into an institutional-grade, verifiable track record.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3" style={{ gap: '2rem' }}>
+            
+            {/* Step 1 */}
+            <div className="glass-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.5rem', transition: 'all 0.5s ease' }}>
+              <div style={{ fontSize: '3rem', fontWeight: 900, color: 'rgba(56, 189, 248, 0.3)', marginBottom: '1rem', lineHeight: 1 }}>01</div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', pointerEvents: 'none' }}>Log Portfolio Records</h3>
+              <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.7', pointerEvents: 'none', margin: 0 }}>
+                Upload screenshot slips or log predictions manually. Our smart parser extracts odds, teams, and stake values automatically.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="glass-card reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.5rem', transition: 'all 0.5s ease' }}>
+              <div style={{ fontSize: '3rem', fontWeight: 900, color: 'rgba(168, 85, 247, 0.3)', marginBottom: '1rem', lineHeight: 1 }}>02</div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', pointerEvents: 'none' }}>Cryptographic Proof</h3>
+              <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.7', pointerEvents: 'none', margin: 0 }}>
+                Past records are sealed using immutable mathematical hashes. Once logged, past history cannot be altered or retroactively deleted.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="glass-card reveal-on-scroll delay-300" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.5rem', transition: 'all 0.5s ease' }}>
+              <div style={{ fontSize: '3rem', fontWeight: 900, color: 'rgba(52, 211, 153, 0.3)', marginBottom: '1rem', lineHeight: 1 }}>03</div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', pointerEvents: 'none' }}>Monetize & Scale Edge</h3>
+              <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.7', pointerEvents: 'none', margin: 0 }}>
+                Generate high-res share cards, climb global leaderboards, and build a subscriber base with 100% verified ROI.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 3: Verified Analyst Showcase */}
+      <section style={{ padding: '6rem 2rem', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          
+          <div className="reveal-on-scroll text-center flex-col items-center mb-16">
+            <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
+              Top Verified Analysts
+            </h2>
+            <p className="text-secondary text-center" style={{ fontSize: '1.15rem', maxWidth: '600px', lineHeight: '1.7' }}>
+              Ranked purely on mathematical performance, return on investment, and verified bankroll growth.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3" style={{ gap: '2rem' }}>
+            
+            {/* Analyst 1 */}
+            <div className="glass-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-3">
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>AQ</div>
+                  <div>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@alpha_quant</h4>
+                    <span className="text-secondary" style={{ fontSize: '0.8rem' }}>1,420 Followers</span>
+                  </div>
+                </div>
+                <Award size={24} color="#FFD700" />
+              </div>
+              <div style={{ background: 'rgba(56, 189, 248, 0.08)', padding: '0.8rem 1rem', borderRadius: '12px', border: '1px solid rgba(56, 189, 248, 0.2)', marginBottom: '1rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.75rem', uppercase: true, fontWeight: 700 }}>VERIFIED 30-DAY ROI</span>
+                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#38bdf8', margin: 0 }}>+34.2%</h3>
+              </div>
+              <div className="flex items-center justify-between text-secondary" style={{ fontSize: '0.85rem' }}>
+                <span>Win Rate: <strong>68.4%</strong></span>
+                <span>Ledger: <strong style={{ color: '#34d399' }}>SEALED</strong></span>
+              </div>
+            </div>
+
+            {/* Analyst 2 */}
+            <div className="glass-card reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-3">
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>MB</div>
+                  <div>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@matrix_bets</h4>
+                    <span className="text-secondary" style={{ fontSize: '0.8rem' }}>980 Followers</span>
+                  </div>
+                </div>
+                <Award size={24} color="#cbd5e1" />
+              </div>
+              <div style={{ background: 'rgba(168, 85, 247, 0.08)', padding: '0.8rem 1rem', borderRadius: '12px', border: '1px solid rgba(168, 85, 247, 0.2)', marginBottom: '1rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.75rem', uppercase: true, fontWeight: 700 }}>VERIFIED 30-DAY ROI</span>
+                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#a855f7', margin: 0 }}>+28.6%</h3>
+              </div>
+              <div className="flex items-center justify-between text-secondary" style={{ fontSize: '0.85rem' }}>
+                <span>Win Rate: <strong>64.1%</strong></span>
+                <span>Ledger: <strong style={{ color: '#34d399' }}>SEALED</strong></span>
+              </div>
+            </div>
+
+            {/* Analyst 3 */}
+            <div className="glass-card reveal-on-scroll delay-300" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-3">
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>SE</div>
+                  <div>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@sharp_edge</h4>
+                    <span className="text-secondary" style={{ fontSize: '0.8rem' }}>740 Followers</span>
+                  </div>
+                </div>
+                <Award size={24} color="#cd7f32" />
+              </div>
+              <div style={{ background: 'rgba(52, 211, 153, 0.08)', padding: '0.8rem 1rem', borderRadius: '12px', border: '1px solid rgba(52, 211, 153, 0.2)', marginBottom: '1rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.75rem', uppercase: true, fontWeight: 700 }}>VERIFIED 30-DAY ROI</span>
+                <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#34d399', margin: 0 }}>+24.9%</h3>
+              </div>
+              <div className="flex items-center justify-between text-secondary" style={{ fontSize: '0.85rem' }}>
+                <span>Win Rate: <strong>61.8%</strong></span>
+                <span>Ledger: <strong style={{ color: '#34d399' }}>SEALED</strong></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Two Paths Section */}
-      <section className="flex-col items-center responsive-padding" style={{ position: 'relative', zIndex: 10 }}>
+      <section className="flex-col items-center responsive-padding" style={{ position: 'relative', zIndex: 10, padding: '5rem 2rem' }}>
         <div className="reveal-on-scroll text-center flex-col items-center">
           <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center' }}>Choose Your Path</h3>
           <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp analyst proving your edge, or an investor looking for quantitative alpha, QuantStakes is built for you.</p>
@@ -274,6 +539,7 @@ export default function Landing() {
 
           <div className="flex items-center gap-8" style={{ fontSize: '0.9rem' }}>
             <Link to="/auth" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</Link>
+            <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Sneak Peek</a>
             <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
             <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terms of Service</Link>
             <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Privacy Policy</Link>
