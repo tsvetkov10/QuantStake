@@ -283,15 +283,47 @@ export default function Landing() {
           </div>
           <p className="text-secondary text-center mb-12 reveal-on-scroll" style={{ fontSize: '1.2rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
 
-          <div className="grid grid-cols-2" style={{ gap: '5rem', alignItems: 'start' }}>
+          <div className="grid grid-cols-2" style={{ gap: '4rem', alignItems: 'start' }}>
             
-            <div className="flex-col gap-6 justify-center reveal-on-scroll delay-100">
-              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>About QuantStakes</h3>
-                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>A non-profit platform created for sports portfolio management, maintaining code, website architecture, and portfolio tracking APIs.</p>
-                <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '1.1rem', pointerEvents: 'none' }}>
-                  <BarChart3 size={20} /> Data-Driven & Open
+            <div className="flex-col gap-5 justify-center reveal-on-scroll delay-100">
+              {/* Card 1: Non Profit & Mission */}
+              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div style={{ background: 'rgba(56, 189, 248, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <BarChart3 size={20} color="#38bdf8" />
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>100% Non-Profit Platform</h3>
                 </div>
+                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
+                  QuantStakes is a free, non-profit sports portfolio management terminal designed to provide quantitative tracking, transparent metrics, and verified performance logs.
+                </p>
+              </div>
+
+              {/* Card 2: Engineering & APIs */}
+              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div style={{ background: 'rgba(168, 85, 247, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <BrainCircuit size={20} color="#a855f7" />
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>Architecture & Open APIs</h3>
+                  <div style={{ pointerEvents: 'none' }}></div>
+                </div>
+                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
+                  Independently built and maintained by a dedicated developer responsible for website architecture, system engineering, and portfolio data APIs.
+                </p>
+              </div>
+
+              {/* Card 3: Support Response Guarantee */}
+              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div style={{ background: 'rgba(52, 211, 153, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <ShieldCheck size={20} color="#34d399" />
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>Direct Support</h3>
+                </div>
+                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
+                  Our contact channel is monitored daily. Have a feature request or API question? Send us a message and expect a response within 24 hours.
+                </p>
               </div>
             </div>
 
