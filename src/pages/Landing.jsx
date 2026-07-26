@@ -3,6 +3,28 @@ import { Link } from 'react-router-dom';
 import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText } from 'lucide-react';
 
 export default function Landing() {
+  // Animated Revenue Counter (0 -> 10,000)
+  const [revenue, setRevenue] = useState(0);
+  const targetRevenue = 10000;
+
+  useEffect(() => {
+    let startTimestamp = null;
+    const duration = 2400; // 2.4s count up
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setRevenue(Math.floor(easeOut * targetRevenue));
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, []);
+
   // Scroll Reveal Observer for One-Pager Experience
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -92,7 +114,7 @@ export default function Landing() {
             </p>
 
             {/* CTA Action Group: White Pill + Learn More */}
-            <div className="flex items-center gap-6 flex-wrap mb-6">
+            <div className="flex items-center gap-6 flex-wrap mb-8">
               <Link to="/auth" className="btn-white-pill">
                 Open Account
               </Link>
@@ -103,6 +125,13 @@ export default function Landing() {
                 Explore Terminal
               </a>
             </div>
+
+            {/* Hero Trust Badges Row */}
+            <div className="flex items-center gap-6 flex-wrap" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
+              <span className="flex items-center gap-2"><CheckCircle size={15} color="#34d399" /> 100% Mathematical Proof</span>
+              <span className="flex items-center gap-2"><CheckCircle size={15} color="#38bdf8" /> Zero Fake Records</span>
+              <span className="flex items-center gap-2"><CheckCircle size={15} color="#a855f7" /> Instant Slip Parser</span>
+            </div>
           </div>
 
           {/* Hero Right Column: Floating Financial Metric Glass Card */}
@@ -111,7 +140,21 @@ export default function Landing() {
             {/* Ambient Backlight Glow behind Card */}
             <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(168, 85, 247, 0.2) 60%, transparent 80%)', filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0 }}></div>
 
-            <div className="fintech-metric-card">
+            {/* Floating Top Badge */}
+            <div className="desktop-only" style={{ position: 'absolute', top: '-25px', right: '0px', zIndex: 10, background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(16px)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 4s ease-in-out infinite' }}>
+              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#38bdf8' }}>
+                <Sparkles size={16} color="#38bdf8" /> Live Edge: +34.2% ROI
+              </div>
+            </div>
+
+            {/* Floating Bottom Badge */}
+            <div className="desktop-only" style={{ position: 'absolute', bottom: '-25px', left: '0px', zIndex: 10, background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(16px)', border: '1px solid rgba(52, 211, 153, 0.3)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 5s ease-in-out infinite' }}>
+              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#34d399' }}>
+                <ShieldCheck size={16} color="#34d399" /> SHA-256 Ledger Sealed
+              </div>
+            </div>
+
+            <div className="fintech-metric-card" style={{ position: 'relative', zIndex: 5 }}>
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', fontWeight: 500 }}>
                   <TrendingUp size={18} color="#38bdf8" /> Revenue / ROI
@@ -119,11 +162,12 @@ export default function Landing() {
                 <MoreHorizontal size={20} style={{ color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }} />
               </div>
 
-              <div style={{ fontSize: '3.2rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-1.5px', marginBottom: '0.2rem', lineHeight: 1 }}>
-                +$10,629
+              {/* Animated 0 to 10,000 Revenue Counter */}
+              <div style={{ fontSize: '3.4rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-1.5px', marginBottom: '0.2rem', lineHeight: 1 }}>
+                +${revenue.toLocaleString()}
               </div>
               <div className="text-secondary" style={{ fontSize: '0.85rem', marginBottom: '2rem', fontWeight: 500 }}>
-                Last 30 days
+                Last 30 days verified growth
               </div>
 
               <div className="flex items-center gap-3" style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '0.75rem 1rem', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
