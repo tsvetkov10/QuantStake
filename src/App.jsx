@@ -144,6 +144,7 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       {/* Main Content */}
       <main className="main-content" style={{ flexGrow: 1, padding: '3rem', height: '100vh', overflowY: 'auto' }}>
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard session={session} profile={profile} />} />
           <Route path="/leaderboard" element={MAINTENANCE_CONFIG.leaderboard ? <Maintenance title="Analyst Leaderboard" description="We are optimizing track record verification algorithms. The analyst leaderboard will return online shortly." /> : <Leaderboard session={session} profile={profile} />} />
           <Route path="/trader/:username" element={MAINTENANCE_CONFIG.traderProfile ? <Maintenance title="Trader Profile" description="Trader profile customization and public track record views are currently undergoing scheduled upgrades." /> : <TraderProfile session={session} profile={profile} />} />
