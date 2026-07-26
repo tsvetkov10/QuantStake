@@ -143,8 +143,8 @@
 }
 
 .reveal-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Delay modifiers for staggered card entrance */

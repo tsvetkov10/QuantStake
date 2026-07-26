@@ -57,6 +57,7 @@ export default function Landing() {
   // 3D Card Tilt Handler
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
+    if (!card.classList.contains('reveal-visible')) return;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -66,7 +67,7 @@ export default function Landing() {
     const rotateY = ((x - centerX) / centerX) * 2;
     
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-    card.style.transition = 'none';
+    card.style.transition = 'transform 0.15s ease-out';
     
     const spotlight = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.08) 0%, transparent 80%)`;
     card.style.backgroundImage = spotlight;
@@ -304,11 +305,6 @@ export default function Landing() {
       {/* INTERACTIVE SECTION: Bankroll Compound Growth Calculator */}
       <section id="calculator" className="flex-col items-center responsive-padding" style={{ padding: '5rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <div className="reveal-on-scroll text-center flex-col items-center mb-12">
-          <div style={{ background: 'rgba(56, 189, 248, 0.1)', padding: '0.6rem 1.2rem', borderRadius: '20px', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-              <Calculator size={16} /> INTERACTIVE QUANT CALCULATOR
-            </span>
-          </div>
           <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
             Project Your Bankroll Growth
           </h2>
