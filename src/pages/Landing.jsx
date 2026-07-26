@@ -338,9 +338,9 @@ export default function Landing() {
             <div className="glass-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>AQ</div>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>AV</div>
                   <div>
-                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@alpha_quant</h4>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@alex_vance</h4>
                     <span className="text-secondary" style={{ fontSize: '0.8rem' }}>1,420 Followers</span>
                   </div>
                 </div>
@@ -360,9 +360,9 @@ export default function Landing() {
             <div className="glass-card reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>MB</div>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>ED</div>
                   <div>
-                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@matrix_bets</h4>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@elena_dimitrova</h4>
                     <span className="text-secondary" style={{ fontSize: '0.8rem' }}>980 Followers</span>
                   </div>
                 </div>
@@ -382,9 +382,9 @@ export default function Landing() {
             <div className="glass-card reveal-on-scroll delay-300" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2.2rem', transition: 'all 0.5s ease' }}>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>SE</div>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>MD</div>
                   <div>
-                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@sharp_edge</h4>
+                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#ffffff' }}>@marcus_devlin</h4>
                     <span className="text-secondary" style={{ fontSize: '0.8rem' }}>740 Followers</span>
                   </div>
                 </div>
