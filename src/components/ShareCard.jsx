@@ -50,16 +50,17 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           
-          {/* Logo Data URI background to guarantee 100% rendering when copying/downloading */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div
+          {/* Explicit img tag with base64 src to guarantee 100% rendering in htmlToImage copy/download */}
+          <div style={{ display: 'flex', itemsCenter: 'center' }}>
+            <img
+              src={LOGO_FULL_BASE64}
+              alt="QuantStakes Logo"
               style={{
-                width: '320px',
                 height: '72px',
-                backgroundImage: `url("${LOGO_FULL_BASE64}")`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'right center',
-                backgroundRepeat: 'no-repeat',
+                maxWidth: '320px',
+                objectFit: 'contain',
+                display: 'block',
+                margin: 0
               }}
             />
           </div>
@@ -111,7 +112,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
           </div>
           <div style={{ textAlign: 'right' }}>
             <p style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: '0 0 5px 0', lineHeight: '32px' }}>Join the elite community.</p>
-            <p style={{ fontSize: '1.8rem', color: '#3b82f6', margin: 0, fontWeight: '900' }}>app.quantstakes.com</p>
+            <p style={{ fontSize: '1.8rem', color: '#3b82f6', margin: 0, fontWeight: '900' }}>www.quantstakes.com</p>
           </div>
         </div>
 
