@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap } from 'lucide-react';
+import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap, Star } from 'lucide-react';
 
 export default function Landing() {
   // Animated Revenue Counter (0 -> 10,000)
@@ -115,18 +115,25 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '5rem', width: '100%', minHeight: '88vh' }}>
+      <section style={{ position: 'relative', paddingTop: '10.5rem', paddingBottom: '5rem', width: '100%', minHeight: '88vh' }}>
         
         <div className="hero-cirform-grid responsive-padding" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
+            
+            {/* Top Glass Badge */}
+            <div style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.45rem 1rem', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1.5rem', boxShadow: '0 4px 20px rgba(56, 189, 248, 0.15)' }}>
+              <Sparkles size={15} color="#38bdf8" />
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', letterSpacing: '0.5px' }}>INSTITUTIONAL QUANTITATIVE TERMINAL</span>
+            </div>
+
             <h1 className="title-cirform mb-6" style={{ textAlign: 'left', letterSpacing: '-2px' }}>
               We create bright <br />
               future for Portfolio Management
             </h1>
 
-            <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
+            <p className="text-secondary mb-8" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
               Empowering sports analysts with verified metrics, cryptographic proof, and institutional-grade portfolio tracking.
             </p>
 
@@ -144,11 +151,29 @@ export default function Landing() {
             </div>
 
             {/* Hero Trust Badges Row */}
-            <div className="flex items-center gap-6 flex-wrap" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="flex items-center gap-6 flex-wrap mb-8" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#34d399" /> 100% Mathematical Proof</span>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#38bdf8" /> Zero Fake Records</span>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#a855f7" /> Instant Slip Parser</span>
             </div>
+
+            {/* Social Proof Avatar Stack */}
+            <div className="flex items-center gap-4 pt-6" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', width: '100%', maxWidth: '540px' }}>
+              <div className="flex items-center" style={{ marginLeft: '6px' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>AV</div>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>ED</div>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>MD</div>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 800, border: '2px solid #040714', margin: '0 -6px' }}>+1.4k</div>
+              </div>
+              <div className="flex-col">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="#FFD700" color="#FFD700" />)}
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginLeft: '4px' }}>5.0</span>
+                </div>
+                <span className="text-secondary" style={{ fontSize: '0.8rem' }}>Trusted by +1,400 quant analysts & investors</span>
+              </div>
+            </div>
+
           </div>
 
           {/* Hero Right Column: Floating Financial Metric Glass Card */}
@@ -156,6 +181,20 @@ export default function Landing() {
             
             {/* Ambient Backlight Glow behind Card */}
             <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(168, 85, 247, 0.2) 60%, transparent 80%)', filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0 }}></div>
+
+            {/* Floating Top Badge */}
+            <div className="desktop-only" style={{ position: 'absolute', top: '-25px', right: '-10px', zIndex: 10, background: 'rgba(11, 16, 35, 0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(56, 189, 248, 0.4)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 4s ease-in-out infinite' }}>
+              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#38bdf8' }}>
+                <Zap size={16} color="#38bdf8" /> Live Edge: +34.2% ROI
+              </div>
+            </div>
+
+            {/* Floating Bottom Badge */}
+            <div className="desktop-only" style={{ position: 'absolute', bottom: '-25px', left: '-10px', zIndex: 10, background: 'rgba(11, 16, 35, 0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(52, 211, 153, 0.4)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 5s ease-in-out infinite' }}>
+              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#34d399' }}>
+                <ShieldCheck size={16} color="#34d399" /> SHA-256 Block Sealed
+              </div>
+            </div>
 
             <div className="fintech-metric-card" style={{ position: 'relative', zIndex: 5 }}>
               <div className="flex justify-between items-center mb-6">
@@ -169,8 +208,23 @@ export default function Landing() {
               <div style={{ fontSize: '3.4rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-1.5px', marginBottom: '0.2rem', lineHeight: 1 }}>
                 +${revenue.toLocaleString()}
               </div>
-              <div className="text-secondary" style={{ fontSize: '0.85rem', marginBottom: '2rem', fontWeight: 500 }}>
+              <div className="text-secondary" style={{ fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: 500 }}>
                 Last 30 days verified growth
+              </div>
+
+              {/* Mini Sparkline Graph inside Card */}
+              <div style={{ height: '50px', width: '100%', marginBottom: '1.5rem' }}>
+                <svg viewBox="0 0 300 50" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                  <defs>
+                    <linearGradient id="heroSparkline" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M 0,45 Q 50,35 100,28 T 200,18 T 300,5 L 300,50 L 0,50 Z" fill="url(#heroSparkline)" />
+                  <path d="M 0,45 Q 50,35 100,28 T 200,18 T 300,5" fill="none" stroke="#38bdf8" strokeWidth="3" strokeLinecap="round" />
+                  <circle cx="300" cy="5" r="4" fill="#38bdf8" filter="drop-shadow(0 0 6px #38bdf8)" />
+                </svg>
               </div>
 
               <div className="flex items-center gap-3" style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '0.75rem 1rem', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
