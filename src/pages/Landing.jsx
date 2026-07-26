@@ -301,6 +301,98 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* INTERACTIVE SECTION: Bankroll Compound Growth Calculator */}
+      <section id="calculator" className="flex-col items-center responsive-padding" style={{ padding: '5rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
+        <div className="reveal-on-scroll text-center flex-col items-center mb-12">
+          <div style={{ background: 'rgba(56, 189, 248, 0.1)', padding: '0.6rem 1.2rem', borderRadius: '20px', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1rem' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <Calculator size={16} /> INTERACTIVE QUANT CALCULATOR
+            </span>
+          </div>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
+            Project Your Bankroll Growth
+          </h2>
+          <p className="text-secondary text-center" style={{ fontSize: '1.15rem', maxWidth: '640px', lineHeight: '1.7' }}>
+            Adjust the bankroll and monthly ROI sliders to see how compounding yield expands your portfolio over 3, 6, and 12 months.
+          </p>
+        </div>
+
+        {/* Calculator Widget Card */}
+        <div className="reveal-on-scroll delay-100" style={{ maxWidth: '1000px', width: '100%', background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '24px', padding: '3rem', boxShadow: '0 20px 60px rgba(0,0,0,0.6)' }}>
+          <div className="grid grid-cols-2 gap-12" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem' }}>
+            
+            {/* Sliders Left Column */}
+            <div className="flex-col gap-8">
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <label className="text-secondary" style={{ fontSize: '0.95rem', fontWeight: 600 }}>Initial Bankroll</label>
+                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#38bdf8' }}>${calcBankroll.toLocaleString()}</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="500" 
+                  max="25000" 
+                  step="500" 
+                  value={calcBankroll} 
+                  onChange={e => setCalcBankroll(Number(e.target.value))}
+                  style={{ width: '100%', height: '8px', accentColor: '#38bdf8', cursor: 'pointer' }}
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <label className="text-secondary" style={{ fontSize: '0.95rem', fontWeight: 600 }}>Target Monthly Yield (ROI)</label>
+                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#34d399' }}>+{calcRoi}% / mo</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="5" 
+                  max="35" 
+                  step="1" 
+                  value={calcRoi} 
+                  onChange={e => setCalcRoi(Number(e.target.value))}
+                  style={{ width: '100%', height: '8px', accentColor: '#34d399', cursor: 'pointer' }}
+                />
+              </div>
+
+              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', padding: '1.25rem' }}>
+                <span className="text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.6' }}>
+                  💡 <strong>Kelly Criterion Principle:</strong> Controlled position sizing preserves bankroll capital while maximizing logarithmic growth rate over long horizons.
+                </span>
+              </div>
+            </div>
+
+            {/* Results Right Column */}
+            <div className="flex-col justify-between gap-4">
+              <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(56, 189, 248, 0.25)', borderRadius: '18px', padding: '1.5rem' }}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: 600 }}>3 Months Compounded</span>
+                  <span style={{ fontSize: '0.8rem', color: '#38bdf8', fontWeight: 700 }}>+${(calc3Months - calcBankroll).toLocaleString()} profit</span>
+                </div>
+                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>${calc3Months.toLocaleString()}</h3>
+              </div>
+
+              <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(168, 85, 247, 0.25)', borderRadius: '18px', padding: '1.5rem' }}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: 600 }}>6 Months Compounded</span>
+                  <span style={{ fontSize: '0.8rem', color: '#a855f7', fontWeight: 700 }}>+${(calc6Months - calcBankroll).toLocaleString()} profit</span>
+                </div>
+                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>${calc6Months.toLocaleString()}</h3>
+              </div>
+
+              <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(52, 211, 153, 0.35)', borderRadius: '18px', padding: '1.5rem' }}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: 600 }}>12 Months Compounded</span>
+                  <span style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 700 }}>+${(calc12Months - calcBankroll).toLocaleString()} profit</span>
+                </div>
+                <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#34d399', margin: 0, textShadow: '0 0 15px rgba(52, 211, 153, 0.3)' }}>${calc12Months.toLocaleString()}</h3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* NEW SECTION 2: How It Works (3-Step Workflow) */}
       <section id="how-it-works" style={{ padding: '6rem 2rem', background: 'rgba(4, 7, 20, 0.4)', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
