@@ -121,19 +121,12 @@ export default function Landing() {
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
-            
-            {/* Top Glass Badge */}
-            <div style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.45rem 1rem', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1.5rem', boxShadow: '0 4px 20px rgba(56, 189, 248, 0.15)' }}>
-              <Sparkles size={15} color="#38bdf8" />
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', letterSpacing: '0.5px' }}>INSTITUTIONAL QUANTITATIVE TERMINAL</span>
-            </div>
-
             <h1 className="title-cirform mb-6" style={{ textAlign: 'left', letterSpacing: '-2px' }}>
               We create bright <br />
               future for Portfolio Management
             </h1>
 
-            <p className="text-secondary mb-8" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
+            <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
               Empowering sports analysts with verified metrics, cryptographic proof, and institutional-grade portfolio tracking.
             </p>
 
@@ -151,29 +144,11 @@ export default function Landing() {
             </div>
 
             {/* Hero Trust Badges Row */}
-            <div className="flex items-center gap-6 flex-wrap mb-8" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="flex items-center gap-6 flex-wrap" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#34d399" /> 100% Mathematical Proof</span>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#38bdf8" /> Zero Fake Records</span>
               <span className="flex items-center gap-2"><CheckCircle size={15} color="#a855f7" /> Instant Slip Parser</span>
             </div>
-
-            {/* Social Proof Avatar Stack */}
-            <div className="flex items-center gap-4 pt-6" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', width: '100%', maxWidth: '540px' }}>
-              <div className="flex items-center" style={{ marginLeft: '6px' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>AV</div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>ED</div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800, color: '#fff', border: '2px solid #040714', margin: '0 -6px' }}>MD</div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 800, border: '2px solid #040714', margin: '0 -6px' }}>+1.4k</div>
-              </div>
-              <div className="flex-col">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="#FFD700" color="#FFD700" />)}
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginLeft: '4px' }}>5.0</span>
-                </div>
-                <span className="text-secondary" style={{ fontSize: '0.8rem' }}>Trusted by +1,400 quant analysts & investors</span>
-              </div>
-            </div>
-
           </div>
 
           {/* Hero Right Column: Floating Financial Metric Glass Card */}
