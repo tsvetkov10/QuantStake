@@ -8,14 +8,14 @@ export default function Maintenance({ title = "Module Under Maintenance", descri
       <div className="glass-panel text-center flex-col items-center" style={{ maxWidth: '640px', width: '100%', padding: '3.5rem 2.5rem', background: 'rgba(10, 10, 16, 0.75)', border: '1px solid rgba(0, 243, 255, 0.15)', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.6)', backdropFilter: 'blur(20px)', position: 'relative', overflow: 'hidden' }}>
         
         {/* Glowing Top Line Accent */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, transparent, var(--accent-cyan), #E2E8F0, transparent)' }}></div>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, transparent, var(--accent-cyan), #4833b5, transparent)' }}></div>
 
         {/* Animated Cyber Icon Ring */}
         <div className="flex justify-center items-center mb-6" style={{ position: 'relative' }}>
-          <div style={{ width: '88px', height: '88px', borderRadius: '50%', background: 'rgba(226, 232, 240, 0.08)', border: '1px solid rgba(226, 232, 240, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(226, 232, 240, 0.2)' }}>
-            <Wrench size={42} color="#FFFFFF" style={{ animation: 'spin-slow 12s linear infinite' }} />
+          <div style={{ width: '88px', height: '88px', borderRadius: '50%', background: 'rgba(72, 51, 181, 0.08)', border: '1px solid rgba(72, 51, 181, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(72, 51, 181, 0.2)' }}>
+            <Wrench size={42} color="#9d8df0" style={{ animation: 'spin-slow 12s linear infinite' }} />
           </div>
-          <div style={{ position: 'absolute', bottom: '-4px', right: 'calc(50% - 40px)', background: '#E2E8F0', borderRadius: '50%', padding: '4px', display: 'flex' }}>
+          <div style={{ position: 'absolute', bottom: '-4px', right: 'calc(50% - 40px)', background: '#4833b5', borderRadius: '50%', padding: '4px', display: 'flex' }}>
             <Sparkles size={14} color="#fff" />
           </div>
         </div>
@@ -40,7 +40,7 @@ export default function Maintenance({ title = "Module Under Maintenance", descri
             <span style={{ color: 'var(--accent-cyan)', fontWeight: 700 }}>85% Completed</span>
           </div>
           <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-            <div style={{ width: '85%', height: '100%', background: 'linear-gradient(90deg, #FFFFFF, #E2E8F0)', borderRadius: '4px' }}></div>
+            <div style={{ width: '85%', height: '100%', background: 'linear-gradient(90deg, #9d8df0, #4833b5)', borderRadius: '4px' }}></div>
           </div>
         </div>
 

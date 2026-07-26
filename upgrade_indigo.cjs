@@ -25,15 +25,15 @@ allFiles.forEach(file => {
   let content = fs.readFileSync(file, 'utf8');
   let originalContent = content;
   
-  // Replace Gold Theme with Platinum Theme
-  // Light Gold -> Platinum White
-  content = content.replace(/#F3E5AB/g, '#FFFFFF');
-  // Metallic Gold -> Crisp Silver
-  content = content.replace(/#D4AF37/g, '#E2E8F0');
-  // Deep Gold -> Slate Silver
-  content = content.replace(/#B8860B/g, '#94A3B8');
-  // Gold RGBA -> Silver RGBA
-  content = content.replace(/rgba\(212,\s*175,\s*55/g, 'rgba(226, 232, 240');
+  // Replace Gold Theme with Premium Indigo Theme
+  // Light Gold -> Soft Periwinkle
+  content = content.replace(/#F3E5AB/g, '#9d8df0');
+  // Metallic Gold -> Logo Indigo
+  content = content.replace(/#D4AF37/g, '#4833b5');
+  // Deep Gold -> Dark Indigo
+  content = content.replace(/#B8860B/g, '#29187a');
+  // Gold RGBA -> Indigo RGBA
+  content = content.replace(/rgba\(212,\s*175,\s*55/g, 'rgba(72, 51, 181');
   
   if (content !== originalContent) {
     fs.writeFileSync(file, content, 'utf8');
