@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-import { AlertCircle, CheckCircle, Upload, ShieldCheck, Target, Activity, FileText, BadgePercent, Coins, Calendar, Copy, CheckCircle2, Sparkles } from 'lucide-react';
+import { AlertCircle, CheckCircle, Upload, ShieldCheck, Target, Activity, FileText, BadgePercent, Coins, Calendar, Copy, CheckCircle2, Sparkles, Lock, ArrowRight } from 'lucide-react';
 import { extractBetData } from '../lib/ocrModel';
 import TeamSelector from '../components/TeamSelector';
 import * as htmlToImage from 'html-to-image';
