@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText } from 'lucide-react';
+import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap } from 'lucide-react';
 
 export default function Landing() {
   // Animated Revenue Counter (0 -> 10,000)
   const [revenue, setRevenue] = useState(0);
   const targetRevenue = 10000;
+
+  // Interactive Calculator State
+  const [calcBankroll, setCalcBankroll] = useState(2500);
+  const [calcRoi, setCalcRoi] = useState(15);
+
+  // Expandable Features State
+  const [expandedFeature, setExpandedFeature] = useState(null);
+
+  // Expandable FAQ State
+  const [openFaq, setOpenFaq] = useState(0); // First FAQ open by default
 
   useEffect(() => {
     let startTimestamp = null;
@@ -69,6 +79,11 @@ export default function Landing() {
     card.style.backgroundImage = 'none';
   };
 
+  // Compound Calculator calculations
+  const calc3Months = Math.round(calcBankroll * Math.pow(1 + calcRoi / 100, 3));
+  const calc6Months = Math.round(calcBankroll * Math.pow(1 + calcRoi / 100, 6));
+  const calc12Months = Math.round(calcBankroll * Math.pow(1 + calcRoi / 100, 12));
+
   return (
     <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       
@@ -85,11 +100,12 @@ export default function Landing() {
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
         </div>
         
-        <nav className="flex gap-10 items-center">
+        <nav className="flex gap-8 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
           <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Sneak Peek</a>
-          <a href="#how-it-works" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>How It Works</a>
-          <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
+          <a href="#calculator" onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Calculator</a>
+          <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Capabilities</a>
+          <a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>FAQ</a>
           
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
           <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
@@ -98,7 +114,7 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '8rem', width: '100%', minHeight: '88vh' }}>
+      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '5rem', width: '100%', minHeight: '88vh' }}>
         
         <div className="hero-cirform-grid responsive-padding" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
           
@@ -140,20 +156,6 @@ export default function Landing() {
             {/* Ambient Backlight Glow behind Card */}
             <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(168, 85, 247, 0.2) 60%, transparent 80%)', filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0 }}></div>
 
-            {/* Floating Top Badge */}
-            <div className="desktop-only" style={{ position: 'absolute', top: '-25px', right: '0px', zIndex: 10, background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(16px)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 4s ease-in-out infinite' }}>
-              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#38bdf8' }}>
-                <Sparkles size={16} color="#38bdf8" /> Live Edge: +34.2% ROI
-              </div>
-            </div>
-
-            {/* Floating Bottom Badge */}
-            <div className="desktop-only" style={{ position: 'absolute', bottom: '-25px', left: '0px', zIndex: 10, background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(16px)', border: '1px solid rgba(52, 211, 153, 0.3)', padding: '0.6rem 1.2rem', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', animation: 'float 5s ease-in-out infinite' }}>
-              <div className="flex items-center gap-2" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#34d399' }}>
-                <ShieldCheck size={16} color="#34d399" /> SHA-256 Ledger Sealed
-              </div>
-            </div>
-
             <div className="fintech-metric-card" style={{ position: 'relative', zIndex: 5 }}>
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', fontWeight: 500 }}>
@@ -182,11 +184,29 @@ export default function Landing() {
 
           </div>
         </div>
-
       </section>
 
-      {/* NEW SECTION 1: Dashboard Terminal Sneak Peek */}
-      <section id="preview" className="flex-col items-center responsive-padding" style={{ padding: '4rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
+      {/* NEW ANIMATION 1: Live Verification Marquee Ticker */}
+      <div style={{ width: '100%', background: 'rgba(4, 7, 20, 0.9)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 0', overflow: 'hidden', whiteSpace: 'nowrap', position: 'relative', zIndex: 10 }}>
+        <div className="marquee-content flex items-center gap-12" style={{ display: 'inline-flex', animation: 'marquee 30s linear infinite' }}>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#34d399" /> @alex_vance verified +€1,551 payout on Polymarket</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#38bdf8" /> SHA-256 Block #948202 Sealed</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#a855f7" /> @elena_dimitrova hit +536.9% ROI milestone</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><FileText size={14} color="#34d399" /> Slip OCR parsed in 0.38s</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#FFD700" /> @marcus_devlin verified 14-game win streak</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#34d399" /> Zero fake records verified</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#34d399" /> @alex_vance verified +€1,551 payout on Polymarket</span>
+        </div>
+      </div>
+
+      {/* SECTION: Dashboard Terminal Sneak Peek */}
+      <section id="preview" className="flex-col items-center responsive-padding" style={{ padding: '5rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <div className="reveal-on-scroll text-center flex-col items-center mb-12">
           <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', marginBottom: '1rem' }}>
             Built Like a Quantitative Trading Desk
@@ -206,11 +226,6 @@ export default function Landing() {
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }}></div>
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }}></div>
               <span className="text-secondary" style={{ marginLeft: '1rem', fontSize: '0.85rem', fontWeight: 600 }}>QuantStakes Terminal v2.4</span>
-            </div>
-
-            <div className="flex items-center gap-2" style={{ color: '#34d399', fontSize: '0.8rem', fontWeight: 600, background: 'rgba(16, 185, 129, 0.12)', padding: '0.3rem 0.8rem', borderRadius: '20px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#34d399', animation: 'pulse 1.5s infinite' }}></div>
-              LIVE VERIFICATION ENGINE ACTIVE
             </div>
           </div>
 
@@ -240,36 +255,8 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Performance Curve Chart SVG */}
-            <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.5rem', marginBottom: '2rem', position: 'relative' }}>
-              <div className="flex justify-between items-center mb-4">
-                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ffffff' }}>Bankroll Trajectory & Growth</span>
-                <span className="text-secondary" style={{ fontSize: '0.85rem' }}>30 Day Verified Horizon</span>
-              </div>
-
-              <svg viewBox="0 0 800 180" style={{ width: '100%', height: '180px', overflow: 'visible' }}>
-                <defs>
-                  <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                {/* Area Fill */}
-                <path d="M 0,160 L 100,140 L 200,110 L 300,125 L 400,80 L 500,65 L 600,40 L 700,45 L 800,15 L 800,180 L 0,180 Z" fill="url(#chartGradient)" />
-                {/* Curve Line */}
-                <path d="M 0,160 L 100,140 L 200,110 L 300,125 L 400,80 L 500,65 L 600,40 L 700,45 L 800,15" fill="none" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" />
-                {/* Glowing Pulse Dot */}
-                <circle cx="800" cy="15" r="6" fill="#38bdf8" filter="drop-shadow(0 0 10px #38bdf8)" />
-              </svg>
-            </div>
-
             {/* Live Ledger Table */}
             <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.25rem', overflowX: 'auto' }}>
-              <div className="flex justify-between items-center mb-3">
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#ffffff' }}>Recent Cryptographic Slip Entries</span>
-                <span style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 600 }}>100% Mathematically Sealed</span>
-              </div>
-
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
                 <thead>
                   <tr style={{ color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
