@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Mail, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, ArrowRight } from 'lucide-react';
+import { BrainCircuit, BarChart3, Mail, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowDown } from 'lucide-react';
 
 export default function Landing() {
   const [sent, setSent] = useState(false);
@@ -19,7 +19,7 @@ export default function Landing() {
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
     card.style.transition = 'none';
     
-    const spotlight = `radial-gradient(circle at ${x}px ${y}px, var(--adaptive-white-10) 0%, transparent 80%)`;
+    const spotlight = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.08) 0%, transparent 80%)`;
     card.style.backgroundImage = spotlight;
   };
 
@@ -31,134 +31,106 @@ export default function Landing() {
   };
 
   return (
-    <div className="flex-col" style={{ minHeight: '100vh', width: '100%', backgroundColor: '#030308', overflowX: 'hidden' }}>
+    <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       
+      {/* Dynamic Light Speed Streaks Background */}
+      <div className="light-streak-beam-1"></div>
+      <div className="light-streak-beam-2"></div>
+
       {/* Navigation Header */}
-      <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(3, 3, 8, 0.85)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
+      <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(4, 7, 20, 0.75)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
         </div>
+        
         <nav className="flex gap-10 items-center">
-          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="nav-link-active desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', cursor: 'pointer' }}>Terminal</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
           <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
           <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Contact</a>
           
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
-          <Link to="/auth" className="btn btn-secondary desktop-only" style={{ padding: '0.5rem 1rem', borderRadius: '20px' }}>Log In</Link>
-          <Link to="/auth" className="btn btn-primary" style={{ padding: '0.5rem 1.4rem', borderRadius: '20px', fontWeight: '700' }}>Open Account</Link>
+          <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
+          <Link to="/auth" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>Sign up</Link>
         </nav>
       </header>
 
-      {/* Hero Section - Matching Screenshot Layout */}
-      <section style={{ position: 'relative', paddingTop: '10rem', paddingBottom: '14rem', background: 'radial-gradient(ellipse at 80% 20%, #110d2b 0%, #05040a 50%, #000000 100%)', width: '100%', overflow: 'hidden' }}>
+      {/* Hero Section - Matching Cirform Dribbble Layout */}
+      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '10rem', width: '100%', minHeight: '88vh' }}>
         
-        {/* Shooting Stars background effect */}
-        <div className="shooting-star" style={{ top: '18%', left: '35%' }}></div>
-        <div className="shooting-star" style={{ top: '25%', right: '20%', width: '120px' }}></div>
-        <div className="shooting-star" style={{ top: '60%', left: '15%' }}></div>
-
-        {/* Floating Space Planet Orbs */}
-        <div style={{ position: 'absolute', top: '22%', right: '38%', width: '60px', height: '60px', borderRadius: '50%', background: 'radial-gradient(circle, #2a1f5c 0%, #0d0a21 100%)', boxShadow: 'inset 0 -5px 12px rgba(0,0,0,0.8), 0 0 20px rgba(139, 92, 246, 0.2)', opacity: 0.8, pointerEvents: 'none' }}></div>
-        <div style={{ position: 'absolute', top: '65%', right: '12%', width: '40px', height: '40px', borderRadius: '50%', background: 'radial-gradient(circle, #1a2b4c 0%, #071021 100%)', boxShadow: 'inset 0 -4px 10px rgba(0,0,0,0.8)', opacity: 0.6, pointerEvents: 'none' }}></div>
-
-        <div className="hero-split-grid responsive-padding" style={{ paddingTop: '2rem', paddingBottom: '0' }}>
+        <div className="hero-cirform-grid responsive-padding" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
           
-          {/* Hero Left Column: Headline, Description & Pill CTA */}
-          <div className="flex-col hero-title-left" style={{ alignItems: 'flex-start' }}>
-            <h1 className="hero-title-large mb-6" style={{ textAlign: 'left' }}>
-              Boost <br />
-              <span className="hero-accent-text">
-                Your Edge
-                <div className="hero-accent-underline"></div>
-              </span>
+          {/* Hero Left Column: Headline, Description & White Pill Action */}
+          <div className="flex-col" style={{ alignItems: 'flex-start' }}>
+            <h1 className="title-cirform mb-6" style={{ textAlign: 'left' }}>
+              We create bright <br />
+              future <span className="serif-italic-accent">for Betting</span>
             </h1>
 
-            <p className="text-secondary mb-10" style={{ fontSize: '1.2rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
-              QuantStakes is a non-profit platform for tracking your sports portfolio, verifying your performance, and maintaining unforgeable cryptographic proof of your edge.
+            <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
+              Empowering sports bettors with verified analytics, cryptographic slip proof, and institutional-grade portfolio tracking.
             </p>
 
-            {/* Pill CTA Button (Matching Screenshot) */}
-            <Link to="/auth" className="pill-cta-button">
-              <span>Boost Now</span>
-              <div className="pill-cta-arrow">
-                <ArrowRight size={20} />
+            {/* CTA Action Group: White Pill + Learn More */}
+            <div className="flex items-center gap-6 flex-wrap mb-16">
+              <Link to="/auth" className="btn-white-pill">
+                Open Account
+              </Link>
+
+              <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
+
+              <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>
+                Learn more
+              </a>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="flex items-center gap-2 text-secondary desktop-only" style={{ fontSize: '0.8rem', letterSpacing: '2px', fontWeight: 700, opacity: 0.6 }}>
+              SCROLL <ArrowDown size={14} />
+            </div>
+          </div>
+
+          {/* Hero Right Column: Floating Financial Metric Glass Card */}
+          <div className="flex flex-col items-center justify-center" style={{ position: 'relative', width: '100%' }}>
+            
+            {/* Ambient Backlight Glow behind Card */}
+            <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(168, 85, 247, 0.2) 60%, transparent 80%)', filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0 }}></div>
+
+            <div className="fintech-metric-card">
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', fontWeight: 500 }}>
+                  <TrendingUp size={18} color="#38bdf8" /> Revenue / ROI
+                </div>
+                <MoreHorizontal size={20} style={{ color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }} />
               </div>
-            </Link>
+
+              <div style={{ fontSize: '3.2rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-1.5px', marginBottom: '0.2rem', lineHeight: 1 }}>
+                +$10,629
+              </div>
+              <div className="text-secondary" style={{ fontSize: '0.85rem', marginBottom: '2rem', fontWeight: 500 }}>
+                Last 30 days
+              </div>
+
+              <div className="flex items-center gap-3" style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '0.75rem 1rem', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ background: 'rgba(16, 185, 129, 0.18)', border: '1px solid rgba(16, 185, 129, 0.4)', color: '#34d399', padding: '0.25rem 0.75rem', borderRadius: '20px', fontWeight: 700, fontSize: '0.85rem' }}>
+                  +26%
+                </span>
+                <span className="text-secondary" style={{ fontSize: '0.85rem', fontWeight: 500 }}>
+                  Since previous 30 days
+                </span>
+              </div>
+            </div>
+
+            {/* Bottom Right Floating Avatar Badge */}
+            <div className="avatar-stack-badge" style={{ marginTop: '2rem', alignSelf: 'flex-end', marginRight: '2rem' }}>
+              <div className="flex items-center">
+                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #2563eb)', border: '2px solid #040714', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
+                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', border: '2px solid #040714', marginLeft: '-10px', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
+                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', border: '2px solid #040714', marginLeft: '-10px', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
+              </div>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Finance experts</span>
+            </div>
+
           </div>
-
-          {/* Hero Right Column: Branded Simplified Rocket Vector */}
-          <div className="flex justify-center items-center rocket-float-container" style={{ position: 'relative', width: '100%', height: '100%', minHeight: '400px' }}>
-            <svg viewBox="0 0 600 600" style={{ width: '100%', height: 'auto', maxWidth: '500px', filter: 'drop-shadow(0 20px 40px rgba(56, 189, 248, 0.3))' }}>
-              <defs>
-                {/* Rocket Hull Gradient */}
-                <linearGradient id="simpleRocketBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#60a5fa" />
-                  <stop offset="40%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#1d4ed8" />
-                </linearGradient>
-                <linearGradient id="simpleRocketNose" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#ffffff" />
-                  <stop offset="100%" stopColor="#e2e8f0" />
-                </linearGradient>
-                <linearGradient id="simpleFlame" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#ffffff" />
-                  <stop offset="40%" stopColor="#38bdf8" />
-                  <stop offset="80%" stopColor="#6366f1" />
-                  <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-                </linearGradient>
-                <radialGradient id="spaceAura" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-
-              {/* Background Glow */}
-              <circle cx="300" cy="280" r="200" fill="url(#spaceAura)" />
-
-              <g transform="rotate(-35 300 300)">
-                {/* Flame */}
-                <path d="M 270 410 Q 300 560 300 580 Q 300 560 330 410 Z" fill="url(#simpleFlame)" />
-                <path d="M 285 410 Q 300 500 300 520 Q 300 500 315 410 Z" fill="#ffffff" />
-
-                {/* Back Wings */}
-                <path d="M 230 350 L 150 420 Q 180 430 220 400 Z" fill="#1d4ed8" stroke="#60a5fa" strokeWidth="1.5" />
-                <path d="M 370 350 L 450 420 Q 420 430 380 400 Z" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
-
-                {/* Rocket Main Body */}
-                <path d="M 300 120 C 380 220 370 360 350 410 L 250 410 C 230 360 220 220 300 120 Z" fill="url(#simpleRocketBody)" stroke="#93c5fd" strokeWidth="2" />
-
-                {/* White Nose Cone */}
-                <path d="M 300 120 C 325 160 325 180 325 190 L 275 190 C 275 180 275 160 300 120 Z" fill="url(#simpleRocketNose)" />
-
-                {/* Branded Symbol.png Logo Emblem on Rocket */}
-                <g transform="translate(300 290)">
-                  {/* Outer Ring Glass Frame */}
-                  <circle cx="0" cy="0" r="46" fill="#090d1a" stroke="#ffffff" strokeWidth="4" />
-                  <circle cx="0" cy="0" r="42" fill="#030712" stroke="#38bdf8" strokeWidth="2" />
-                  
-                  {/* Embedded Symbol PNG */}
-                  <image href="/symbol.png" x="-32" y="-32" width="64" height="64" preserveAspectRatio="xMidYMid slice" />
-                </g>
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        {/* Fluid Multi-Layer Wave Gradients (Matching Screenshot Bottom) */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5 }}>
-          <svg viewBox="0 0 1200 180" preserveAspectRatio="none" style={{ position: 'relative', display: 'block', width: '100%', height: '140px' }}>
-            <defs>
-              <linearGradient id="waveGradLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#ec4899" stopOpacity="0.9" />
-                <stop offset="35%" stopColor="#a855f7" stopOpacity="0.85" />
-                <stop offset="70%" stopColor="#3b82f6" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.9" />
-              </linearGradient>
-            </defs>
-            {/* Flowing Organic Wave Path */}
-            <path d="M0,80 C200,160 450,20 700,90 C950,160 1100,50 1200,80 L1200,180 L0,180 Z" fill="url(#waveGradLeft)"></path>
-            <path d="M0,110 C300,40 600,150 900,80 C1050,45 1150,110 1200,130 L1200,180 L0,180 Z" fill="#030308" opacity="0.95"></path>
-          </svg>
         </div>
 
       </section>
@@ -193,14 +165,7 @@ export default function Landing() {
               </li>
             </ul>
             <div style={{ marginTop: 'auto' }}>
-              <Link to="/auth" className="btn" style={{ 
-                width: '100%', pointerEvents: 'auto', padding: '1.2rem', fontSize: '1.05rem', fontWeight: '600',
-                background: 'linear-gradient(135deg, #a855f7, #06b6d4)',
-                color: '#ffffff',
-                border: 'none',
-                boxShadow: '0 4px 20px rgba(168, 85, 247, 0.3)',
-                borderRadius: '12px'
-              }}>Start Tracking Edge</Link>
+              <Link to="/auth" className="btn-white-pill" style={{ width: '100%', pointerEvents: 'auto', padding: '1rem', fontSize: '1rem', textAlign: 'center' }}>Start Tracking Edge</Link>
             </div>
           </div>
 
@@ -228,14 +193,7 @@ export default function Landing() {
               </li>
             </ul>
             <div style={{ marginTop: 'auto' }}>
-              <Link to="/auth" className="btn" style={{ 
-                width: '100%', pointerEvents: 'auto', padding: '1.2rem', fontSize: '1.05rem', fontWeight: '600',
-                background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
-                color: '#ffffff',
-                border: 'none',
-                boxShadow: '0 4px 20px rgba(6, 182, 212, 0.3)',
-                borderRadius: '12px'
-              }}>Browse Top Analysts</Link>
+              <Link to="/auth" className="btn-white-pill" style={{ width: '100%', pointerEvents: 'auto', padding: '1rem', fontSize: '1rem', textAlign: 'center' }}>Browse Top Analysts</Link>
             </div>
           </div>
         </div>
@@ -309,7 +267,7 @@ export default function Landing() {
           <div className="grid grid-cols-2" style={{ gap: '5rem', alignItems: 'start' }}>
             
             <div className="flex-col gap-6 justify-center">
-              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'var(--adaptive-white-04)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
+              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
                 <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>About QuantStakes</h3>
                 <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>A non-profit platform created for sports portfolio management, maintaining code, website architecture, and bet-tracking APIs.</p>
                 <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '1.1rem', pointerEvents: 'none' }}>
@@ -318,7 +276,7 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="glass-panel" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 10, 16, 0.85)', border: '1px solid rgba(6, 182, 212, 0.15)', borderRadius: '24px' }}>
+            <div className="glass-panel" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 14, 29, 0.85)', border: '1px solid rgba(56, 189, 248, 0.15)', borderRadius: '24px' }}>
               {sent ? (
                 <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem', position: 'relative', zIndex: 1 }}>
                   <CheckCircle size={56} className="text-success mb-6" />
@@ -329,17 +287,17 @@ export default function Landing() {
                 <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex-col gap-6" style={{ position: 'relative', zIndex: 1 }}>
                   <div>
                     <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Name</label>
-                    <input type="text" className="input-field" placeholder="Your Name" required style={{ background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
+                    <input type="text" className="input-field" placeholder="Your Name" required style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
                   </div>
                   <div>
                     <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Email Address</label>
-                    <input type="email" className="input-field" placeholder="name@example.com" required style={{ background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
+                    <input type="email" className="input-field" placeholder="name@example.com" required style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
                   </div>
                   <div>
                     <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
-                    <textarea className="input-field" placeholder="How can we help?" required rows="4" style={{ resize: 'vertical', background: 'rgba(5, 5, 8, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }}></textarea>
+                    <textarea className="input-field" placeholder="How can we help?" required rows="4" style={{ resize: 'vertical', background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }}></textarea>
                   </div>
-                  <button className="btn btn-primary" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', color: '#fff', border: 'none', borderRadius: '12px', cursor: 'pointer' }}>
+                  <button className="btn-white-pill" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1rem' }}>
                     Send Message
                   </button>
                 </form>
@@ -350,7 +308,7 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: 'rgba(0, 0, 0, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 4rem 3rem 4rem' }}>
+      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 4rem 3rem 4rem' }}>
         <div className="flex justify-between" style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '4rem', flexWrap: 'wrap', gap: '4rem' }}>
           
           <div style={{ maxWidth: '350px' }}>
