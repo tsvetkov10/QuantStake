@@ -134,6 +134,73 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* --- Scroll Reveal Animations (One-Pager Experience) --- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(45px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Delay modifiers for staggered card entrance */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+
+/* --- Dynamic Background Lightning FX --- */
+.lightning-bolt {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 18px #38bdf8) drop-shadow(0 0 35px #a855f7);
+  animation: lightningStrike 5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.lightning-left {
+  top: 10%;
+  left: 5%;
+  width: 280px;
+  animation-delay: 0.5s;
+}
+
+.lightning-right {
+  top: 30%;
+  right: 6%;
+  width: 320px;
+  animation-delay: 2.8s;
+}
+
+@keyframes lightningStrike {
+  0%, 86%, 94%, 100% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  87% {
+    opacity: 0.9;
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 30px #38bdf8) drop-shadow(0 0 60px #ffffff);
+  }
+  89% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  91% {
+    opacity: 0.95;
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 35px #a855f7) drop-shadow(0 0 70px #38bdf8);
+  }
+  93% {
+    opacity: 0.3;
+  }
+}
+
 :root {
   --bg-dark: #000000;
   --bg-glass: #0a0a0a;

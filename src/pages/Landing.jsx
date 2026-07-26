@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Mail, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowDown } from 'lucide-react';
+import { BrainCircuit, BarChart3, Mail, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal } from 'lucide-react';
 
 export default function Landing() {
   const [sent, setSent] = useState(false);
+
+  // Scroll Reveal Observer for One-Pager Experience
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   // 3D Card Tilt Handler
   const handleMouseMove = (e) => {
@@ -37,6 +56,14 @@ export default function Landing() {
       <div className="light-streak-beam-1"></div>
       <div className="light-streak-beam-2"></div>
 
+      {/* Electric Background Lightning Bolts */}
+      <svg className="lightning-bolt lightning-left" viewBox="0 0 100 200">
+        <path d="M 50 0 L 20 80 L 55 85 L 15 200 L 80 95 L 45 90 Z" fill="none" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <svg className="lightning-bolt lightning-right" viewBox="0 0 100 200">
+        <path d="M 60 0 L 30 75 L 65 80 L 20 200 L 85 90 L 50 85 Z" fill="none" stroke="#a855f7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+
       {/* Navigation Header */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(4, 7, 20, 0.75)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
@@ -54,24 +81,24 @@ export default function Landing() {
         </nav>
       </header>
 
-      {/* Hero Section - Matching Cirform Dribbble Layout */}
-      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '10rem', width: '100%', minHeight: '88vh' }}>
+      {/* Hero Section */}
+      <section style={{ position: 'relative', paddingTop: '11rem', paddingBottom: '8rem', width: '100%', minHeight: '88vh' }}>
         
         <div className="hero-cirform-grid responsive-padding" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
-          <div className="flex-col" style={{ alignItems: 'flex-start' }}>
+          <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
             <h1 className="title-cirform mb-6" style={{ textAlign: 'left' }}>
               We create bright <br />
-              future <span className="serif-italic-accent">for Betting</span>
+              future <span className="serif-italic-accent">for Portfolio Management</span>
             </h1>
 
             <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
-              Empowering sports bettors with verified analytics, cryptographic slip proof, and institutional-grade portfolio tracking.
+              Empowering sports analysts with verified metrics, cryptographic proof, and institutional-grade portfolio tracking.
             </p>
 
             {/* CTA Action Group: White Pill + Learn More */}
-            <div className="flex items-center gap-6 flex-wrap mb-16">
+            <div className="flex items-center gap-6 flex-wrap mb-6">
               <Link to="/auth" className="btn-white-pill">
                 Open Account
               </Link>
@@ -82,15 +109,10 @@ export default function Landing() {
                 Learn more
               </a>
             </div>
-
-            {/* Scroll Indicator */}
-            <div className="flex items-center gap-2 text-secondary desktop-only" style={{ fontSize: '0.8rem', letterSpacing: '2px', fontWeight: 700, opacity: 0.6 }}>
-              SCROLL <ArrowDown size={14} />
-            </div>
           </div>
 
           {/* Hero Right Column: Floating Financial Metric Glass Card */}
-          <div className="flex flex-col items-center justify-center" style={{ position: 'relative', width: '100%' }}>
+          <div className="flex flex-col items-center justify-center reveal-on-scroll delay-200" style={{ position: 'relative', width: '100%' }}>
             
             {/* Ambient Backlight Glow behind Card */}
             <div style={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(168, 85, 247, 0.2) 60%, transparent 80%)', filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0 }}></div>
@@ -137,18 +159,20 @@ export default function Landing() {
 
       {/* Two Paths Section */}
       <section className="flex-col items-center responsive-padding" style={{ position: 'relative', zIndex: 10 }}>
-        <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center' }}>Choose Your Path</h3>
-        <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp bettor proving your edge, or an investor looking for quantitative alpha, QuantStakes is built for you.</p>
+        <div className="reveal-on-scroll text-center flex-col items-center">
+          <h3 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 'bold', textAlign: 'center' }}>Choose Your Path</h3>
+          <p className="text-secondary mb-12 text-center" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.6' }}>Whether you're a sharp analyst proving your edge, or an investor looking for quantitative alpha, QuantStakes is built for you.</p>
+        </div>
         
         <div className="features-grid">
           {/* Analyst Path */}
-          <div className="glass-card flex-col" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
+          <div className="glass-card flex-col reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
             <div style={{ alignSelf: 'flex-start', background: 'rgba(168, 85, 247, 0.1)', padding: '1rem', borderRadius: '12px', display: 'inline-block', marginBottom: '2rem', pointerEvents: 'none' }}>
               <Sparkles size={32} color="#a855f7" />
             </div>
             <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', fontWeight: 'bold', pointerEvents: 'none', color: 'var(--text-primary)' }}>Become a Quant Analyst</h3>
             <p className="text-secondary" style={{ fontSize: '1rem', lineHeight: '1.7', pointerEvents: 'none', marginBottom: '2.5rem' }}>
-              Upload your slips to parse them into a cryptographic track record. Share your verified winning picks and grow an audience.
+              Upload your portfolio records to parse them into a cryptographic track record. Share your verified winning picks and grow an audience.
             </p>
             <ul className="flex-col flex-grow" style={{ pointerEvents: 'none', padding: 0, margin: 0, listStyle: 'none', marginBottom: '3rem' }}>
               <li className="flex items-start gap-3 text-secondary" style={{ marginBottom: '1.25rem', lineHeight: '1.5' }}>
@@ -170,7 +194,7 @@ export default function Landing() {
           </div>
 
           {/* Follower Path */}
-          <div className="glass-card flex-col" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
+          <div className="glass-card flex-col reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '3rem', transition: 'all 0.5s ease', cursor: 'default', height: '100%' }}>
             <div style={{ alignSelf: 'flex-start', background: 'rgba(6, 182, 212, 0.1)', padding: '1rem', borderRadius: '12px', display: 'inline-block', marginBottom: '2rem', pointerEvents: 'none' }}>
               <Users size={32} color="var(--accent-cyan)" />
             </div>
@@ -201,26 +225,26 @@ export default function Landing() {
 
       {/* Features Grid */}
       <section id="features" className="flex-col items-center" style={{ padding: '5rem 2rem' }}>
-        <h3 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: 'bold' }}>Platform Capabilities</h3>
+        <h3 className="reveal-on-scroll" style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: 'bold' }}>Platform Capabilities</h3>
         <div className="grid grid-cols-3" style={{ gap: '1.5rem', maxWidth: '1200px', width: '100%' }}>
           
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <BrainCircuit size={24} color="#a855f7" />
             </div>
-            <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Smart Slip Parsing</h3>
-            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Upload screenshots of your bet slips for fast, accurate parsing of odds, teams, and stake values.</p>
+            <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Smart Record Parsing</h3>
+            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Upload screenshots of your portfolio slips for fast, accurate parsing of odds, teams, and stake values.</p>
           </div>
           
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <ShieldCheck size={24} color="var(--accent-cyan)" />
             </div>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Cryptographic Proof</h3>
-            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Sealed slip records ensure past bets cannot be forged, altered, or retroactively edited.</p>
+            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Sealed portfolio records ensure past metrics cannot be forged, altered, or retroactively edited.</p>
           </div>
           
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-300" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <BarChart3 size={24} color="var(--success)" />
             </div>
@@ -228,7 +252,7 @@ export default function Landing() {
             <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Visualize true return on investment and bankroll trajectory with deep performance charts.</p>
           </div>
 
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'rgba(99, 102, 241, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <Users size={24} color="#6366f1" />
             </div>
@@ -236,20 +260,20 @@ export default function Landing() {
             <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Showcase your quantitative edge on public leaderboards built purely on real data.</p>
           </div>
 
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-200" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'rgba(255, 215, 0, 0.1)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <CreditCard size={24} color="#FFD700" />
             </div>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Track Record Sharing</h3>
-            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Generate sleek, verified share cards to showcase your winning bets on social channels.</p>
+            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Generate sleek, verified share cards to showcase your winning performance on social channels.</p>
           </div>
 
-          <div className="glass-card feature-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
+          <div className="glass-card feature-card reveal-on-scroll delay-300" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
             <div style={{ background: 'var(--adaptive-white-10)', padding: '0.75rem', borderRadius: '12px', display: 'inline-block', marginBottom: '1rem', pointerEvents: 'none' }}>
               <Activity size={24} color="white" />
             </div>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontWeight: 'bold', pointerEvents: 'none' }}>Global League Coverage</h3>
-            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Log and analyze bets across NBA, NFL, Premier League, Champions League, and more.</p>
+            <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', pointerEvents: 'none' }}>Log and analyze performance across NBA, NFL, Premier League, Champions League, and more.</p>
           </div>
 
         </div>
@@ -258,25 +282,25 @@ export default function Landing() {
       {/* Inline Contact Section */}
       <section id="contact" style={{ padding: '6rem 2rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="flex items-center gap-3 mb-8 justify-center">
+          <div className="flex items-center gap-3 mb-8 justify-center reveal-on-scroll">
             <Mail size={28} className="text-success" />
             <h2 className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>Contact Support</h2>
           </div>
-          <p className="text-secondary text-center mb-12" style={{ fontSize: '1.2rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
+          <p className="text-secondary text-center mb-12 reveal-on-scroll" style={{ fontSize: '1.2rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
 
           <div className="grid grid-cols-2" style={{ gap: '5rem', alignItems: 'start' }}>
             
-            <div className="flex-col gap-6 justify-center">
+            <div className="flex-col gap-6 justify-center reveal-on-scroll delay-100">
               <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2.5rem', transition: 'all 0.5s ease' }}>
                 <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)', pointerEvents: 'none' }}>About QuantStakes</h3>
-                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>A non-profit platform created for sports portfolio management, maintaining code, website architecture, and bet-tracking APIs.</p>
+                <p className="text-secondary" style={{ marginBottom: '1.5rem', lineHeight: '1.6', pointerEvents: 'none' }}>A non-profit platform created for sports portfolio management, maintaining code, website architecture, and portfolio tracking APIs.</p>
                 <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '1.1rem', pointerEvents: 'none' }}>
                   <BarChart3 size={20} /> Data-Driven & Open
                 </div>
               </div>
             </div>
 
-            <div className="glass-panel" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 14, 29, 0.85)', border: '1px solid rgba(56, 189, 248, 0.15)', borderRadius: '24px' }}>
+            <div className="glass-panel reveal-on-scroll delay-200" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 14, 29, 0.85)', border: '1px solid rgba(56, 189, 248, 0.15)', borderRadius: '24px' }}>
               {sent ? (
                 <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem', position: 'relative', zIndex: 1 }}>
                   <CheckCircle size={56} className="text-success mb-6" />
@@ -316,7 +340,7 @@ export default function Landing() {
               <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
             </div>
             <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.8' }}>
-              A non-profit sports portfolio management terminal to track, analyze, and maintain cryptographic proof of your betting edge.
+              A non-profit sports portfolio management terminal to track, analyze, and maintain cryptographic proof of your performance edge.
             </p>
           </div>
 
@@ -343,7 +367,7 @@ export default function Landing() {
         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap' }}>
           <p className="text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.6' }}>
             © {new Date().getFullYear()} QuantStakes. All rights reserved. Non-profit platform. <br/>
-            QuantStakes is not a sportsbook and does not accept wagers.
+            QuantStakes is a sports portfolio management platform.
           </p>
           <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '0.85rem' }}>
             <Shield size={16} color="var(--success)" /> SECURE PLATFORM
