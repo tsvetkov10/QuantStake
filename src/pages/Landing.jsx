@@ -86,99 +86,59 @@ export default function Landing() {
             </Link>
           </div>
 
-          {/* Hero Right Column: Polished 3D Vector Illustration */}
+          {/* Hero Right Column: Branded Simplified Rocket Vector */}
           <div className="flex justify-center items-center rocket-float-container" style={{ position: 'relative', width: '100%', height: '100%', minHeight: '400px' }}>
-            <svg viewBox="0 0 600 600" style={{ width: '100%', height: 'auto', maxWidth: '520px', filter: 'drop-shadow(0 25px 50px rgba(56, 189, 248, 0.35))' }}>
+            <svg viewBox="0 0 600 600" style={{ width: '100%', height: 'auto', maxWidth: '500px', filter: 'drop-shadow(0 20px 40px rgba(56, 189, 248, 0.3))' }}>
               <defs>
-                {/* Body Metallic Gradients */}
-                <linearGradient id="rocketBodyPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#bae6fd" />
-                  <stop offset="25%" stopColor="#38bdf8" />
-                  <stop offset="65%" stopColor="#2563eb" />
-                  <stop offset="100%" stopColor="#1e1b4b" />
+                {/* Rocket Hull Gradient */}
+                <linearGradient id="simpleRocketBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#60a5fa" />
+                  <stop offset="40%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#1d4ed8" />
                 </linearGradient>
-                <linearGradient id="rocketHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-                </linearGradient>
-                <linearGradient id="rocketWingLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#0f172a" />
-                </linearGradient>
-                <linearGradient id="rocketWingRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1d4ed8" />
-                  <stop offset="100%" stopColor="#020617" />
-                </linearGradient>
-                
-                {/* Exhaust Fire Plume Gradients */}
-                <radialGradient id="fireOuter" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.9" />
-                  <stop offset="40%" stopColor="#818cf8" stopOpacity="0.7" />
-                  <stop offset="80%" stopColor="#c084fc" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-                </radialGradient>
-                <linearGradient id="fireInner" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="simpleRocketNose" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#ffffff" />
-                  <stop offset="30%" stopColor="#7dd3fc" />
-                  <stop offset="70%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+                  <stop offset="100%" stopColor="#e2e8f0" />
                 </linearGradient>
-                <radialGradient id="glowingAura" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.35" />
+                <linearGradient id="simpleFlame" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="40%" stopColor="#38bdf8" />
+                  <stop offset="80%" stopColor="#6366f1" />
+                  <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+                </linearGradient>
+                <radialGradient id="spaceAura" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
                   <stop offset="100%" stopColor="#000000" stopOpacity="0" />
                 </radialGradient>
               </defs>
 
-              {/* Background Glow Aura */}
-              <circle cx="300" cy="260" r="220" fill="url(#glowingAura)" />
+              {/* Background Glow */}
+              <circle cx="300" cy="280" r="200" fill="url(#spaceAura)" />
 
-              {/* Thruster Plume & Flames */}
               <g transform="rotate(-35 300 300)">
-                {/* Outer Energy Plume */}
-                <path d="M 230 410 Q 180 500 130 560 Q 250 510 300 450 Z" fill="url(#fireOuter)" />
-                <path d="M 370 410 Q 420 500 470 560 Q 350 510 300 450 Z" fill="url(#fireOuter)" />
-                
-                {/* Main Core Flame Stream */}
-                <path d="M 260 410 Q 210 520 160 590 Q 280 520 300 460 Z" fill="url(#fireInner)" />
-                <path d="M 340 410 Q 390 520 440 590 Q 320 520 300 460 Z" fill="url(#fireInner)" />
-                <path d="M 280 410 Q 300 550 300 600 Q 300 550 320 410 Z" fill="#ffffff" opacity="0.95" />
+                {/* Flame */}
+                <path d="M 270 410 Q 300 560 300 580 Q 300 560 330 410 Z" fill="url(#simpleFlame)" />
+                <path d="M 285 410 Q 300 500 300 520 Q 300 500 315 410 Z" fill="#ffffff" />
 
-                {/* Energy Spark Dots */}
-                <circle cx="220" cy="530" r="4" fill="#38bdf8" opacity="0.8" />
-                <circle cx="380" cy="540" r="5" fill="#a78bfa" opacity="0.8" />
-                <circle cx="290" cy="580" r="6" fill="#ffffff" opacity="0.9" />
-                <circle cx="330" cy="560" r="3" fill="#38bdf8" opacity="0.9" />
+                {/* Back Wings */}
+                <path d="M 230 350 L 150 420 Q 180 430 220 400 Z" fill="#1d4ed8" stroke="#60a5fa" strokeWidth="1.5" />
+                <path d="M 370 350 L 450 420 Q 420 430 380 400 Z" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.5" />
 
-                {/* Rocket Back Thrusters Base */}
-                <path d="M 240 400 L 250 420 L 350 420 L 360 400 Z" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
-                <rect x="260" y="420" width="30" height="15" rx="3" fill="#1e293b" />
-                <rect x="310" y="420" width="30" height="15" rx="3" fill="#1e293b" />
+                {/* Rocket Main Body */}
+                <path d="M 300 120 C 380 220 370 360 350 410 L 250 410 C 230 360 220 220 300 120 Z" fill="url(#simpleRocketBody)" stroke="#93c5fd" strokeWidth="2" />
 
-                {/* Back Wings / Fins */}
-                <path d="M 230 350 L 130 430 Q 150 440 210 400 Z" fill="url(#rocketWingLeft)" stroke="#38bdf8" strokeWidth="1.5" />
-                <path d="M 370 350 L 470 430 Q 450 440 390 400 Z" fill="url(#rocketWingRight)" stroke="#38bdf8" strokeWidth="1.5" />
-                <path d="M 290 340 L 300 430 L 310 340 Z" fill="#2563eb" />
+                {/* White Nose Cone */}
+                <path d="M 300 120 C 325 160 325 180 325 190 L 275 190 C 275 180 275 160 300 120 Z" fill="url(#simpleRocketNose)" />
 
-                {/* Main Rocket Body */}
-                <path d="M 300 110 C 390 220 380 360 360 400 L 240 400 C 220 360 210 220 300 110 Z" fill="url(#rocketBodyPrimary)" stroke="#60a5fa" strokeWidth="2.5" />
-                
-                {/* Sleek Specular Reflection Line */}
-                <path d="M 300 115 C 330 180 340 280 335 380" stroke="url(#rocketHighlight)" strokeWidth="6" strokeLinecap="round" fill="none" />
-
-                {/* Metallic Nose Cone Tip */}
-                <path d="M 300 110 C 330 160 330 185 330 195 L 270 195 C 270 185 270 160 300 110 Z" fill="#ffffff" opacity="0.95" />
-
-                {/* Upper Porthole Window */}
-                <circle cx="300" cy="245" r="28" fill="#030712" stroke="#ffffff" strokeWidth="5" />
-                <circle cx="300" cy="245" r="20" fill="#0284c7" stroke="#38bdf8" strokeWidth="2" />
-                <circle cx="300" cy="245" r="14" fill="#38bdf8" opacity="0.9" />
-                <path d="M 290 235 A 12 12 0 0 1 310 238" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" />
-
-                {/* Lower Porthole Window */}
-                <circle cx="300" cy="325" r="20" fill="#030712" stroke="#ffffff" strokeWidth="4" />
-                <circle cx="300" cy="325" r="14" fill="#0284c7" stroke="#38bdf8" strokeWidth="1.5" />
-                <circle cx="300" cy="325" r="9" fill="#38bdf8" opacity="0.9" />
-                <path d="M 293 318 A 8 8 0 0 1 307 320" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" fill="none" />
+                {/* Branded Symbol.png Logo Emblem on Rocket */}
+                <g transform="translate(300 290)">
+                  {/* Outer Ring Glass Frame */}
+                  <circle cx="0" cy="0" r="46" fill="#090d1a" stroke="#ffffff" strokeWidth="4" />
+                  <circle cx="0" cy="0" r="42" fill="#030712" stroke="#38bdf8" strokeWidth="2" />
+                  
+                  {/* Embedded Symbol PNG */}
+                  <image href="/symbol.png" x="-32" y="-32" width="64" height="64" preserveAspectRatio="xMidYMid slice" />
+                </g>
               </g>
             </svg>
           </div>
