@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { Sparkles, Target, Activity, CheckCircle, Zap } from 'lucide-react';
+import { Target, Activity, CheckCircle, Zap } from 'lucide-react';
+import { LOGO_FULL_BASE64 } from '../assets/logoDataUrl';
 
 const ShareCard = forwardRef(({ profile, metrics }, ref) => {
   const { netProfit, roi, winRate, totalStaked, biggestWin } = metrics;
@@ -38,7 +39,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(10, 10, 15, 0.6)', border: '2px solid var(--adaptive-white-08)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
               {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
               )}
@@ -48,8 +49,10 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
               <span style={{ color: '#888888', fontSize: '1.5rem' }}>QuantStakes Verified</span>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
+          
+          {/* Logo Data URI to guarantee rendering when copying/downloading */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={LOGO_FULL_BASE64} alt="QuantStakes Logo" style={{ height: '72px', objectFit: 'contain' }} />
           </div>
         </div>
 
