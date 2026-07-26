@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Mail, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal } from 'lucide-react';
+import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal } from 'lucide-react';
 
 export default function Landing() {
-  const [sent, setSent] = useState(false);
-
   // Scroll Reveal Observer for One-Pager Experience
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,7 +50,7 @@ export default function Landing() {
   return (
     <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       
-      {/* Dynamic Moving Speed Streaks & Flare FX (Matching Dribbble Video) */}
+      {/* Dynamic Moving Speed Streaks & Flare FX */}
       <div className="flowing-speed-container">
         <div className="flowing-beam beam-cyan"></div>
         <div className="flowing-beam beam-magenta"></div>
@@ -68,7 +66,6 @@ export default function Landing() {
         <nav className="flex gap-10 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
           <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Contact</a>
           
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
           <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
@@ -136,8 +133,6 @@ export default function Landing() {
                 </span>
               </div>
             </div>
-
-
 
           </div>
         </div>
@@ -266,49 +261,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Inline Contact Section - Form Only, Centered */}
-      <section id="contact" style={{ padding: '6rem 2rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-          <div className="flex items-center gap-3 mb-4 justify-center reveal-on-scroll">
-            <Mail size={32} color="#38bdf8" />
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, color: '#ffffff' }}>Contact Support</h2>
-          </div>
-          <p className="text-secondary text-center mb-10 reveal-on-scroll" style={{ fontSize: '1.15rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
-
-          <div className="glass-panel reveal-on-scroll delay-100" style={{ padding: '3rem 2.5rem', position: 'relative', overflow: 'hidden', background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(30px)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '28px', boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.15)' }}>
-            
-            {/* Ambient Inner Glow */}
-            <div style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }}></div>
-
-            {sent ? (
-              <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
-                <CheckCircle size={60} color="#34d399" className="mb-6" />
-                <h3 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#ffffff', fontWeight: 700 }}>Message Sent</h3>
-                <p className="text-secondary" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>Thank you for reaching out! We'll be in touch soon.</p>
-              </div>
-            ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex-col gap-6" style={{ position: 'relative', zIndex: 1 }}>
-                <div>
-                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Name</label>
-                  <input type="text" className="input-field" placeholder="Your Name" required style={{ background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }} />
-                </div>
-                <div>
-                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Email Address</label>
-                  <input type="email" className="input-field" placeholder="name@example.com" required style={{ background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }} />
-                </div>
-                <div>
-                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
-                  <textarea className="input-field" placeholder="How can we help?" required rows="4" style={{ resize: 'vertical', background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }}></textarea>
-                </div>
-                <button type="submit" style={{ width: '100%', padding: '1.1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #38bdf8 0%, #2563eb 100%)', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: 'pointer', boxShadow: '0 8px 25px rgba(56, 189, 248, 0.4)', transition: 'all 0.3s ease' }}>
-                  Send Message
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 4rem 3rem 4rem' }}>
         <div className="flex justify-between" style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '4rem', flexWrap: 'wrap', gap: '4rem' }}>
@@ -330,11 +282,6 @@ export default function Landing() {
             </div>
 
             <div className="flex-col gap-4">
-              <h4 style={{ color: 'var(--text-primary)', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '1rem' }}>Company</h4>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Contact</a>
-            </div>
-
-            <div className="flex-col gap-4">
               <h4 style={{ color: 'var(--text-primary)', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '1rem' }}>Legal</h4>
               <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terms of Service</Link>
               <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Privacy Policy</Link>
@@ -347,9 +294,6 @@ export default function Landing() {
             © {new Date().getFullYear()} QuantStakes. All rights reserved. Non-profit platform. <br/>
             QuantStakes is a sports portfolio management platform.
           </p>
-          <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '0.85rem' }}>
-            <Shield size={16} color="var(--success)" /> SECURE PLATFORM
-          </div>
         </div>
       </footer>
     </div>
