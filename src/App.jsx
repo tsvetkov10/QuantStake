@@ -159,29 +159,16 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
 
 function App() {
   const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isInitializing, setIsInitializing] = useState(false);
   const [profile, setProfile] = useState(null);
   const currentUserId = useRef(null);
   const isMock = isMockMode;
 
   useEffect(() => {
-    const checkProfile = async (currentSession, isNewSignIn = false) => {
+    const checkProfile = async (currentSession) => {
       if (isMock) {
         const p = sessionStorage.getItem('mock_profile');
         if (p) {
           setProfile(JSON.parse(p));
-        }
-        const isMockLogin = sessionStorage.getItem('mock_new_login') === 'true';
-        if (isMockLogin) {
-           sessionStorage.removeItem('mock_new_login');
-           setIsInitializing(true);
-           setTimeout(() => {
-             setLoading(false);
-             setIsInitializing(false);
-           }, 3000);
-        } else {
-           setLoading(false);
         }
         return;
       }
@@ -194,16 +181,6 @@ function App() {
           setProfile(null);
         }
       }
-      
-      if (isNewSignIn) {
-         setIsInitializing(true);
-         setTimeout(() => {
-           setLoading(false);
-           setIsInitializing(false);
-         }, 3000);
-      } else {
-         setLoading(false);
-      }
     };
 
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
@@ -211,7 +188,7 @@ function App() {
       if (currentSession) {
         currentUserId.current = currentSession.user.id;
       }
-      checkProfile(currentSession, true);
+      checkProfile(currentSession);
     });
 
     const {
@@ -221,8 +198,7 @@ function App() {
       if (event === 'SIGNED_IN' && currentSession) {
          if (currentUserId.current !== currentSession.user.id) {
             currentUserId.current = currentSession.user.id;
-            setLoading(true);
-            checkProfile(currentSession, true);
+            checkProfile(currentSession);
          }
       } else if (event === 'SIGNED_OUT') {
          currentUserId.current = null;
@@ -232,24 +208,6 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, [isMock]);
-
-  if (loading) {
-    if (isInitializing) {
-      return (
-        <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-          <div className="flex items-center gap-3 mb-10">
-            <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '90px', objectFit: 'contain' }} />
-          </div>
-          
-          <div style={{ width: '300px', height: '4px', background: 'var(--adaptive-white-05)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-             <div className="loading-bar-fill" style={{ position: 'absolute', top: 0, left: 0, height: '100%', background: 'var(--accent-cyan)' }}></div>
-          </div>
-          <p className="text-secondary mt-5" style={{ fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase', animation: 'pulse 1.5s infinite' }}>Establishing Secure Connection...</p>
-        </div>
-      );
-    }
-    return <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)'}}></div>;
-  }
 
   const hasMockSession = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';
   const userToUse = session || (hasMockSession ? { user: { email: 'demo@quantstakes.com', id: 'demo-uuid' } } : null);

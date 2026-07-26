@@ -261,38 +261,26 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 4rem 3rem 4rem' }}>
-        <div className="flex justify-between" style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '4rem', flexWrap: 'wrap', gap: '4rem' }}>
+      {/* Sleek, Compact Footer */}
+      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '2.2rem 3rem' }}>
+        <div className="flex justify-between items-center" style={{ maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap', gap: '1.5rem' }}>
           
-          <div style={{ maxWidth: '350px' }}>
-            <div className="flex items-center gap-3 mb-6">
-              <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
-            </div>
-            <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.8' }}>
-              A non-profit sports portfolio management terminal to track, analyze, and maintain cryptographic proof of your performance edge.
-            </p>
+          <div className="flex items-center gap-4">
+            <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '44px', objectFit: 'contain' }} />
+            <span className="text-secondary desktop-only" style={{ fontSize: '0.85rem', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '1rem' }}>
+              Non-profit sports portfolio management terminal
+            </span>
           </div>
 
-          <div className="flex" style={{ gap: '6rem' }}>
-            <div className="flex-col gap-4">
-              <h4 style={{ color: 'var(--text-primary)', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '1rem' }}>Product</h4>
-              <Link to="/auth" className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</Link>
-              <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
-            </div>
-
-            <div className="flex-col gap-4">
-              <h4 style={{ color: 'var(--text-primary)', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '1rem' }}>Legal</h4>
-              <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terms of Service</Link>
-              <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Privacy Policy</Link>
-            </div>
+          <div className="flex items-center gap-8" style={{ fontSize: '0.9rem' }}>
+            <Link to="/auth" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</Link>
+            <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
+            <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terms of Service</Link>
+            <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Privacy Policy</Link>
           </div>
-        </div>
 
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap' }}>
-          <p className="text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.6' }}>
-            © {new Date().getFullYear()} QuantStakes. All rights reserved. Non-profit platform. <br/>
-            QuantStakes is a sports portfolio management platform.
+          <p className="text-secondary" style={{ fontSize: '0.85rem', margin: 0 }}>
+            © {new Date().getFullYear()} QuantStakes. All rights reserved.
           </p>
         </div>
       </footer>
