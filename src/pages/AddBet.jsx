@@ -430,7 +430,7 @@ export default function AddBet({ session, profile }) {
                 </div>
 
                 <div style={{ marginTop: '4px', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.6rem', color: '#a78bfa', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+                  <span style={{ fontSize: '0.6rem', color: '#F3E5AB', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
                 </div>
               </div>
             );
@@ -456,7 +456,7 @@ export default function AddBet({ session, profile }) {
               </div>
               <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '0.9rem', marginTop: '2px' }}>{leg}</span>
               <div style={{ marginTop: '4px', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.6rem', color: '#a78bfa', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+                <span style={{ fontSize: '0.6rem', color: '#F3E5AB', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
               </div>
             </div>
           );
@@ -518,7 +518,7 @@ export default function AddBet({ session, profile }) {
               padding: '1.25rem 1.5rem', 
               background: 'linear-gradient(135deg, rgba(10, 10, 20, 0.96) 0%, rgba(20, 20, 30, 0.98) 100%)',
               border: '1.5px solid var(--accent-cyan)',
-              boxShadow: '0 10px 40px rgba(167, 139, 250, 0.2)',
+              boxShadow: '0 10px 40px rgba(212, 175, 55, 0.2)',
               display: 'flex',
               alignItems: 'start',
               gap: '12px',
@@ -527,7 +527,7 @@ export default function AddBet({ session, profile }) {
               overflow: 'hidden'
             }}
           >
-            <div style={{ background: 'rgba(167, 139, 250, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ background: 'rgba(212, 175, 55, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CheckCircle2 size={20} color="var(--accent-cyan)" />
             </div>
             
@@ -879,15 +879,15 @@ export default function AddBet({ session, profile }) {
                 style={{ 
                   width: '100%', 
                   marginTop: '1rem', 
-                  background: 'rgba(167, 139, 250, 0.05)', 
+                  background: 'rgba(212, 175, 55, 0.05)', 
                   border: '1px solid var(--border-glass)', 
                   color: 'var(--text-primary)', 
                   cursor: 'pointer', 
                   transition: 'all 0.2s',
                   boxShadow: '0 0 10px transparent'
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.15)'; e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.5)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(167, 139, 250, 0.2)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.boxShadow = '0 0 10px transparent'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.15)'; e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.5)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.2)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.boxShadow = '0 0 10px transparent'; }}
               >
                 {loading ? 'Processing Ledger Ingestion...' : 'Commit Log Entry'}
               </button>
@@ -914,14 +914,14 @@ export default function AddBet({ session, profile }) {
             }}
           >
             {/* Top Accent Line */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, ${activeSportColor}, rgba(167, 139, 250, 0.5))` }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, ${activeSportColor}, rgba(212, 175, 55, 0.5))` }} />
 
             {/* Brand Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px dashed rgba(255, 255, 255, 0.1)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Sparkles size={20} color="#a78bfa" strokeWidth={3} />
+                <Sparkles size={20} color="#F3E5AB" strokeWidth={3} />
                 <span style={{ fontSize: '1.1rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>
-                  Quant<span style={{ color: '#a78bfa' }}>Stake</span>
+                  Quant<span style={{ color: '#F3E5AB' }}>Stake</span>
                 </span>
               </div>
               <div className="flex items-center gap-1.5" data-html2canvas-ignore="true">
@@ -943,7 +943,7 @@ export default function AddBet({ session, profile }) {
                     fontWeight: '600',
                     transition: 'all 0.2s'
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#a78bfa'; e.currentTarget.style.color = '#ffffff'; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#F3E5AB'; e.currentTarget.style.color = '#ffffff'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'; e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'; }}
                 >
                   <Copy size={12} />
@@ -1032,9 +1032,9 @@ export default function AddBet({ session, profile }) {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <BadgePercent size={14} color="#a78bfa" /> Decimal Odds
+                    <BadgePercent size={14} color="#F3E5AB" /> Decimal Odds
                   </span>
-                  <span style={{ fontSize: '1.05rem', color: '#a78bfa', fontWeight: '700', fontFamily: 'monospace' }}>
+                  <span style={{ fontSize: '1.05rem', color: '#F3E5AB', fontWeight: '700', fontFamily: 'monospace' }}>
                     @{activeOdds.toFixed(2)}
                   </span>
                 </div>

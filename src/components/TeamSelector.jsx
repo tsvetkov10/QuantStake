@@ -32,7 +32,7 @@ export default function TeamSelector({ value, onChange, placeholder }) {
       >
         {selectedTeam ? (
           <>
-            <img src={selectedTeam.logo} alt={selectedTeam.name} style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+            <img src={selectedTeam.logo} alt={selectedTeam.name} style={{ width: '24px', height: '64px', objectFit: 'contain' }} />
             <span style={{ color: 'var(--text-primary)' }}>{selectedTeam.name}</span>
           </>
         ) : (
@@ -119,7 +119,7 @@ export default function TeamSelector({ value, onChange, placeholder }) {
                   setSearchTerm('');
                 }}
               >
-                <img src={team.logo} alt={team.name} style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                <img src={team.logo} alt={team.name} style={{ width: '24px', height: '64px', objectFit: 'contain' }} />
                 <span style={{ fontSize: '0.95rem' }}>{team.name}</span>
               </div>
             )) : searchTerm.trim() === '' ? (

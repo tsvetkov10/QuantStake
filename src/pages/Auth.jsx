@@ -103,7 +103,7 @@ export default function Auth() {
         {/* Left Side: Branding / Features (Hidden on very small screens) */}
         <div className="auth-left" style={{ flex: 1, background: 'linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(138, 43, 226, 0.15))', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div className="flex items-center gap-3 mb-6">
-            <img src="/logo.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '36px', objectFit: 'contain' }} />
+            <img src="/logo.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '60px', objectFit: 'contain' }} />
           </div>
           
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: '1.2', marginBottom: '1.5rem' }}>

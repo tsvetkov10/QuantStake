@@ -49,7 +49,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '40px', objectFit: 'contain' }} />
+            <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
           </div>
         </div>
 
@@ -74,7 +74,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             
             <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <Activity size={32} color="#a78bfa" style={{ flexShrink: 0 }} />
+                <Activity size={32} color="#F3E5AB" style={{ flexShrink: 0 }} />
                 <span style={{ color: '#888888', fontSize: '1.5rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Yield (ROI)</span>
               </div>
               <p style={{ fontSize: '4rem', fontWeight: 'bold', margin: 0, color: roi >= 0 ? '#10b981' : '#ffffff' }}>{roi >= 0 ? '+' : ''}{roi.toFixed(1)}%</p>

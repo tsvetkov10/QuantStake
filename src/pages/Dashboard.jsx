@@ -12,7 +12,7 @@ const BetCardPopup = ({ rawBet, sym }) => {
   const statusInfo = rawBet.status === 'Won' ? { color: '#10b981', label: 'SETTLED • WIN', shadow: '0 0 12px rgba(16,185,129,0.4)' } : 
                      rawBet.status === 'Lost' ? { color: '#ef4444', label: 'SETTLED • LOSS', shadow: '0 0 12px rgba(239,68,68,0.4)' } : 
                      rawBet.status === 'Cashed Out' ? { color: '#FFD700', label: 'SETTLED • CASHOUT', shadow: '0 0 12px rgba(255,215,0,0.4)' } : 
-                     { color: '#a78bfa', label: 'PENDING', shadow: 'none' };
+                     { color: '#F3E5AB', label: 'PENDING', shadow: 'none' };
   
   const matchupParts = rawBet.teams ? rawBet.teams.split('vs').map(s => s.trim()) : ['Unknown'];
   const isWin = rawBet.status === 'Won';
@@ -49,7 +49,7 @@ const BetCardPopup = ({ rawBet, sym }) => {
 
       <div className="flex-col gap-3">
         <div className="flex justify-between items-center">
-          <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: '#a78bfa', background: 'rgba(255, 255, 255, 0.05)', padding: '0.2rem 0.6rem', borderRadius: '20px', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: '#F3E5AB', background: 'rgba(255, 255, 255, 0.05)', padding: '0.2rem 0.6rem', borderRadius: '20px', textTransform: 'uppercase' }}>
             {rawBet.sport || 'OTHER'}
           </span>
           <span style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: '600' }}>{rawBet.bookmaker || 'Unknown'}</span>
@@ -141,7 +141,7 @@ const BankrollCandlestickChart = ({ data, sym }) => {
         {/* Zero baseline */}
         {yMin < 0 && yMax > 0 && (() => {
           const zeroY = viewHeight - ((0 - yMin) / yRange) * viewHeight;
-          return <line x1="0" y1={zeroY} x2={viewWidth} y2={zeroY} stroke="rgba(167, 139, 250, 0.3)" strokeDasharray="4 4" strokeWidth="1.5" />;
+          return <line x1="0" y1={zeroY} x2={viewWidth} y2={zeroY} stroke="rgba(212, 175, 55, 0.3)" strokeDasharray="4 4" strokeWidth="1.5" />;
         })()}
 
         {/* Candlestick Bars */}
@@ -153,7 +153,7 @@ const BankrollCandlestickChart = ({ data, sym }) => {
           const lowY = viewHeight - ((item.low - yMin) / yRange) * viewHeight;
 
           const isBull = item.close >= item.open;
-          const candleColor = isBull ? '#ff8c00' : '#8b5cf6';
+          const candleColor = isBull ? '#ff8c00' : '#D4AF37';
 
           const bodyTop = Math.min(openY, closeY);
           const bodyHeight = Math.max(3, Math.abs(openY - closeY));
@@ -225,7 +225,7 @@ const CustomTooltip = ({ active, payload, sym }) => {
         <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.65rem', marginBottom: '2px' }}>
           {data.date === 'Start' ? 'Start Balance' : data.date}
         </div>
-        <div style={{ fontWeight: 'bold', color: '#a78bfa', fontSize: '0.95rem' }}>
+        <div style={{ fontWeight: 'bold', color: '#F3E5AB', fontSize: '0.95rem' }}>
           {sym}{Number(data.balance).toFixed(2)}
         </div>
       </div>
@@ -609,7 +609,7 @@ export default function Dashboard({ session, profile }) {
     winRate: s.total > 0 ? parseFloat(((s.wins / s.total) * 100).toFixed(1)) : 0,
     total: s.total
   })).filter(s => s.total > 0);
-  const pieColors = ['#a78bfa', '#ff3366', '#FFD700', '#00ffaa', '#8b5cf6', '#ff8c00', '#10b981'];
+  const pieColors = ['#F3E5AB', '#ff3366', '#FFD700', '#00ffaa', '#D4AF37', '#ff8c00', '#10b981'];
 
   const getCurrencySymbol = (code) => {
     switch(code) {
@@ -726,14 +726,14 @@ export default function Dashboard({ session, profile }) {
                 gap: '10px',
                 fontSize: '1.2rem',
                 padding: '1rem 2rem',
-                background: 'rgba(167, 139, 250, 0.03)',
-                border: '1.5px solid rgba(167, 139, 250, 0.3)',
+                background: 'rgba(212, 175, 55, 0.03)',
+                border: '1.5px solid rgba(212, 175, 55, 0.3)',
                 color: 'var(--text-primary)',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.1)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.03)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(212, 175, 55, 0.03)'; }}
             >
               {isGeneratingShare ? <div className="spinner" style={{ width: '24px', height: '24px', borderTopColor: 'white' }}></div> : <Download size={24} color="white" />}
               <span>Save PNG</span>
@@ -961,7 +961,7 @@ export default function Dashboard({ session, profile }) {
                     fontSize: '0.75rem',
                     fontWeight: 'bold',
                     border: 'none',
-                    background: chartType === 'candlestick' ? 'linear-gradient(135deg, #ff8c00, #8b5cf6)' : 'transparent',
+                    background: chartType === 'candlestick' ? 'linear-gradient(135deg, #ff8c00, #D4AF37)' : 'transparent',
                     color: chartType === 'candlestick' ? '#ffffff' : 'rgba(255,255,255,0.5)',
                     cursor: 'pointer',
                     display: 'flex',
@@ -1002,7 +1002,7 @@ export default function Dashboard({ session, profile }) {
                 <AreaChart data={chartData} margin={{ top: 20, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorBalanceGraph" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={netProfit >= 0 ? "#a78bfa" : "#ef4444"} stopOpacity={0.4}/>
+                      <stop offset="0%" stopColor={netProfit >= 0 ? "#F3E5AB" : "#ef4444"} stopOpacity={0.4}/>
                       <stop offset="75%" stopColor={netProfit >= 0 ? "#3b82f6" : "#ef4444"} stopOpacity={0.05}/>
                       <stop offset="100%" stopColor="#000000" stopOpacity={0}/>
                     </linearGradient>
@@ -1010,16 +1010,16 @@ export default function Dashboard({ session, profile }) {
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.08)" vertical={false} />
                   <XAxis dataKey="date" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} dy={10} />
                   <YAxis yAxisId="left" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${sym}${value}`} dx={-10} domain={[chartYMin, chartYMax]} />
-                  <Tooltip content={<CustomTooltip sym={sym} />} cursor={{ stroke: 'rgba(167, 139, 250, 0.4)', strokeDasharray: '3 3' }} />
+                  <Tooltip content={<CustomTooltip sym={sym} />} cursor={{ stroke: 'rgba(212, 175, 55, 0.4)', strokeDasharray: '3 3' }} />
                   <Area 
                     yAxisId="left" 
                     type="monotone" 
                     dataKey="balance" 
-                    stroke={netProfit >= 0 ? "#a78bfa" : "#ef4444"} 
+                    stroke={netProfit >= 0 ? "#F3E5AB" : "#ef4444"} 
                     strokeWidth={3} 
                     fill="url(#colorBalanceGraph)" 
-                    dot={{ r: 4, fill: '#0d0f17', stroke: netProfit >= 0 ? "#a78bfa" : "#ef4444", strokeWidth: 2 }} 
-                    activeDot={{ r: 7, fill: netProfit >= 0 ? "#a78bfa" : "#ef4444", stroke: '#ffffff', strokeWidth: 2 }} 
+                    dot={{ r: 4, fill: '#0d0f17', stroke: netProfit >= 0 ? "#F3E5AB" : "#ef4444", strokeWidth: 2 }} 
+                    activeDot={{ r: 7, fill: netProfit >= 0 ? "#F3E5AB" : "#ef4444", stroke: '#ffffff', strokeWidth: 2 }} 
                   />
                 </AreaChart>
               </ResponsiveContainer>

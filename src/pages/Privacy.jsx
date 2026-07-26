@@ -8,7 +8,7 @@ export default function Privacy() {
       {/* Header - Fixed to always stay on top */}
       <header className="flex justify-between items-center" style={{ padding: '1.5rem 4rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '36px', objectFit: 'contain' }} />
+          <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '60px', objectFit: 'contain' }} />
         </div>
         <nav className="flex gap-8 items-center landing-nav">
           <Link to="/" className="text-secondary" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}>Home</Link>
