@@ -274,86 +274,45 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Inline Contact Section */}
-      <section id="contact" style={{ padding: '6rem 2rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="flex items-center gap-3 mb-8 justify-center reveal-on-scroll">
-            <Mail size={28} className="text-success" />
-            <h2 className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>Contact Support</h2>
+      {/* Inline Contact Section - Form Only, Centered */}
+      <section id="contact" style={{ padding: '6rem 2rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+          <div className="flex items-center gap-3 mb-4 justify-center reveal-on-scroll">
+            <Mail size={32} color="#38bdf8" />
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, color: '#ffffff' }}>Contact Support</h2>
           </div>
-          <p className="text-secondary text-center mb-12 reveal-on-scroll" style={{ fontSize: '1.2rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
+          <p className="text-secondary text-center mb-10 reveal-on-scroll" style={{ fontSize: '1.15rem' }}>Have a question or feedback for QuantStakes? Send us a message.</p>
 
-          <div className="grid grid-cols-2" style={{ gap: '4rem', alignItems: 'start' }}>
+          <div className="glass-panel reveal-on-scroll delay-100" style={{ padding: '3rem 2.5rem', position: 'relative', overflow: 'hidden', background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(30px)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '28px', boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.15)' }}>
             
-            <div className="flex-col gap-5 justify-center reveal-on-scroll delay-100">
-              {/* Card 1: Non Profit & Mission */}
-              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div style={{ background: 'rgba(56, 189, 248, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <BarChart3 size={20} color="#38bdf8" />
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>100% Non-Profit Platform</h3>
-                </div>
-                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
-                  QuantStakes is a free, non-profit sports portfolio management terminal designed to provide quantitative tracking, transparent metrics, and verified performance logs.
-                </p>
-              </div>
+            {/* Ambient Inner Glow */}
+            <div style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }}></div>
 
-              {/* Card 2: Engineering & APIs */}
-              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div style={{ background: 'rgba(168, 85, 247, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <BrainCircuit size={20} color="#a855f7" />
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>Architecture & Open APIs</h3>
-                  <div style={{ pointerEvents: 'none' }}></div>
-                </div>
-                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
-                  Independently built and maintained by a dedicated developer responsible for website architecture, system engineering, and portfolio data APIs.
-                </p>
+            {sent ? (
+              <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
+                <CheckCircle size={60} color="#34d399" className="mb-6" />
+                <h3 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#ffffff', fontWeight: 700 }}>Message Sent</h3>
+                <p className="text-secondary" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>Thank you for reaching out! We'll be in touch soon.</p>
               </div>
-
-              {/* Card 3: Support Response Guarantee */}
-              <div className="glass-card" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '2rem', transition: 'all 0.5s ease' }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div style={{ background: 'rgba(52, 211, 153, 0.12)', padding: '0.6rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ShieldCheck size={20} color="#34d399" />
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', margin: 0, fontWeight: 700 }}>Direct Support</h3>
+            ) : (
+              <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex-col gap-6" style={{ position: 'relative', zIndex: 1 }}>
+                <div>
+                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Name</label>
+                  <input type="text" className="input-field" placeholder="Your Name" required style={{ background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }} />
                 </div>
-                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', pointerEvents: 'none', margin: 0 }}>
-                  Our contact channel is monitored daily. Have a feature request or API question? Send us a message and expect a response within 24 hours.
-                </p>
-              </div>
-            </div>
-
-            <div className="glass-panel reveal-on-scroll delay-200" style={{ padding: '3rem', position: 'relative', overflow: 'hidden', background: 'rgba(10, 14, 29, 0.85)', border: '1px solid rgba(56, 189, 248, 0.15)', borderRadius: '24px' }}>
-              {sent ? (
-                <div className="flex-col items-center justify-center text-center h-full" style={{ padding: '2rem', position: 'relative', zIndex: 1 }}>
-                  <CheckCircle size={56} className="text-success mb-6" />
-                  <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Message Sent</h3>
-                  <p className="text-secondary" style={{ fontSize: '1.1rem' }}>Thank you for reaching out! We'll be in touch soon.</p>
+                <div>
+                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Email Address</label>
+                  <input type="email" className="input-field" placeholder="name@example.com" required style={{ background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }} />
                 </div>
-              ) : (
-                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex-col gap-6" style={{ position: 'relative', zIndex: 1 }}>
-                  <div>
-                    <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Name</label>
-                    <input type="text" className="input-field" placeholder="Your Name" required style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
-                  </div>
-                  <div>
-                    <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Email Address</label>
-                    <input type="email" className="input-field" placeholder="name@example.com" required style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }} />
-                  </div>
-                  <div>
-                    <label className="label" style={{ color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
-                    <textarea className="input-field" placeholder="How can we help?" required rows="4" style={{ resize: 'vertical', background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', padding: '0.9rem 1.2rem', borderRadius: '12px' }}></textarea>
-                  </div>
-                  <button className="btn-white-pill" type="submit" style={{ width: '100%', padding: '1rem', fontSize: '1rem' }}>
-                    Send Message
-                  </button>
-                </form>
-              )}
-            </div>
+                <div>
+                  <label className="label" style={{ color: '#e2e8f0', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>Message</label>
+                  <textarea className="input-field" placeholder="How can we help?" required rows="4" style={{ resize: 'vertical', background: 'rgba(5, 9, 22, 0.9)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#ffffff', padding: '1rem 1.25rem', borderRadius: '14px', fontSize: '1rem' }}></textarea>
+                </div>
+                <button type="submit" style={{ width: '100%', padding: '1.1rem', fontSize: '1.05rem', fontWeight: '700', background: 'linear-gradient(135deg, #38bdf8 0%, #2563eb 100%)', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: 'pointer', boxShadow: '0 8px 25px rgba(56, 189, 248, 0.4)', transition: 'all 0.3s ease' }}>
+                  Send Message
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
