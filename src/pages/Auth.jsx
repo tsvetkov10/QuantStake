@@ -43,7 +43,14 @@ export default function Auth() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const redirectUrl = `${window.location.origin}/dashboard`;
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: redirectUrl
+          }
+        });
         if (error) throw error;
         setSuccessMsg('Registration successful! Please check your email to verify your account.');
         setTimeout(() => setIsSignUp(false), 3000);
