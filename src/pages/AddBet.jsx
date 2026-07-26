@@ -559,10 +559,10 @@ export default function AddBet({ session, profile }) {
         <p className="text-secondary" style={{ fontSize: '0.95rem' }}>Commit verified quantitative bets to your public cryptographic ledger index.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem', alignItems: 'start', width: '100%', paddingBottom: '3rem' }}>
+      <div style={{ maxWidth: '820px', width: '100%', paddingBottom: '3rem' }}>
         
-        {/* Left Column: Form Elements */}
-        <div style={{ flex: '1 1 450px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        {/* Main Form Container */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           
           {/* Compact OCR Scan Bar */}
           <div className="glass-panel" style={{ padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '60px' }}>
@@ -892,159 +892,6 @@ export default function AddBet({ session, profile }) {
                 {loading ? 'Processing Ledger Ingestion...' : 'Commit Log Entry'}
               </button>
             </form>
-          </div>
-        </div>
-
-        {/* Right Column: Dynamic Bet Slip Preview */}
-        <div style={{ flex: '1 1 350px', minWidth: 0, position: 'sticky', top: '2rem', overflowY: 'auto', scrollbarWidth: 'thin', paddingRight: '0.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
-
-          <div 
-            id="live-slip-preview"
-            className="glass-panel" 
-            style={{ 
-              padding: '1.5rem', 
-              position: 'relative', 
-              overflow: 'hidden', 
-              borderRadius: '24px',
-              border: `1px solid ${activeStake > 0 ? activeSportColor : 'rgba(255, 255, 255, 0.12)'}`,
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
-              transition: 'all 0.3s ease',
-              background: '#0d0f17',
-              color: '#ffffff'
-            }}
-          >
-            {/* Top Accent Line */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, ${activeSportColor}, rgba(6, 182, 212, 0.5))` }} />
-
-            {/* Brand Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px dashed rgba(255, 255, 255, 0.1)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '32px', objectFit: 'contain' }} />
-              </div>
-              <div className="flex items-center gap-1.5" data-html2canvas-ignore="true">
-                <button
-                  type="button"
-                  onClick={copyLiveSlipAsImage}
-                  title="Copy Live Slip Image to Clipboard"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    padding: '0.35rem 0.6rem',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    fontSize: '0.75rem',
-                    fontWeight: '600',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#22d3ee'; e.currentTarget.style.color = '#ffffff'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'; e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'; }}
-                >
-                  <Copy size={12} />
-                  <span>Copy Slip</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Status & Date Banner */}
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.3rem 0.75rem', borderRadius: '30px' }}>
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: statusInfo.color,
-                  boxShadow: statusInfo.shadow,
-                  animation: 'pulse 1.5s infinite'
-                }} />
-                <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: statusInfo.color, letterSpacing: '1.5px', fontWeight: 'bold' }}>
-                  {statusInfo.label}
-                </span>
-              </div>
-
-              <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: '600' }}>
-                {selectedDate}
-              </span>
-            </div>
-
-            {/* Ticket Info Rows */}
-            <div className="flex-col gap-3">
-              <div className="flex justify-between items-center">
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>SPORT</span>
-                <span 
-                  style={{ 
-                    fontSize: '0.75rem', 
-                    fontWeight: '800', 
-                    color: activeSportColor, 
-                    background: 'rgba(255, 255, 255, 0.05)', 
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    padding: '0.2rem 0.6rem', 
-                    borderRadius: '20px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}
-                >
-                  {sport}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BET TYPE</span>
-                <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{type}</span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>BOOKMAKER</span>
-                <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600' }}>{bookmaker}</span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>DATE</span>
-                <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Calendar size={14} color="rgba(255, 255, 255, 0.5)" /> {selectedDate}
-                </span>
-              </div>
-
-              {/* Matchup Content */}
-              <div className="flex-col gap-1.5 mt-1">
-                {renderMatchupsBlock(matchups.join(' | '), activeSportColor)}
-              </div>
-
-              {/* Dotted border separator */}
-              <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.1)', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
-
-              {/* Financial panel - Compact Breakdown */}
-              <div style={{ background: 'rgba(0, 0, 0, 0.3)', borderRadius: '14px', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Coins size={14} color="rgba(255, 255, 255, 0.6)" /> Total Wagered
-                  </span>
-                  <span style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700', fontFamily: 'monospace' }}>
-                    {currencySymbol}{activeStake.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <BadgePercent size={14} color="#22d3ee" /> Decimal Odds
-                  </span>
-                  <span style={{ fontSize: '1.05rem', color: '#22d3ee', fontWeight: '700', fontFamily: 'monospace' }}>
-                    @{activeOdds.toFixed(2)}
-                  </span>
-                </div>
-
-                <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)' }}>Est. Return</span>
-                  <span style={{ fontSize: '1.25rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace', textShadow: '0 0 12px rgba(16, 185, 129, 0.3)' }}>
-                    {currencySymbol}{estPayout.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </span>
-                </div>
-              </div>
-
-            </div>
           </div>
         </div>
 
