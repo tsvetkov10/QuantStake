@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap, Star } from 'lucide-react';
+import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap, Star, Volume2, VolumeX, Music } from 'lucide-react';
 
 export default function Landing() {
   // Animated Revenue Counter (0 -> 10,000)
@@ -16,6 +16,63 @@ export default function Landing() {
 
   // Expandable FAQ State
   const [openFaq, setOpenFaq] = useState(0); // First FAQ open by default
+
+  // Ambient Theme Music State (Royalty-Free Web Audio Synth Engine)
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const audioCtxRef = useRef(null);
+
+  const toggleMusic = () => {
+    if (isPlayingMusic) {
+      if (audioCtxRef.current) {
+        audioCtxRef.current.suspend();
+      }
+      setIsPlayingMusic(false);
+    } else {
+      if (!audioCtxRef.current) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        const ctx = new AudioContextClass();
+        audioCtxRef.current = ctx;
+
+        // Build a lush, warm, ambient futuristic synth pad (C minor 9 chord)
+        const freqs = [130.81, 155.56, 196.00, 246.94, 293.66]; // C3, Eb3, G3, B3, D4
+        const masterGain = ctx.createGain();
+        masterGain.gain.value = 0.12; // Comfortable low background volume
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 400; // Warm lowpass filter
+
+        freqs.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.value = freq;
+
+          // LFO modulation for movement
+          const lfo = ctx.createOscillator();
+          lfo.frequency.value = 0.15 + idx * 0.04;
+          const lfoGain = ctx.createGain();
+          lfoGain.gain.value = 1.2;
+          lfo.connect(lfoGain);
+          lfoGain.connect(osc.frequency);
+          lfo.start();
+
+          gain.gain.value = 0.2;
+          osc.connect(gain);
+          gain.connect(filter);
+          osc.start();
+        });
+
+        filter.connect(masterGain);
+        masterGain.connect(ctx.destination);
+      } else {
+        audioCtxRef.current.resume();
+      }
+      setIsPlayingMusic(true);
+    }
+  };
 
   useEffect(() => {
     let startTimestamp = null;
@@ -695,6 +752,44 @@ export default function Landing() {
           </p>
         </div>
       </footer>
+
+      {/* FLOATING AMBIENT AUDIO TOGGLE BUTTON */}
+      <button 
+        onClick={toggleMusic}
+        title={isPlayingMusic ? "Mute Ambient Theme" : "Play Ambient Theme"}
+        style={{
+          position: 'fixed',
+          bottom: '55px',
+          right: '25px',
+          zIndex: 10000,
+          background: isPlayingMusic ? 'rgba(56, 189, 248, 0.2)' : 'rgba(11, 16, 35, 0.85)',
+          backdropFilter: 'blur(16px)',
+          border: isPlayingMusic ? '1px solid rgba(56, 189, 248, 0.6)' : '1px solid rgba(255, 255, 255, 0.15)',
+          color: isPlayingMusic ? '#38bdf8' : 'rgba(255, 255, 255, 0.7)',
+          padding: '0.6rem 1.1rem',
+          borderRadius: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '0.82rem',
+          fontWeight: 600,
+          cursor: 'pointer',
+          boxShadow: isPlayingMusic ? '0 0 20px rgba(56, 189, 248, 0.3)' : '0 8px 25px rgba(0, 0, 0, 0.6)',
+          transition: 'all 0.3s ease'
+        }}
+      >
+        {isPlayingMusic ? (
+          <>
+            <Volume2 size={16} color="#38bdf8" />
+            <span>Ambient Sound: ON</span>
+          </>
+        ) : (
+          <>
+            <VolumeX size={16} color="rgba(255, 255, 255, 0.5)" />
+            <span>Ambient Sound: OFF</span>
+          </>
+        )}
+      </button>
     </div>
   );
 }
