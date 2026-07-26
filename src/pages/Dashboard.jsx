@@ -627,7 +627,7 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
+      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
       const timestamp = Math.floor(Date.now() / 1000);
       download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
@@ -641,7 +641,7 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
+      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
       try {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         setIsCopied(true);
@@ -669,6 +669,16 @@ export default function Dashboard({ session, profile }) {
 
   return (
     <div className="flex-col gap-12 pb-12">
+      {/* Off-screen Unscaled 1080x1080 Target Node for htmlToImage (Guarantees Logo & Avatar Export) */}
+      <div style={{ position: 'fixed', left: '-9999px', top: '-9999px', width: '1080px', height: '1080px', pointerEvents: 'none', zIndex: -9999 }}>
+        <ShareCard 
+          key={`offscreen-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
+          ref={shareCardRef} 
+          profile={profile} 
+          metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
+        />
+      </div>
+
       {showSharePreview && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'var(--bg-modal)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
           
@@ -691,8 +701,7 @@ export default function Dashboard({ session, profile }) {
                 }
               }}>
                 <ShareCard 
-                  key={`${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
-                  ref={shareCardRef} 
+                  key={`preview-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
                   profile={profile} 
                   metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
                 />

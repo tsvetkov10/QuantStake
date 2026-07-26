@@ -1,10 +1,45 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Target, Activity, CheckCircle, Zap } from 'lucide-react';
 import { LOGO_FULL_BASE64 } from '../assets/logoDataUrl';
 
 const ShareCard = forwardRef(({ profile, metrics }, ref) => {
   const { netProfit, roi, winRate, totalStaked, biggestWin } = metrics;
   const sym = profile?.currency === 'EUR' ? '€' : profile?.currency === 'GBP' ? '£' : '$';
+  const [avatarDataUrl, setAvatarDataUrl] = useState(null);
+
+  // Convert profile avatar to base64 to ensure 100% CORS-proof rendering in html-to-image exports
+  useEffect(() => {
+    if (!profile?.avatar_url) {
+      setAvatarDataUrl(null);
+      return;
+    }
+
+    let isMounted = true;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width || 120;
+        canvas.height = img.height || 120;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL('image/png');
+        if (isMounted) setAvatarDataUrl(dataUrl);
+      } catch (err) {
+        console.warn('Avatar base64 conversion fallback to initial badge:', err);
+        if (isMounted) setAvatarDataUrl(null);
+      }
+    };
+    img.onerror = () => {
+      if (isMounted) setAvatarDataUrl(null);
+    };
+    img.src = profile.avatar_url;
+
+    return () => {
+      isMounted = false;
+    };
+  }, [profile?.avatar_url]);
 
   return (
     <div
@@ -12,7 +47,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       style={{
         width: '1080px',
         height: '1080px',
-        background: 'var(--bg-invert)',
+        background: '#090d16',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -22,13 +57,13 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       }}
     >
       {/* Background Graphic Elements */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
       
       {/* Grid Overlay */}
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: 'linear-gradient(var(--adaptive-white-03) 1px, transparent 1px), linear-gradient(90deg, var(--adaptive-white-03) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px)',
         backgroundSize: '40px 40px',
         pointerEvents: 'none'
       }}></div>
@@ -36,27 +71,27 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       <div style={{ padding: '60px', flexGrow: 1, display: 'flex', flexDirection: 'column', zIndex: 10 }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(10, 10, 15, 0.6)', border: '2px solid var(--adaptive-white-08)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              {profile?.avatar_url ? (
-                <img src={profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
+              {avatarDataUrl ? (
+                <img src={avatarDataUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
+                <span style={{ fontSize: '3rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
               )}
             </div>
             <div>
-              <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: 0, letterSpacing: '-1px' }}>{profile?.username || 'Trader'}</h1>
-              <span style={{ color: '#888888', fontSize: '1.5rem' }}>QuantStakes Verified</span>
+              <h1 style={{ fontSize: '3.2rem', fontWeight: 'bold', margin: 0, letterSpacing: '-1px', color: '#ffffff' }}>{profile?.username || 'Trader'}</h1>
+              <span style={{ color: '#38bdf8', fontSize: '1.5rem', fontWeight: '600' }}>QuantStakes Verified Track Record</span>
             </div>
           </div>
           
-          {/* Explicit img tag with base64 src to guarantee 100% rendering in htmlToImage copy/download */}
+          {/* Base64 Logo Tag */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img
               src={LOGO_FULL_BASE64}
               alt="QuantStakes Logo"
               style={{
-                height: '120px',
+                height: '115px',
                 maxWidth: '480px',
                 objectFit: 'contain',
                 display: 'block',
