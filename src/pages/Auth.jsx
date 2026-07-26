@@ -146,9 +146,9 @@ export default function Auth() {
           
           {/* Left Side: Branding / Features */}
           <div className="auth-left" style={{ flex: 1.1, padding: '4rem 3.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%)', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <h2 className="title-cirform" style={{ fontSize: '2.4rem', lineHeight: '1.15', marginBottom: '1.5rem' }}>
+            <h2 className="title-cirform" style={{ fontSize: '2.5rem', lineHeight: '1.15', marginBottom: '1.5rem', letterSpacing: '-2px' }}>
               We create bright <br/>
-              future <span className="serif-italic-accent">for Portfolio Management</span>
+              future for Portfolio Management
             </h2>
 
             <p className="text-secondary mb-8" style={{ fontSize: '1.05rem', lineHeight: '1.6' }}>
