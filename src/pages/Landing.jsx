@@ -271,7 +271,7 @@ export default function Landing() {
       </section>
 
       {/* NEW SECTION 2: How It Works (3-Step Workflow) */}
-      <section id="how-it-works" style={{ padding: '6rem 2rem', background: 'rgba(4, 7, 20, 0.4)', position: 'relative', zIndex: 10 }}>
+      <section id="how-it-works" style={{ padding: '6rem 2rem', background: 'rgba(4, 7, 20, 0.4)', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           
           <div className="reveal-on-scroll text-center flex-col items-center mb-16">
@@ -468,8 +468,8 @@ export default function Landing() {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="flex-col items-center" style={{ padding: '5rem 2rem' }}>
-        <h3 className="reveal-on-scroll" style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: 'bold' }}>Platform Capabilities</h3>
+      <section id="features" className="flex-col items-center responsive-padding" style={{ padding: '4rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
+        <h2 className="reveal-on-scroll" style={{ fontSize: '2.8rem', marginBottom: '2.5rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center' }}>Platform Capabilities</h2>
         <div className="grid grid-cols-3" style={{ gap: '1.5rem', maxWidth: '1200px', width: '100%' }}>
           
           <div className="glass-card feature-card reveal-on-scroll delay-100" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ padding: '2rem', transition: 'all 0.5s ease', cursor: 'default' }}>
