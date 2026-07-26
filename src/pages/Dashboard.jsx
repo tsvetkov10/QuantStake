@@ -700,43 +700,63 @@ export default function Dashboard({ session, profile }) {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '20px', zIndex: 100000, marginTop: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '16px', zIndex: 100000, marginTop: '2rem' }}>
             <button 
               onClick={handleCopy}
               disabled={isGeneratingShare || isCopied}
-              className="btn btn-secondary"
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.2rem', padding: '1rem 2rem', color: isCopied ? 'var(--success)' : undefined, borderColor: isCopied ? 'var(--success)' : undefined }}
+              className="btn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justify: 'center',
+                gap: '10px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                padding: '0.85rem 1.75rem',
+                borderRadius: '14px',
+                background: isCopied ? 'rgba(52, 211, 153, 0.15)' : 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(168, 85, 247, 0.15) 100%)',
+                border: isCopied ? '1px solid rgba(52, 211, 153, 0.4)' : '1px solid rgba(56, 189, 248, 0.4)',
+                color: isCopied ? '#34d399' : '#ffffff',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.4)'
+              }}
             >
               {isGeneratingShare ? (
-                <div className="spinner" style={{ width: '24px', height: '24px', borderTopColor: 'white' }}></div>
+                <div className="spinner" style={{ width: '20px', height: '20px', borderTopColor: 'white' }}></div>
               ) : isCopied ? (
-                <Check size={24} color="var(--success)" />
+                <Check size={20} color="#34d399" />
               ) : (
-                <Copy size={24} />
+                <Copy size={20} color="#38bdf8" />
               )}
-              {isCopied ? 'Copied!' : 'Copy to Clipboard'}
+              <span>{isCopied ? 'Copied to Clipboard!' : 'Copy Image'}</span>
             </button>
+
             <button 
               onClick={handleDownload}
               disabled={isGeneratingShare}
-              className="btn btn-secondary"
+              className="btn"
               style={{
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
+                justify: 'center',
                 gap: '10px',
-                fontSize: '1.2rem',
-                padding: '1rem 2rem',
-                background: 'rgba(6, 182, 212, 0.03)',
-                border: '1.5px solid rgba(6, 182, 212, 0.3)',
-                color: 'var(--text-primary)',
+                fontSize: '1rem',
+                fontWeight: '600',
+                padding: '0.85rem 1.75rem',
+                borderRadius: '14px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                color: '#ffffff',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.25s ease',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.4)'
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6, 182, 212, 0.1)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(6, 182, 212, 0.03)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; }}
             >
-              {isGeneratingShare ? <div className="spinner" style={{ width: '24px', height: '24px', borderTopColor: 'white' }}></div> : <Download size={24} color="white" />}
-              <span>Save PNG</span>
+              {isGeneratingShare ? <div className="spinner" style={{ width: '20px', height: '20px', borderTopColor: 'white' }}></div> : <Download size={20} color="#ffffff" />}
+              <span>Download PNG</span>
             </button>
           </div>
         </div>
@@ -748,18 +768,41 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary">Comprehensive quantitative breakdown of your betting strategy.</p>
         </div>
         
-        <div className="flex gap-3 items-end md-flex-col" style={{ animation: 'fade-in 0.3s ease' }}>
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', visibility: 'hidden', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Actions</label>
-            <button 
-              onClick={() => setShowSharePreview(true)}
-              className="btn btn-secondary" 
-              style={{ padding: '0 1.25rem', height: '38px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid var(--accent-cyan)', color: 'var(--accent-cyan)', fontSize: '0.9rem', display: 'flex', alignItems: 'center' }}
-            >
-              <Share2 size={16} />
-              <span style={{ marginLeft: '8px' }}>Share Performance</span>
-            </button>
-          </div>
+        <div className="flex gap-4 items-end md-flex-col" style={{ animation: 'fade-in 0.3s ease' }}>
+          <button 
+            onClick={() => setShowSharePreview(true)}
+            className="btn" 
+            style={{ 
+              display: 'inline-flex',
+              alignItems: 'center',
+              justify: 'center',
+              gap: '9px',
+              padding: '0 1.35rem', 
+              height: '38px', 
+              background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)', 
+              border: '1px solid rgba(56, 189, 248, 0.35)', 
+              color: '#ffffff', 
+              fontSize: '0.88rem', 
+              fontWeight: '600',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              boxShadow: '0 4px 15px rgba(56, 189, 248, 0.1)'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(168, 85, 247, 0.2) 100%)';
+              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(56, 189, 248, 0.25)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)';
+              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(56, 189, 248, 0.1)';
+            }}
+          >
+            <Share2 size={16} color="#38bdf8" />
+            <span>Share Performance</span>
+          </button>
 
           <div className="flex-col">
             <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timeframe</label>
