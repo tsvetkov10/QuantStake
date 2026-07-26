@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Target, TrendingUp, ShieldAlert, Zap, AlertTriangle } from 'lucide-react';
+import { Target, Sparkles, ShieldAlert, Zap, AlertTriangle } from 'lucide-react';
 
 export default function Tools() {
   const [activeTool, setActiveTool] = useState('ladder');
@@ -192,7 +192,7 @@ export default function Tools() {
             <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(0, 255, 136, 0.05)' }}>
               <div className="flex justify-between items-center mb-2">
                 <h3 style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.2rem' }}>Safe (Grind)</h3>
-                <TrendingUp size={20} color="var(--success)" />
+                <Sparkles size={20} color="var(--success)" />
               </div>
               <p className="text-secondary mb-4" style={{ fontSize: '0.85rem' }}>Average Odds: <strong style={{ color: 'var(--text-primary)' }}>1.20</strong></p>
               <h2 style={{ fontSize: '2rem', fontWeight: 'bold' }}>{safeLadder.length} <span style={{ fontSize: '1rem', color: 'var(--text-secondary)', fontWeight: 'normal' }}>Bets</span></h2>
@@ -238,7 +238,7 @@ export default function Tools() {
 
           {/* Moderate Profile */}
           <div className="glass-card flex-col gap-4" style={{ padding: '0', overflow: 'hidden' }}>
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(0, 243, 255, 0.05)' }}>
+            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(167, 139, 250, 0.05)' }}>
               <div className="flex justify-between items-center mb-2">
                 <h3 style={{ color: 'var(--accent-cyan)', fontWeight: 'bold', fontSize: '1.2rem' }}>Moderate</h3>
                 <Zap size={20} color="var(--accent-cyan)" />

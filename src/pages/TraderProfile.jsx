@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Target, TrendingUp, Activity, CheckCircle, DollarSign, Percent, Banknote, ShieldCheck } from 'lucide-react';
+import { Target, Sparkles, Activity, CheckCircle, DollarSign, Percent, Banknote, ShieldCheck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const MOCK_ANALYSTS = {

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { TrendingUp, Target, Activity, CheckCircle, Zap } from 'lucide-react';
+import { Sparkles, Target, Activity, CheckCircle, Zap } from 'lucide-react';
 
 const ShareCard = forwardRef(({ profile, metrics }, ref) => {
   const { netProfit, roi, winRate, totalStaked, biggestWin } = metrics;
@@ -49,7 +49,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <TrendingUp size={40} className="logo-icon" strokeWidth={3} />
+            <Sparkles size={40} className="logo-icon" strokeWidth={3} />
             <h2 className="logo-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>QuantStakes</h2>
           </div>
         </div>
@@ -75,7 +75,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             
             <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <Activity size={32} color="#00ffaa" style={{ flexShrink: 0 }} />
+                <Activity size={32} color="#a78bfa" style={{ flexShrink: 0 }} />
                 <span style={{ color: '#888888', fontSize: '1.5rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Yield (ROI)</span>
               </div>
               <p style={{ fontSize: '4rem', fontWeight: 'bold', margin: 0, color: roi >= 0 ? '#10b981' : '#ffffff' }}>{roi >= 0 ? '+' : ''}{roi.toFixed(1)}%</p>

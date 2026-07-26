@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, ShieldAlert, ArrowLeft, TrendingUp, Sparkles, Clock } from 'lucide-react';
+import { Wrench, ShieldAlert, ArrowLeft, Sparkles, Clock } from 'lucide-react';
 
 export default function Maintenance({ title = "Module Under Maintenance", description = "We are performing scheduled upgrades to enhance high-frequency algorithmic accuracy and ledger security. This page will return online shortly." }) {
   return (
@@ -12,8 +12,8 @@ export default function Maintenance({ title = "Module Under Maintenance", descri
 
         {/* Animated Cyber Icon Ring */}
         <div className="flex justify-center items-center mb-6" style={{ position: 'relative' }}>
-          <div style={{ width: '88px', height: '88px', borderRadius: '50%', background: 'rgba(0, 243, 255, 0.08)', border: '1px solid rgba(0, 243, 255, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(0, 243, 255, 0.2)' }}>
-            <Wrench size={42} color="#00f3ff" style={{ animation: 'spin-slow 12s linear infinite' }} />
+          <div style={{ width: '88px', height: '88px', borderRadius: '50%', background: 'rgba(167, 139, 250, 0.08)', border: '1px solid rgba(167, 139, 250, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(167, 139, 250, 0.2)' }}>
+            <Wrench size={42} color="#a78bfa" style={{ animation: 'spin-slow 12s linear infinite' }} />
           </div>
           <div style={{ position: 'absolute', bottom: '-4px', right: 'calc(50% - 40px)', background: '#8b5cf6', borderRadius: '50%', padding: '4px', display: 'flex' }}>
             <Sparkles size={14} color="#fff" />
@@ -40,14 +40,14 @@ export default function Maintenance({ title = "Module Under Maintenance", descri
             <span style={{ color: 'var(--accent-cyan)', fontWeight: 700 }}>85% Completed</span>
           </div>
           <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-            <div style={{ width: '85%', height: '100%', background: 'linear-gradient(90deg, #00f3ff, #8b5cf6)', borderRadius: '4px' }}></div>
+            <div style={{ width: '85%', height: '100%', background: 'linear-gradient(90deg, #a78bfa, #8b5cf6)', borderRadius: '4px' }}></div>
           </div>
         </div>
 
         {/* Actions */}
         <div className="flex gap-4 items-center justify-center" style={{ width: '100%' }}>
           <Link to="/dashboard" className="btn btn-primary" style={{ padding: '0.85rem 1.75rem', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: 600 }}>
-            <TrendingUp size={18} /> Return to Dashboard
+            <Sparkles size={18} /> Return to Dashboard
           </Link>
         </div>
       </div>

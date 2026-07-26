@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-import { Search, ChevronRight, CheckCircle2, XCircle, Clock, Banknote, PlusCircle, Activity, TrendingUp, Percent, LayoutGrid, List, Copy, X, Edit3, Trash2, Calendar, Coins, BadgePercent } from 'lucide-react';
+import { Search, ChevronRight, CheckCircle2, XCircle, Clock, Banknote, PlusCircle, Activity, Sparkles, Percent, LayoutGrid, List, Copy, X, Edit3, Trash2, Calendar, Coins, BadgePercent } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
@@ -558,7 +558,7 @@ export default function BetHistory({ session, profile }) {
                 </div>
 
                 <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.6rem', color: '#00f3ff', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+                  <span style={{ fontSize: '0.6rem', color: '#a78bfa', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
                 </div>
               </div>
             );
@@ -595,7 +595,7 @@ export default function BetHistory({ session, profile }) {
               </div>
 
               <div style={{ marginTop: 'auto', paddingTop: '6px', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.6rem', color: '#00f3ff', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
+                <span style={{ fontSize: '0.6rem', color: '#a78bfa', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{market}</span>
               </div>
             </div>
           );
@@ -677,7 +677,7 @@ export default function BetHistory({ session, profile }) {
               padding: '1.25rem 1.5rem', 
               background: 'linear-gradient(135deg, rgba(10, 10, 20, 0.96) 0%, rgba(20, 20, 30, 0.98) 100%)',
               border: '1.5px solid var(--accent-cyan)',
-              boxShadow: '0 10px 40px rgba(0, 243, 255, 0.2)',
+              boxShadow: '0 10px 40px rgba(167, 139, 250, 0.2)',
               display: 'flex',
               alignItems: 'start',
               gap: '12px',
@@ -686,7 +686,7 @@ export default function BetHistory({ session, profile }) {
               overflow: 'hidden'
             }}
           >
-            <div style={{ background: 'rgba(0, 243, 255, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ background: 'rgba(167, 139, 250, 0.1)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CheckCircle2 size={20} color="var(--accent-cyan)" />
             </div>
             
@@ -728,15 +728,15 @@ export default function BetHistory({ session, profile }) {
             gap: '8px',
             padding: '0.6rem 1.25rem',
             height: 'auto',
-            background: 'rgba(0, 243, 255, 0.03)',
-            border: '1.5px solid rgba(0, 243, 255, 0.3)',
+            background: 'rgba(167, 139, 250, 0.03)',
+            border: '1.5px solid rgba(167, 139, 250, 0.3)',
             color: 'var(--text-primary)',
-            boxShadow: '0 0 10px rgba(0, 243, 255, 0.1)',
+            boxShadow: '0 0 10px rgba(167, 139, 250, 0.1)',
             cursor: 'pointer',
             transition: 'all 0.2s'
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.1)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(0, 243, 255, 0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.03)'; e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 243, 255, 0.1)'; }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.1)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(167, 139, 250, 0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.03)'; e.currentTarget.style.boxShadow = '0 0 10px rgba(167, 139, 250, 0.1)'; }}
         >
           <PlusCircle size={18} /> Log New Position
         </button>
@@ -774,7 +774,7 @@ export default function BetHistory({ session, profile }) {
               {netProfit >= 0 ? '+' : ''}{sym}{netProfit.toFixed(2)}
             </span>
           </div>
-          <TrendingUp size={24} color={netProfit >= 0 ? 'var(--success)' : 'var(--danger)'} style={{ opacity: 0.8 }} />
+          <Sparkles size={24} color={netProfit >= 0 ? 'var(--success)' : 'var(--danger)'} style={{ opacity: 0.8 }} />
         </div>
       </div>
 
@@ -817,7 +817,7 @@ export default function BetHistory({ session, profile }) {
                 onClick={() => setViewMode('slips')}
                 title="View Slips Grid"
                 style={{
-                  background: viewMode === 'slips' ? 'rgba(0,243,255,0.08)' : 'transparent',
+                  background: viewMode === 'slips' ? 'rgba(167, 139, 250,0.08)' : 'transparent',
                   border: 'none',
                   borderRadius: '6px',
                   padding: '0.35rem',
@@ -835,7 +835,7 @@ export default function BetHistory({ session, profile }) {
                 onClick={() => setViewMode('rows')}
                 title="View Rows List"
                 style={{
-                  background: viewMode === 'rows' ? 'rgba(0,243,255,0.08)' : 'transparent',
+                  background: viewMode === 'rows' ? 'rgba(167, 139, 250,0.08)' : 'transparent',
                   border: 'none',
                   borderRadius: '6px',
                   padding: '0.35rem',
@@ -865,7 +865,7 @@ export default function BetHistory({ session, profile }) {
                 fontSize: '0.8rem',
                 borderRadius: '20px',
                 cursor: 'pointer',
-                background: selectedSport === sp ? 'rgba(0, 243, 255, 0.1)' : 'var(--adaptive-white-02)',
+                background: selectedSport === sp ? 'rgba(167, 139, 250, 0.1)' : 'var(--adaptive-white-02)',
                 border: `1.5px solid ${selectedSport === sp ? 'var(--accent-cyan)' : 'var(--border-glass)'}`,
                 color: selectedSport === sp ? 'white' : 'var(--text-secondary)',
                 fontWeight: '500',
@@ -930,8 +930,8 @@ export default function BetHistory({ session, profile }) {
                         <span style={{ 
                           padding: '0.3rem 0.6rem', 
                           borderRadius: '8px', 
-                          background: bet.sport === 'Football' ? 'rgba(0, 243, 255, 0.05)' : 'var(--adaptive-white-03)', 
-                          border: `1px solid ${bet.sport === 'Football' ? 'rgba(0, 243, 255, 0.15)' : 'var(--adaptive-white-05)'}`,
+                          background: bet.sport === 'Football' ? 'rgba(167, 139, 250, 0.05)' : 'var(--adaptive-white-03)', 
+                          border: `1px solid ${bet.sport === 'Football' ? 'rgba(167, 139, 250, 0.15)' : 'var(--adaptive-white-05)'}`,
                           fontSize: '0.8rem',
                           color: bet.sport === 'Football' ? 'var(--accent-cyan)' : 'var(--text-secondary)'
                         }}>
@@ -954,14 +954,14 @@ export default function BetHistory({ session, profile }) {
                           gap: '6px',
                           backgroundColor: bet.status === 'Won' ? 'rgba(16, 185, 129, 0.08)' : 
                                            bet.status === 'Lost' ? 'rgba(239, 68, 68, 0.08)' : 
-                                           bet.status === 'Cashed Out' ? 'rgba(255, 215, 0, 0.08)' : 'rgba(0, 243, 255, 0.08)',
+                                           bet.status === 'Cashed Out' ? 'rgba(255, 215, 0, 0.08)' : 'rgba(167, 139, 250, 0.08)',
                           color: bet.status === 'Won' ? 'var(--success)' : 
                                  bet.status === 'Lost' ? 'var(--danger)' : 
                                  bet.status === 'Cashed Out' ? '#FFD700' : 'var(--accent-cyan)',
                           border: `1.5px solid ${
                             bet.status === 'Won' ? 'rgba(16, 185, 129, 0.2)' : 
                             bet.status === 'Lost' ? 'rgba(239, 68, 68, 0.2)' : 
-                            bet.status === 'Cashed Out' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(0, 243, 255, 0.2)'
+                            bet.status === 'Cashed Out' ? 'rgba(255, 215, 0, 0.2)' : 'rgba(167, 139, 250, 0.2)'
                           }`,
                           fontWeight: '700',
                           textTransform: 'uppercase',
@@ -1173,7 +1173,7 @@ export default function BetHistory({ session, profile }) {
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Odds</span>
-                      <span style={{ fontSize: '1.05rem', color: '#00f3ff', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(bet.odds).toFixed(2)}</span>
+                      <span style={{ fontSize: '1.05rem', color: '#a78bfa', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(bet.odds).toFixed(2)}</span>
                     </div>
 
                     <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -1190,10 +1190,10 @@ export default function BetHistory({ session, profile }) {
                       marginTop: '1rem',
                       width: '100%',
                       padding: '0.65rem',
-                      background: 'rgba(0, 243, 255, 0.06)',
-                      border: '1px solid rgba(0, 243, 255, 0.2)',
+                      background: 'rgba(167, 139, 250, 0.06)',
+                      border: '1px solid rgba(167, 139, 250, 0.2)',
                       borderRadius: '10px',
-                      color: '#00f3ff',
+                      color: '#a78bfa',
                       fontSize: '0.8rem',
                       fontWeight: '700',
                       cursor: 'pointer',
@@ -1203,8 +1203,8 @@ export default function BetHistory({ session, profile }) {
                       gap: '8px',
                       transition: 'all 0.2s ease'
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.15)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.4)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.2)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.15)'; e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.4)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.06)'; e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.2)'; }}
                   >
                     <Copy size={14} />
                     <span>Copy Slip</span>
@@ -1417,7 +1417,7 @@ export default function BetHistory({ session, profile }) {
                               cursor: 'pointer',
                               fontSize: '0.85rem',
                               background: selectedBet.status === st ? 
-                                          (st === 'Won' ? 'rgba(16, 185, 129, 0.15)' : st === 'Lost' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(0, 243, 255, 0.15)') : 
+                                          (st === 'Won' ? 'rgba(16, 185, 129, 0.15)' : st === 'Lost' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(167, 139, 250, 0.15)') : 
                                           'var(--adaptive-white-02)',
                               borderColor: selectedBet.status === st ? 
                                           (st === 'Won' ? 'var(--success)' : st === 'Lost' ? 'var(--danger)' : 'var(--accent-cyan)') : 
@@ -1616,7 +1616,7 @@ export default function BetHistory({ session, profile }) {
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>Odds</span>
-                        <span style={{ fontSize: '1.05rem', color: '#00f3ff', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(selectedBet.odds).toFixed(2)}</span>
+                        <span style={{ fontSize: '1.05rem', color: '#a78bfa', fontWeight: '700', fontFamily: 'monospace' }}>@{Number(selectedBet.odds).toFixed(2)}</span>
                       </div>
                       <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)' }}>Est. Return</span>
@@ -1657,10 +1657,10 @@ export default function BetHistory({ session, profile }) {
                         marginTop: '1rem',
                         width: '100%',
                         padding: '0.65rem',
-                        background: 'rgba(0, 243, 255, 0.06)',
-                        border: '1px solid rgba(0, 243, 255, 0.2)',
+                        background: 'rgba(167, 139, 250, 0.06)',
+                        border: '1px solid rgba(167, 139, 250, 0.2)',
                         borderRadius: '10px',
-                        color: '#00f3ff',
+                        color: '#a78bfa',
                         fontSize: '0.8rem',
                         fontWeight: '700',
                         cursor: 'pointer',
@@ -1670,8 +1670,8 @@ export default function BetHistory({ session, profile }) {
                         gap: '8px',
                         transition: 'all 0.2s ease'
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.15)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.4)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.06)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.2)'; }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.15)'; e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.4)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167, 139, 250, 0.06)'; e.currentTarget.style.borderColor = 'rgba(167, 139, 250, 0.2)'; }}
                     >
                       <Copy size={14} />
                       <span>Copy Slip</span>

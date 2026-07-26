@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, History, LogOut, Settings as SettingsIcon, TrendingUp, Target, Trophy, Globe, Moon, Sun } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, History, LogOut, Settings as SettingsIcon, Sparkles, Target, Trophy, Globe, Moon, Sun } from 'lucide-react';
 import { supabase, isMockMode } from './lib/supabase';
 import Dashboard from './pages/Dashboard';
 import AddBet from './pages/AddBet';
@@ -73,7 +73,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       {/* Mobile Top Header */}
       <div className="mobile-top-header">
         <div className="flex items-center gap-2">
-          <TrendingUp size={24} className="logo-icon" strokeWidth={3} />
+          <Sparkles size={24} className="logo-icon" strokeWidth={3} />
           <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px' }}>QuantStakes</h2>
         </div>
         <div className="flex items-center gap-3">
@@ -97,7 +97,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       {/* Sidebar */}
       <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', background: 'linear-gradient(180deg, rgba(15,15,20,0.95) 0%, rgba(10,10,15,0.95) 100%)', boxShadow: '5px 0 20px rgba(0,0,0,0.2)' }}>
         <div className="flex items-center gap-3 mb-8 sidebar-header">
-          <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
+          <Sparkles size={36} className="logo-icon" strokeWidth={3} />
           <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h2>
         </div>
         
@@ -240,7 +240,7 @@ function App() {
       return (
         <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <div className="flex items-center gap-3 mb-10">
-            <TrendingUp size={48} color="#00ffaa" strokeWidth={3} />
+            <Sparkles size={48} color="#a78bfa" strokeWidth={3} />
             <h1 className="text-gradient brand-logo-animated" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0, letterSpacing: '2px' }}>QuantStakes</h1>
           </div>
           

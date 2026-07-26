@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase, isMockMode } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-import { AlertCircle, CheckCircle, TrendingUp, Shield, BarChart3 } from 'lucide-react';
+import { AlertCircle, CheckCircle, Sparkles, Shield, BarChart3 } from 'lucide-react';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -103,7 +103,7 @@ export default function Auth() {
         {/* Left Side: Branding / Features (Hidden on very small screens) */}
         <div className="auth-left" style={{ flex: 1, background: 'linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(138, 43, 226, 0.15))', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div className="flex items-center gap-3 mb-6">
-            <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
+            <Sparkles size={36} className="logo-icon" strokeWidth={3} />
             <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h1>
           </div>
           

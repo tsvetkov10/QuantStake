@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, ArrowLeft } from 'lucide-react';
+import { Sparkles, ArrowLeft } from 'lucide-react';
 
 export default function Terms() {
   return (
@@ -8,7 +8,7 @@ export default function Terms() {
       {/* Header - Fixed to always stay on top */}
       <header className="flex justify-between items-center" style={{ padding: '1.5rem 4rem', borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
-          <TrendingUp size={36} className="logo-icon" strokeWidth={3} />
+          <Sparkles size={36} className="logo-icon" strokeWidth={3} />
           <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h1>
         </div>
         <nav className="flex gap-8 items-center landing-nav">
@@ -26,7 +26,7 @@ export default function Terms() {
         </Link>
         
         <div className="flex items-center gap-3 mb-8">
-          <TrendingUp size={24} className="text-success" />
+          <Sparkles size={24} className="text-success" />
           <h1 className="text-gradient" style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0 }}>QuantStakes Terms of Service</h1>
         </div>
 
