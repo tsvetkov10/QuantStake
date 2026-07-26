@@ -49,8 +49,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Sparkles size={40} className="logo-icon" strokeWidth={3} />
-            <h2 className="logo-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: 0 }}>QuantStakes</h2>
+            <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '40px', objectFit: 'contain' }} />
           </div>
         </div>
 

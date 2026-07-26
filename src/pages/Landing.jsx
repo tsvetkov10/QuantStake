@@ -37,8 +37,7 @@ export default function Landing() {
       {/* Header - Fixed to always stay on top */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid var(--border-glass)', background: 'rgba(5, 5, 8, 0.9)', backdropFilter: 'blur(20px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <div className="flex items-center gap-3">
-          <Sparkles size={36} className="logo-icon" strokeWidth={3} />
-          <h1 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h1>
+          <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '36px', objectFit: 'contain' }} />
         </div>
         <nav className="flex gap-8 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
@@ -306,8 +305,7 @@ export default function Landing() {
           
           <div style={{ maxWidth: '350px' }}>
             <div className="flex items-center gap-3 mb-6">
-              <Sparkles size={36} className="logo-icon" strokeWidth={3} />
-              <h2 className="logo-text brand-logo-animated" style={{ fontSize: '1.875rem', fontWeight: 'bold', margin: 0, letterSpacing: '1px', lineHeight: 1 }}>QuantStakes</h2>
+              <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '36px', objectFit: 'contain' }} />
             </div>
             <p className="text-secondary" style={{ fontSize: '1rem', lineHeight: '1.8' }}>
               The premium marketplace for sharp bettors and sports syndicates to track, analyze, and monetize their portfolios with algorithmic precision and cryptographic proof.
