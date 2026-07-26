@@ -17,66 +17,179 @@ export default function Landing() {
   // Expandable FAQ State
   const [openFaq, setOpenFaq] = useState(0); // First FAQ open by default
 
-  // Ambient Theme Music State (Royalty-Free Web Audio Synth Engine)
+  // Royalty-Free Synthwave Music Sequencer (Melody + Arpeggios + Bassline + Beats)
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const audioCtxRef = useRef(null);
+  const timerIdRef = useRef(null);
 
   const toggleMusic = async () => {
     if (isPlayingMusic) {
-      if (audioCtxRef.current) {
-        audioCtxRef.current.suspend();
-      }
+      if (timerIdRef.current) clearInterval(timerIdRef.current);
+      if (audioCtxRef.current) audioCtxRef.current.suspend();
       setIsPlayingMusic(false);
     } else {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
       if (!audioCtxRef.current) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) return;
-        const ctx = new AudioContextClass();
-        audioCtxRef.current = ctx;
-
-        // Ensure context is resumed (required for Safari & Chrome)
-        if (ctx.state === 'suspended') {
-          await ctx.resume();
-        }
-
-        // Build a rich, lush, ambient futuristic synth pad (C major 9 / C minor 9 chord)
-        const freqs = [130.81, 196.00, 261.63, 329.63, 392.00, 523.25]; // C3, G3, C4, E4, G4, C5
-        const masterGain = ctx.createGain();
-        masterGain.gain.value = 0.35; // Rich, audible background volume
-
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 1200; // Warm, bright lowpass filter
-
-        freqs.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          osc.type = idx % 2 === 0 ? 'sine' : 'sawtooth';
-          osc.frequency.value = freq;
-
-          // LFO modulation for organic movement
-          const lfo = ctx.createOscillator();
-          lfo.frequency.value = 0.2 + idx * 0.05;
-          const lfoGain = ctx.createGain();
-          lfoGain.gain.value = 2.0;
-          lfo.connect(lfoGain);
-          lfoGain.connect(osc.frequency);
-          lfo.start();
-
-          gain.gain.value = 0.3;
-          osc.connect(gain);
-          gain.connect(filter);
-          osc.start();
-        });
-
-        filter.connect(masterGain);
-        masterGain.connect(ctx.destination);
-      } else {
-        if (audioCtxRef.current.state === 'suspended') {
-          await audioCtxRef.current.resume();
-        }
+        audioCtxRef.current = new AudioContextClass();
       }
+
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') {
+        await ctx.resume();
+      }
+
+      // Master Volume & Filter
+      const masterGain = ctx.createGain();
+      masterGain.gain.value = 0.28;
+      masterGain.connect(ctx.destination);
+
+      // Chords & Scale Notes (Am -> F -> C -> G)
+      const arpNotes = [
+        // Am (A4, C5, E5, A5)
+        440.00, 523.25, 659.25, 880.00,
+        // F (F4, A4, C5, F5)
+        349.23, 440.00, 523.25, 698.46,
+        // C (C4, E4, G4, C5)
+        261.63, 329.63, 392.00, 523.25,
+        // G (G4, B4, D5, G5)
+        392.00, 493.88, 587.33, 783.99
+      ];
+
+      const bassNotes = [
+        110.00, 110.00, // A2
+        87.31,  87.31,  // F2
+        130.81, 130.81, // C3
+        98.00,  98.00   // G2
+      ];
+
+      let step = 0;
+      const bpm = 124;
+      const stepDuration = (60 / bpm) / 4; // 16th note interval
+
+      // Background Synth Pad (Am Chord)
+      const padGain = ctx.createGain();
+      padGain.gain.value = 0.15;
+      const padFilter = ctx.createBiquadFilter();
+      padFilter.type = 'lowpass';
+      padFilter.frequency.value = 600;
+      padGain.connect(padFilter);
+      padFilter.connect(masterGain);
+
+      [220.00, 261.63, 329.63].forEach(freq => {
+        const osc = ctx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        osc.connect(padGain);
+        osc.start();
+      });
+
+      // 16th Note Synthwave Sequencer Loop
+      const runStep = () => {
+        const now = ctx.currentTime;
+
+        // 1. Arpeggio Synth Lead Note
+        const noteIdx = (step % 16);
+        const freq = arpNotes[noteIdx];
+
+        const osc = ctx.createOscillator();
+        const noteGain = ctx.createGain();
+        const noteFilter = ctx.createBiquadFilter();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now);
+
+        noteFilter.type = 'bandpass';
+        noteFilter.frequency.setValueAtTime(1400 + Math.sin(step * 0.5) * 600, now);
+        noteFilter.Q.value = 3;
+
+        noteGain.gain.setValueAtTime(0.18, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+        osc.connect(noteFilter);
+        noteFilter.connect(noteGain);
+        noteGain.connect(masterGain);
+
+        osc.start(now);
+        osc.stop(now + 0.14);
+
+        // 2. Rhythmic Bassline (8th notes)
+        if (step % 2 === 0) {
+          const bassIdx = Math.floor((step % 16) / 2);
+          const bassFreq = bassNotes[bassIdx];
+
+          const bassOsc = ctx.createOscillator();
+          const bassGain = ctx.createGain();
+          const bassFilter = ctx.createBiquadFilter();
+
+          bassOsc.type = 'sawtooth';
+          bassOsc.frequency.setValueAtTime(bassFreq, now);
+
+          bassFilter.type = 'lowpass';
+          bassFilter.frequency.setValueAtTime(500, now);
+
+          bassGain.gain.setValueAtTime(0.3, now);
+          bassGain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+
+          bassOsc.connect(bassFilter);
+          bassFilter.connect(bassGain);
+          bassGain.connect(masterGain);
+
+          bassOsc.start(now);
+          bassOsc.stop(now + 0.2);
+        }
+
+        // 3. Electronic Kick Drum (on beat 1, 5, 9, 13)
+        if (step % 4 === 0) {
+          const kickOsc = ctx.createOscillator();
+          const kickGain = ctx.createGain();
+
+          kickOsc.frequency.setValueAtTime(150, now);
+          kickOsc.frequency.exponentialRampToValueAtTime(0.01, now + 0.15);
+
+          kickGain.gain.setValueAtTime(0.4, now);
+          kickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+          kickOsc.connect(kickGain);
+          kickGain.connect(masterGain);
+
+          kickOsc.start(now);
+          kickOsc.stop(now + 0.16);
+        }
+
+        // 4. Offbeat Hi-Hat (on beat 3, 7, 11, 15)
+        if (step % 4 === 2) {
+          const bufferSize = ctx.sampleRate * 0.05;
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+
+          const noise = ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          const hatFilter = ctx.createBiquadFilter();
+          hatFilter.type = 'highpass';
+          hatFilter.frequency.value = 7000;
+
+          const hatGain = ctx.createGain();
+          hatGain.gain.setValueAtTime(0.12, now);
+          hatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+          noise.connect(hatFilter);
+          hatFilter.connect(hatGain);
+          hatGain.connect(masterGain);
+
+          noise.start(now);
+          noise.stop(now + 0.05);
+        }
+
+        step = (step + 1) % 64;
+      };
+
+      timerIdRef.current = setInterval(runStep, stepDuration * 1000);
       setIsPlayingMusic(true);
     }
   };
