@@ -66,29 +66,29 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
              </h1>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '30px' }}>
-            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <Target size={32} color="#3b82f6" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#888888', fontSize: '1.5rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Win Rate</span>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
+            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <Target size={30} color="#3b82f6" style={{ flexShrink: 0 }} />
+                <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Win Rate</span>
               </div>
-              <p style={{ fontSize: '4rem', fontWeight: 'bold', margin: 0 }}>{winRate.toFixed(1)}%</p>
+              <p style={{ fontSize: winRate.toFixed(1).length > 5 ? '3.2rem' : '3.6rem', fontWeight: 'bold', margin: 0, whiteSpace: 'nowrap', letterSpacing: '-1px' }}>{winRate.toFixed(1)}%</p>
             </div>
             
-            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <Activity size={32} color="#22d3ee" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#888888', fontSize: '1.5rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Yield (ROI)</span>
+            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <Activity size={30} color="#22d3ee" style={{ flexShrink: 0 }} />
+                <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Yield (ROI)</span>
               </div>
-              <p style={{ fontSize: '4rem', fontWeight: 'bold', margin: 0, color: roi >= 0 ? '#10b981' : '#ffffff' }}>{roi >= 0 ? '+' : ''}{roi.toFixed(1)}%</p>
+              <p style={{ fontSize: `${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%`.length > 6 ? '3.1rem' : '3.6rem', fontWeight: 'bold', margin: 0, color: roi >= 0 ? '#10b981' : '#ffffff', whiteSpace: 'nowrap', letterSpacing: '-1px' }}>{roi >= 0 ? '+' : ''}{roi.toFixed(1)}%</p>
             </div>
 
-            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <Zap size={32} color="#FFD700" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#888888', fontSize: '1.5rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Biggest Hit</span>
+            <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <Zap size={30} color="#FFD700" style={{ flexShrink: 0 }} />
+                <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Biggest Hit</span>
               </div>
-              <p style={{ fontSize: '4rem', fontWeight: 'bold', margin: 0, color: '#FFD700' }}>+{sym}{biggestWin.toFixed(0)}</p>
+              <p style={{ fontSize: `+${sym}${biggestWin.toFixed(0)}`.length > 6 ? '3.1rem' : '3.5rem', fontWeight: 'bold', margin: 0, color: '#FFD700', whiteSpace: 'nowrap', letterSpacing: '-1px' }}>+{sym}{biggestWin.toFixed(0)}</p>
             </div>
           </div>
 
