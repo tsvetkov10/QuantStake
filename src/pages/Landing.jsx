@@ -186,8 +186,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* NEW ANIMATION 1: Live Verification Marquee Ticker */}
-      <div style={{ width: '100%', background: 'rgba(4, 7, 20, 0.9)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '0.85rem 0', overflow: 'hidden', whiteSpace: 'nowrap', position: 'relative', zIndex: 10 }}>
+      {/* PERSISTENT FIXED FOOTER TICKER: Live Verification Marquee Ticker */}
+      <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', background: 'rgba(4, 7, 20, 0.92)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(56, 189, 248, 0.25)', boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.8)', padding: '0.75rem 0', overflow: 'hidden', whiteSpace: 'nowrap', zIndex: 9999 }}>
         <div className="marquee-content flex items-center gap-12" style={{ display: 'inline-flex', animation: 'marquee 30s linear infinite' }}>
           <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#34d399" /> @alex_vance verified +€1,551 payout on Polymarket</span>
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
@@ -555,7 +555,7 @@ export default function Landing() {
       </section>
 
       {/* Sleek, Compact Footer */}
-      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '2.2rem 3rem' }}>
+      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '2.2rem 3rem 5.5rem 3rem' }}>
         <div className="flex justify-between items-center" style={{ maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap', gap: '1.5rem' }}>
           
           <div className="flex items-center gap-4">
