@@ -73,7 +73,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       {/* Mobile Top Header */}
       <div className="mobile-top-header">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
         </div>
         <div className="flex items-center gap-3">
           <Link to="/settings">
@@ -96,7 +96,7 @@ function AuthenticatedApp({ session, isMock, profile, setProfileCompleted, onPro
       {/* Sidebar */}
       <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', background: 'linear-gradient(180deg, rgba(15,15,20,0.95) 0%, rgba(10,10,15,0.95) 100%)', boxShadow: '5px 0 20px rgba(0,0,0,0.2)' }}>
         <div className="flex items-center gap-3 mb-8 sidebar-header">
-          <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '60px', objectFit: 'contain' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '60px', objectFit: 'contain' }} />
         </div>
         
         <nav className="flex-col gap-3" style={{ flexGrow: 1 }}>
@@ -238,7 +238,7 @@ function App() {
       return (
         <div style={{height: '100vh', width: '100%', background: 'var(--bg-dark)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <div className="flex items-center gap-3 mb-10">
-            <img src="/logo.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '90px', objectFit: 'contain' }} />
+            <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '90px', objectFit: 'contain' }} />
           </div>
           
           <div style={{ width: '300px', height: '4px', background: 'var(--adaptive-white-05)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>

@@ -49,7 +49,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
+            <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
           </div>
         </div>
 
