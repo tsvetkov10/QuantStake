@@ -573,43 +573,95 @@ input[type="number"] {
   margin-top: 6px;
 }
 
+/* Magic Glowing Pill Button (Inspired by Dribbble "Magic button") */
 .pill-cta-button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  background: #090a14;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #090b16;
+  border: 2px solid rgba(56, 189, 248, 0.4);
   color: #ffffff;
-  padding: 0.6rem 0.6rem 0.6rem 1.6rem;
+  padding: 0.75rem 0.75rem 0.75rem 2rem;
   border-radius: 9999px;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2), inset 0 0 10px rgba(56, 189, 248, 0.1);
   cursor: pointer;
+  z-index: 10;
+  overflow: visible;
+}
+
+.pill-cta-button::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.8) 0%, rgba(99, 102, 241, 0.4) 50%, transparent 75%);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.pill-cta-button::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.5) 0%, rgba(139, 92, 246, 0.2) 60%, transparent 80%);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .pill-cta-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 14px 30px rgba(139, 92, 246, 0.25);
+  transform: translateY(-2px) scale(1.03);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.9), 0 0 50px rgba(56, 189, 248, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.5);
+  animation: buttonFlamePulse 2s infinite alternate;
+}
+
+.pill-cta-button:hover::before,
+.pill-cta-button:hover::after {
+  opacity: 1;
+}
+
+@keyframes buttonFlamePulse {
+  0% {
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.8), 0 0 40px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(56, 189, 248, 1), 0 0 65px rgba(99, 102, 241, 0.7), inset 0 0 20px rgba(56, 189, 248, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.85), 0 0 45px rgba(56, 189, 248, 0.5), inset 0 0 12px rgba(56, 189, 248, 0.5);
+  }
 }
 
 .pill-cta-arrow {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #ffffff;
   color: #090a14;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .pill-cta-button:hover .pill-cta-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px) scale(1.05);
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
 }
 
 .nav-link-active {
@@ -637,4 +689,15 @@ input[type="number"] {
   transform: rotate(-35deg);
   opacity: 0.4;
   pointer-events: none;
+}
+
+/* Floating animation for rocket */
+.rocket-float-container {
+  animation: floatRocket 4s ease-in-out infinite;
+}
+
+@keyframes floatRocket {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
