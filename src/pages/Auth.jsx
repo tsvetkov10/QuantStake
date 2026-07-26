@@ -52,6 +52,22 @@ export default function Auth() {
           }
         });
         if (error) throw error;
+        
+        // Dispatch email notification to site owner
+        try {
+          fetch('/api/notify-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              timestamp: new Date().toISOString(),
+              userAgent: navigator.userAgent
+            })
+          }).catch(console.error);
+        } catch (e) {
+          console.error('Notification dispatch error', e);
+        }
+
         setSuccessMsg('Registration successful! Please check your email to verify your account.');
         setTimeout(() => setIsSignUp(false), 3000);
       } else {
