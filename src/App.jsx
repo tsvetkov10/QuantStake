@@ -77,7 +77,7 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       {/* Mobile Top Header */}
       <div className="mobile-top-header">
         <Link to="/" title="Return to Landing Page" className="flex items-center gap-2">
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain', cursor: 'pointer' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '64px', objectFit: 'contain', cursor: 'pointer' }} />
         </Link>
         <div className="flex items-center gap-3">
           <Link to="/settings">
@@ -100,7 +100,7 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       {/* Sidebar */}
       <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid var(--border-glass)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', padding: '1.5rem 1.25rem' }}>
         <Link to="/" title="Return to Landing Page" className="flex items-center gap-3 mb-8 sidebar-header" style={{ paddingLeft: '0.5rem', textDecoration: 'none', cursor: 'pointer' }}>
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '56px', objectFit: 'contain' }} />
         </Link>
         
         <nav className="flex-col gap-2.5" style={{ flexGrow: 1 }}>
