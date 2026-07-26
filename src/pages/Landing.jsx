@@ -137,15 +137,7 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Bottom Right Floating Avatar Badge */}
-            <div className="avatar-stack-badge" style={{ marginTop: '2rem', alignSelf: 'flex-end', marginRight: '2rem' }}>
-              <div className="flex items-center">
-                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #2563eb)', border: '2px solid #040714', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
-                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #a855f7, #ec4899)', border: '2px solid #040714', marginLeft: '-10px', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
-                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #059669)', border: '2px solid #040714', marginLeft: '-10px', display: 'flex', alignItems: 'center', opacity: 0.9 }}></div>
-              </div>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Finance experts</span>
-            </div>
+
 
           </div>
         </div>
