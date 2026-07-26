@@ -715,7 +715,7 @@ export default function BetHistory({ session, profile }) {
       {/* Header section */}
       <div className="flex justify-between items-end flex-wrap gap-6">
         <div>
-          <h2 className="text-gradient" style={{ fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>Quantitative Ledger</h2>
+          <h2 className="text-gradient" style={{ fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>Trading History</h2>
           <p className="text-secondary">Audit, filter, and monitor all positions in your portfolio.</p>
         </div>
 
@@ -1070,8 +1070,8 @@ export default function BetHistory({ session, profile }) {
                     zIndex: 15,
                     letterSpacing: '3px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 12px rgba(16, 185, 129, 0.5)',
-                    boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)',
+                    textShadow: '0 0 10px rgba(16, 185, 129, 0.6)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                     background: 'rgba(13, 15, 23, 0.95)',
                     whiteSpace: 'nowrap'
                   }}>
@@ -1092,8 +1092,8 @@ export default function BetHistory({ session, profile }) {
                     zIndex: 15,
                     letterSpacing: '3px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 12px rgba(239, 68, 68, 0.5)',
-                    boxShadow: '0 0 25px rgba(239, 68, 68, 0.25)',
+                    textShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                     background: 'rgba(13, 15, 23, 0.95)',
                     whiteSpace: 'nowrap'
                   }}>
@@ -1114,8 +1114,8 @@ export default function BetHistory({ session, profile }) {
                     zIndex: 15,
                     letterSpacing: '2px',
                     pointerEvents: 'none',
-                    textShadow: '0 0 12px rgba(255, 215, 0, 0.5)',
-                    boxShadow: '0 0 25px rgba(255, 215, 0, 0.25)',
+                    textShadow: '0 0 10px rgba(255, 215, 0, 0.6)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                     background: 'rgba(13, 15, 23, 0.95)',
                     whiteSpace: 'nowrap'
                   }}>
@@ -1527,8 +1527,8 @@ export default function BetHistory({ session, profile }) {
                       zIndex: 15,
                       letterSpacing: '3px',
                       pointerEvents: 'none',
-                      textShadow: '0 0 12px rgba(16, 185, 129, 0.5)',
-                      boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)',
+                      textShadow: '0 0 10px rgba(16, 185, 129, 0.6)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                       background: 'rgba(13, 15, 23, 0.95)',
                       whiteSpace: 'nowrap'
                     }}>
@@ -1549,8 +1549,8 @@ export default function BetHistory({ session, profile }) {
                       zIndex: 15,
                       letterSpacing: '3px',
                       pointerEvents: 'none',
-                      textShadow: '0 0 12px rgba(239, 68, 68, 0.5)',
-                      boxShadow: '0 0 25px rgba(239, 68, 68, 0.25)',
+                      textShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                       background: 'rgba(13, 15, 23, 0.95)',
                       whiteSpace: 'nowrap'
                     }}>
@@ -1571,8 +1571,8 @@ export default function BetHistory({ session, profile }) {
                       zIndex: 15,
                       letterSpacing: '2px',
                       pointerEvents: 'none',
-                      textShadow: '0 0 12px rgba(255, 215, 0, 0.5)',
-                      boxShadow: '0 0 25px rgba(255, 215, 0, 0.25)',
+                      textShadow: '0 0 10px rgba(255, 215, 0, 0.6)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.85)',
                       background: 'rgba(13, 15, 23, 0.95)',
                       whiteSpace: 'nowrap'
                     }}>
