@@ -157,6 +157,13 @@ export default function AddBet({ session, profile }) {
 
     const timePart = new Date().toTimeString().split(' ')[0];
     const selectedTime = new Date(`${selectedDate}T${timePart}`).toISOString();
+    
+    // Construct teams string cleanly, defaulting to 'Quick Bet' if left empty
+    const cleanMatchup = (m) => (m && m.trim() !== '' && m.trim() !== 'vs') ? m.trim() : '';
+    const teamsString = type === 'Single' 
+      ? (cleanMatchup(matchups[0]) ? `${cleanMatchup(matchups[0])} @ ${markets[0] || 'Match Winner'}` : 'Quick Bet')
+      : (matchups.map((m, i) => cleanMatchup(m) ? `${cleanMatchup(m)} @ ${markets[i] || 'Match Winner'}` : `Selection ${i+1}`).join(' | ') || 'Quick Bet Acca');
+
     const betData = {
       user_id: session.user.id,
       bookmaker,
@@ -164,9 +171,7 @@ export default function AddBet({ session, profile }) {
       type,
       stake: parseFloat(stake) || 0,
       odds: parseFloat(odds) || 0,
-      teams: type === 'Single' 
-        ? `${matchups[0]} @ ${markets[0] || 'Match Winner'}` 
-        : matchups.map((m, i) => `${m} @ ${markets[i] || 'Match Winner'}`).filter(x => !x.startsWith(' @')).join(' | '),
+      teams: teamsString,
       status: 'Pending',
       created_at: selectedTime
     };
@@ -718,7 +723,9 @@ export default function AddBet({ session, profile }) {
 
               {/* 3. Matchup & Market Grid */}
               <div className="flex-col gap-2">
-                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Matchup / Selection Teams</label>
+                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>
+                  Matchup / Selection Teams <span style={{ textTransform: 'none', fontWeight: 'normal', color: 'var(--text-secondary)' }}>(Optional)</span>
+                </label>
                 <div className="flex-col gap-2">
                   {matchups.map((matchup, idx) => (
                     <div key={idx} className="flex-col gap-2" style={{ background: 'transparent' }}>
@@ -734,7 +741,7 @@ export default function AddBet({ session, profile }) {
                                   newMatchups[idx] = `${home}${away ? ` vs ${away}` : ' vs '}`;
                                   setMatchups(newMatchups);
                                 }}
-                                placeholder="Home Team"
+                                placeholder="Home Team (Optional)"
                               />
                             </div>
                             <span style={{ fontWeight: 'bold', fontSize: '0.75rem', color: '#22d3ee', background: 'rgba(34, 211, 238, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(34, 211, 238, 0.2)' }}>VS</span>
@@ -747,7 +754,7 @@ export default function AddBet({ session, profile }) {
                                   newMatchups[idx] = `${home} vs ${away}`;
                                   setMatchups(newMatchups);
                                 }}
-                                placeholder="Away Team"
+                                placeholder="Away Team (Optional)"
                               />
                             </div>
                           </div>
@@ -755,14 +762,13 @@ export default function AddBet({ session, profile }) {
                           <input 
                             type="text" 
                             className="input-field" 
-                            placeholder={sport === 'Basketball' ? 'Lakers vs Warriors' : sport === 'Tennis' ? 'Alcaraz vs Djokovic' : 'Selection Name'} 
+                            placeholder={sport === 'Basketball' ? 'Lakers vs Warriors (Optional)' : sport === 'Tennis' ? 'Alcaraz vs Djokovic (Optional)' : 'Selection Name (Optional)'} 
                             value={matchup} 
                             onChange={e => {
                               const newMatchups = [...matchups];
                               newMatchups[idx] = e.target.value;
                               setMatchups(newMatchups);
                             }} 
-                            required 
                             style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
                           />
                         )}

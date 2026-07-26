@@ -98,7 +98,7 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       </div>
 
       {/* Sidebar */}
-      <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', background: 'rgba(6, 9, 20, 0.96)', backdropFilter: 'blur(20px)', boxShadow: '10px 0 30px rgba(0,0,0,0.4)', padding: '1.5rem 1.25rem' }}>
+      <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid var(--border-glass)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', padding: '1.5rem 1.25rem' }}>
         <Link to="/" title="Return to Landing Page" className="flex items-center gap-3 mb-8 sidebar-header" style={{ paddingLeft: '0.5rem', textDecoration: 'none', cursor: 'pointer' }}>
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
         </Link>
@@ -111,14 +111,14 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
           <NavLink to="/tools" icon={Target}>Tools</NavLink>
         </nav>
         
-        <div className="mt-auto flex-col gap-3 pt-6 sidebar-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          <Link to="/settings" className="flex items-center gap-3 p-3" style={{ borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', textDecoration: 'none', transition: 'all 0.25s ease', cursor: 'pointer', overflow: 'hidden' }}>
+        <div className="mt-auto flex-col gap-3 pt-6 sidebar-footer" style={{ borderTop: '1px solid var(--border-glass)' }}>
+          <Link to="/settings" className="flex items-center gap-3 p-3" style={{ borderRadius: '12px', background: 'var(--adaptive-white-03)', border: '1px solid var(--border-glass)', textDecoration: 'none', transition: 'all 0.25s ease', cursor: 'pointer', overflow: 'hidden' }}>
              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0, boxShadow: '0 0 10px rgba(0, 243, 255, 0.2)' }}>
                 {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
              </div>
              <div className="flex-col" style={{ minWidth: 0 }}>
-               <span style={{ color: '#fff', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>{profile?.username || session.user?.email?.split('@')[0]}</span>
-               <span className="text-secondary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#38bdf8', fontWeight: '600' }}>Pro Member</span>
+               <span style={{ color: 'var(--text-primary)', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>{profile?.username || session.user?.email?.split('@')[0]}</span>
+               <span className="text-secondary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--accent-cyan)', fontWeight: '600' }}>Pro Member</span>
              </div>
           </Link>
           <button 

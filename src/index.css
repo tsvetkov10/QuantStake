@@ -316,6 +316,23 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.06);
 }
 
+[data-theme='light'] .sidebar {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme='light'] .sidebar-header,
+[data-theme='light'] .sidebar-footer {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='light'] .mobile-top-header {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #0f172a !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
