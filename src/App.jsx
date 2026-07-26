@@ -76,9 +76,9 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       
       {/* Mobile Top Header */}
       <div className="mobile-top-header">
-        <div className="flex items-center gap-2">
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain' }} />
-        </div>
+        <Link to="/" title="Return to Landing Page" className="flex items-center gap-2">
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '64px', objectFit: 'contain', cursor: 'pointer' }} />
+        </Link>
         <div className="flex items-center gap-3">
           <Link to="/settings">
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', fontWeight: 'bold', fontSize: '0.9rem' }}>
@@ -99,9 +99,9 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
 
       {/* Sidebar */}
       <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', background: 'rgba(6, 9, 20, 0.96)', backdropFilter: 'blur(20px)', boxShadow: '10px 0 30px rgba(0,0,0,0.4)', padding: '1.5rem 1.25rem' }}>
-        <div className="flex items-center gap-3 mb-8 sidebar-header" style={{ paddingLeft: '0.5rem' }}>
+        <Link to="/" title="Return to Landing Page" className="flex items-center gap-3 mb-8 sidebar-header" style={{ paddingLeft: '0.5rem', textDecoration: 'none', cursor: 'pointer' }}>
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
-        </div>
+        </Link>
         
         <nav className="flex-col gap-2.5" style={{ flexGrow: 1 }}>
           <NavLink to="/dashboard" icon={LayoutDashboard}>Terminal</NavLink>

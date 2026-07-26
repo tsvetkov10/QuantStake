@@ -629,6 +629,80 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="flex-col items-center responsive-padding" style={{ padding: '6rem 2rem 4rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
+        <div className="reveal-on-scroll text-center flex-col items-center mb-12">
+          <div style={{ background: 'rgba(56, 189, 248, 0.1)', padding: '0.6rem 1.2rem', borderRadius: '30px', border: '1px solid rgba(56, 189, 248, 0.25)', marginBottom: '1.25rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <HelpCircle size={16} color="#38bdf8" />
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#38bdf8', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Frequently Asked Questions</span>
+          </div>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center', margin: 0 }}>Everything You Need to Know</h2>
+          <p className="text-secondary" style={{ fontSize: '1.1rem', maxWidth: '600px', textAlign: 'center', marginTop: '0.75rem', lineHeight: '1.6' }}>
+            Got questions about cryptographic verification, slip OCR parsing, or portfolio ROI tracking? We have answers.
+          </p>
+        </div>
+
+        <div className="flex-col gap-4" style={{ maxWidth: '850px', width: '100%', margin: '0 auto' }}>
+          {[
+            {
+              q: "What is QuantStakes?",
+              a: "QuantStakes is a non-profit, institutional-grade sports portfolio management and analytics terminal. It empowers sports analysts and portfolio managers to log positions, verify mathematical compounding ROI, and establish unforgeable track records with zero fake records."
+            },
+            {
+              q: "How does the SHA-256 Cryptographic Record Verification work?",
+              a: "Every position logged on QuantStakes is hashed into an unforgeable cryptographic ledger timestamped with SHA-256 algorithms. This guarantees that past performance, ROI, and win rates cannot be altered, forged, or retroactively edited by anyone."
+            },
+            {
+              q: "How does the Instant Slip OCR Parser work?",
+              a: "Our built-in OCR (Optical Character Recognition) engine allows you to upload any betting slip screenshot. It automatically parses odds, stake, market selection, and match details in under 0.5 seconds, eliminating manual data entry."
+            },
+            {
+              q: "Is QuantStakes completely free to use?",
+              a: "Yes, QuantStakes is a 100% free non-profit platform designed specifically for quantitative sports analysts, bankroll managers, and portfolio investors seeking transparent metrics."
+            },
+            {
+              q: "How is ROI and bankroll growth calculated?",
+              a: "ROI is calculated using strict, verified mathematical formulas based on total unit volume, settled returns, and compounding bankroll trajectory over time."
+            },
+            {
+              q: "Can I export my performance logs for third-party audit?",
+              a: "Absolutely. You can export your cryptographically sealed ledger as raw JSON or CSV files at any time directly from your terminal dashboard for independent auditing or tax reporting."
+            }
+          ].map((item, idx) => (
+            <div 
+              key={idx}
+              className="glass-card reveal-on-scroll"
+              onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+              style={{ 
+                padding: '1.5rem 2rem', 
+                borderRadius: '16px', 
+                cursor: 'pointer', 
+                background: openFaq === idx ? 'rgba(15, 23, 42, 0.9)' : 'rgba(11, 16, 35, 0.6)', 
+                border: openFaq === idx ? '1px solid rgba(56, 189, 248, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: openFaq === idx ? '0 10px 30px rgba(0, 0, 0, 0.5)' : 'none',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <div className="flex justify-between items-center">
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: openFaq === idx ? '#38bdf8' : '#ffffff', margin: 0, transition: 'color 0.2s ease' }}>
+                  {item.q}
+                </h3>
+                <div style={{ background: openFaq === idx ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.05)', padding: '0.4rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
+                  {openFaq === idx ? <ChevronUp size={20} color="#38bdf8" /> : <ChevronDown size={20} color="rgba(255,255,255,0.6)" />}
+                </div>
+              </div>
+              {openFaq === idx && (
+                <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <p className="text-secondary" style={{ fontSize: '0.98rem', lineHeight: '1.7', margin: 0, color: '#cbd5e1' }}>
+                    {item.a}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Features Grid */}
       <section id="features" className="flex-col items-center responsive-padding" style={{ padding: '4rem 2rem 6rem 2rem', position: 'relative', zIndex: 10, scrollMarginTop: '100px' }}>
         <h2 className="reveal-on-scroll" style={{ fontSize: '2.8rem', marginBottom: '2.5rem', fontWeight: 'bold', color: '#ffffff', textAlign: 'center' }}>Platform Capabilities</h2>
