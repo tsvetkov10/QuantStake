@@ -1,12 +1,12 @@
 // Maintenance Mode Configuration for QuantStakes Production Pages
-// Set any page to true to show the Maintenance / System Upgrade screen, or false to keep active.
+// Set any page to true to show the Maintenance screen, or false for active production pages.
 
 export const MAINTENANCE_CONFIG = {
-  social: true,        // Social Feed & Signal Marketplace
-  leaderboard: true,   // Analyst Leaderboard & Track Records
-  tools: true,         // Kelly & Arbitrage Calculators
-  addBet: true,        // Bet Slip Parser & Manual Entry
-  history: true,       // Bet History & Verification Ledger
-  settings: true,      // Account & Profile Settings
-  traderProfile: true, // Public Trader Profiles
+  social: false,        // Social Feed & Signal Marketplace - ONLINE
+  leaderboard: false,   // Analyst Leaderboard & Track Records - ONLINE
+  tools: false,         // Kelly & Arbitrage Calculators - ONLINE
+  addBet: false,        // Bet Slip Parser & Manual Entry - ONLINE
+  history: false,       // Bet History & Verification Ledger - ONLINE
+  settings: false,      // Account & Profile Settings - ONLINE
+  traderProfile: false, // Public Trader Profiles - ONLINE
 };
