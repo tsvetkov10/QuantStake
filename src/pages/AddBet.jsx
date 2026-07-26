@@ -554,85 +554,113 @@ export default function AddBet({ session, profile }) {
       )}
 
       {/* Page Header */}
-      <div>
-        <h2 className="text-gradient" style={{ fontSize: '1.75rem', marginBottom: '0.2rem', fontWeight: 'bold' }}>Terminal Ingestion</h2>
-        <p className="text-secondary" style={{ fontSize: '0.85rem' }}>Commit verified quantitative bets to your public cryptographic ledger index.</p>
+      <div className="flex justify-between items-center flex-wrap gap-4 mb-2">
+        <div>
+          <h2 className="text-gradient" style={{ fontSize: '1.8rem', margin: 0, fontWeight: 'bold', letterSpacing: '-0.5px' }}>Terminal Ingestion</h2>
+          <p className="text-secondary" style={{ fontSize: '0.85rem', margin: '0.2rem 0 0 0' }}>Commit verified quantitative bets to your public cryptographic ledger index.</p>
+        </div>
+
+        {/* Live SHA-256 Ledger Seal Badge */}
+        <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.25)', padding: '0.4rem 0.85rem', borderRadius: '20px', color: '#22d3ee', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 0 15px rgba(6, 182, 212, 0.1)' }}>
+          <Lock size={13} color="#22d3ee" />
+          <span>SHA-256 SEAL: {generatedHash.substring(0, 16)}...</span>
+        </div>
       </div>
 
-      <div style={{ maxWidth: '960px', width: '100%', paddingBottom: '0.5rem' }}>
+      <div style={{ maxWidth: '980px', width: '100%', paddingBottom: '0.5rem' }}>
         
         {/* Main Form Container */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           
           {/* Compact OCR Scan Bar */}
-          <div className="glass-panel" style={{ padding: '0.6rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '48px' }}>
+          <div className="glass-panel" style={{ padding: '0.6rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '48px', border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(15, 23, 42, 0.75)' }}>
             <div className="flex items-center gap-2.5">
-              <Upload size={16} color="var(--accent-cyan)" />
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                {ocrLoading ? `Extracting values (${ocrProgress}%)...` : 'Have a screenshot slip?'}
+              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Upload size={15} color="#38bdf8" />
+              </div>
+              <span style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: '500' }}>
+                {ocrLoading ? `Extracting slip values (${ocrProgress}%)...` : 'AI Slip Scan: Upload any sports slip screenshot for instant 0.5s auto-fill'}
               </span>
             </div>
             
             <input type="file" id="screenshot-upload" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={ocrLoading} />
             <label 
               htmlFor="screenshot-upload" 
-              className="btn btn-secondary" 
+              className="btn-white-pill" 
               style={{ 
-                padding: '0.3rem 0.85rem', 
+                padding: '0.35rem 1rem', 
                 fontSize: '0.8rem', 
                 height: 'auto', 
                 margin: 0, 
                 cursor: ocrLoading ? 'default' : 'pointer',
-                background: 'var(--adaptive-white-02)',
-                border: '1px solid var(--border-glass)',
-                color: 'var(--text-primary)'
+                textAlign: 'center'
               }}
             >
-              {ocrLoading ? 'Scanning...' : 'Scan Slip'}
+              {ocrLoading ? 'Scanning...' : '⚡ Scan Slip Screenshot'}
             </label>
           </div>
 
           {/* Core Input Form Card */}
-          <div className="glass-panel" style={{ padding: '1.25rem 1.5rem' }}>
+          <div className="glass-panel" style={{ padding: '1.25rem 1.5rem', background: 'rgba(6, 9, 20, 0.95)' }}>
             {errorMsg && (
               <div className="flex items-center gap-2 mb-4" style={{ padding: '0.75rem 1rem', background: 'rgba(255, 51, 102, 0.1)', border: '1px solid var(--danger)', color: 'var(--danger)', borderRadius: '8px' }}>
                 <AlertCircle size={18} />
-                <p style={{ fontSize: '0.85rem' }}>{errorMsg}</p>
+                <p style={{ fontSize: '0.85rem', margin: 0 }}>{errorMsg}</p>
               </div>
             )}
 
             {successMsg && (
               <div className="flex items-center gap-2 mb-4" style={{ padding: '0.75rem 1rem', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid var(--success)', color: 'var(--success)', borderRadius: '8px' }}>
                 <CheckCircle size={18} />
-                <p style={{ fontSize: '0.85rem' }}>{successMsg}</p>
+                <p style={{ fontSize: '0.85rem', margin: 0 }}>{successMsg}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="flex-col gap-3.5">
               
-              {/* 4 Inline Core Selectors */}
-              <div className="grid grid-cols-4 gap-3">
-                {/* Sport Select */}
-                <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Sport</label>
-                  <select 
-                    className="input-field mt-1" 
-                    value={sport} 
-                    onChange={e => setSport(e.target.value)}
-                    style={{ color: 'var(--text-primary)', height: '40px', minHeight: '40px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
-                  >
-                    <option value="Football">Football</option>
-                    <option value="Basketball">Basketball</option>
-                    <option value="Tennis">Tennis</option>
-                    <option value="MMA">MMA</option>
-                    <option value="Esports">Esports</option>
-                    <option value="Other">Other</option>
-                  </select>
+              {/* 1. Visual Sport Pills Selector */}
+              <div>
+                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Select Sport Discipline</label>
+                <div className="flex gap-2 flex-wrap mt-1.5">
+                  {[
+                    { id: 'Football', label: '⚽ Football' },
+                    { id: 'Basketball', label: '🏀 Basketball' },
+                    { id: 'Tennis', label: '🎾 Tennis' },
+                    { id: 'MMA', label: '🥊 MMA' },
+                    { id: 'Esports', label: '🎮 Esports' },
+                    { id: 'Other', label: '🌐 Other' }
+                  ].map(item => {
+                    const isSelected = sport === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => setSport(item.id)}
+                        style={{
+                          padding: '0.35rem 0.85rem',
+                          borderRadius: '20px',
+                          fontSize: '0.8rem',
+                          fontWeight: isSelected ? '700' : '500',
+                          background: isSelected ? 'rgba(56, 189, 248, 0.18)' : 'rgba(255, 255, 255, 0.03)',
+                          color: isSelected ? '#38bdf8' : 'rgba(255, 255, 255, 0.7)',
+                          border: `1px solid ${isSelected ? '#38bdf8' : 'rgba(255, 255, 255, 0.08)'}`,
+                          boxShadow: isSelected ? '0 0 12px rgba(56, 189, 248, 0.25)' : 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        {item.label}
+                      </button>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Bet Type Select */}
+              {/* 2. Bet Type & Bookmaker & Date Row */}
+              <div className="grid grid-cols-3 gap-3">
+                {/* Bet Type Pills */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Bet Type</label>
+                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Bet Type</label>
                   <select 
                     className="input-field mt-1" 
                     value={type} 
@@ -642,10 +670,10 @@ export default function AddBet({ session, profile }) {
                         setMatchups([matchups[0]]);
                       }
                     }}
-                    style={{ color: 'var(--text-primary)', height: '40px', minHeight: '40px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
                   >
                     <option value="Single">Single</option>
-                    <option value="Multiple">Multiple</option>
+                    <option value="Multiple">Multiple (Acca)</option>
                     <option value="System">System</option>
                     <option value="Bet Builder">Bet Builder</option>
                   </select>
@@ -653,12 +681,12 @@ export default function AddBet({ session, profile }) {
 
                 {/* Bookmaker Select */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Bookmaker</label>
+                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Bookmaker Platform</label>
                   <select 
                     className="input-field mt-1" 
                     value={bookmaker} 
                     onChange={e => setBookmaker(e.target.value)}
-                    style={{ color: 'var(--text-primary)', height: '40px', minHeight: '40px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
                   >
                     <option value="Polymarket">Polymarket</option>
                     <option value="Bet365">Bet365</option>
@@ -676,21 +704,21 @@ export default function AddBet({ session, profile }) {
 
                 {/* Date Select */}
                 <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Date</label>
+                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Log Date</label>
                   <input 
                     type="date" 
                     className="input-field mt-1" 
                     value={selectedDate} 
                     onChange={e => setSelectedDate(e.target.value)} 
-                    style={{ color: 'var(--text-primary)', height: '40px', minHeight: '40px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ color: 'var(--text-primary)', height: '38px', minHeight: '38px', boxSizing: 'border-box', borderRadius: '8px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
                     required
                   />
                 </div>
               </div>
 
-              {/* Matchup & Market Grid */}
+              {/* 3. Matchup & Market Grid */}
               <div className="flex-col gap-2">
-                <label className="label" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Matchup / Teams</label>
+                <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Matchup / Selection Teams</label>
                 <div className="flex-col gap-2">
                   {matchups.map((matchup, idx) => (
                     <div key={idx} className="flex-col gap-2" style={{ background: 'transparent' }}>
@@ -709,7 +737,7 @@ export default function AddBet({ session, profile }) {
                                 placeholder="Home Team"
                               />
                             </div>
-                            <span style={{ fontWeight: 'bold', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>VS</span>
+                            <span style={{ fontWeight: 'bold', fontSize: '0.75rem', color: '#22d3ee', background: 'rgba(34, 211, 238, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(34, 211, 238, 0.2)' }}>VS</span>
                             <div className="flex-1">
                               <TeamSelector 
                                 value={matchup.split(' vs ')[1] || ''} 
@@ -735,7 +763,7 @@ export default function AddBet({ session, profile }) {
                               setMatchups(newMatchups);
                             }} 
                             required 
-                            style={{ height: '40px', minHeight: '40px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                            style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem' }}
                           />
                         )}
                         {matchups.length > 1 && (
@@ -754,7 +782,7 @@ export default function AddBet({ session, profile }) {
                       
                       {/* Render Market Selection ONLY for Football */}
                       {sport === 'Football' && (
-                        <div className="flex-col gap-1.5 mt-1 pt-1.5" style={{ borderTop: '1px dashed var(--adaptive-white-05)' }}>
+                        <div className="flex-col gap-1 mt-1 pt-1.5" style={{ borderTop: '1px dashed var(--adaptive-white-05)' }}>
                           <span className="text-secondary" style={{ fontSize: '0.62rem', fontWeight: 'bold', letterSpacing: '1px' }}>MARKET SELECTION</span>
                           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                             {MARKET_OPTIONS.map(opt => {
@@ -770,7 +798,7 @@ export default function AddBet({ session, profile }) {
                                   }}
                                   style={{
                                     whiteSpace: 'nowrap',
-                                    padding: '4px 10px',
+                                    padding: '3px 9px',
                                     borderRadius: '16px',
                                     fontSize: '0.72rem',
                                     fontWeight: isSelected ? 'bold' : '500',
@@ -780,20 +808,6 @@ export default function AddBet({ session, profile }) {
                                     cursor: 'pointer',
                                     transition: 'all 0.2s ease',
                                     flexShrink: 0
-                                  }}
-                                  onMouseEnter={e => {
-                                    if (!isSelected) {
-                                      e.currentTarget.style.background = 'var(--adaptive-white-06)';
-                                      e.currentTarget.style.color = 'white';
-                                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                                    }
-                                  }}
-                                  onMouseLeave={e => {
-                                    if (!isSelected) {
-                                      e.currentTarget.style.background = 'transparent';
-                                      e.currentTarget.style.color = 'var(--text-secondary)';
-                                      e.currentTarget.style.borderColor = 'var(--border-glass)';
-                                    }
                                   }}
                                 >
                                   {opt}
@@ -816,10 +830,12 @@ export default function AddBet({ session, profile }) {
                 </div>
               </div>
 
-              {/* Stake & Odds Input */}
-              <div className="grid grid-cols-2 gap-3">
+              {/* 4. Interactive Financial Calculation & Preset Bar */}
+              <div className="grid grid-cols-2 gap-3" style={{ background: 'rgba(255,255,255,0.02)', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Stake Amount</label>
+                  <div className="flex justify-between items-center">
+                    <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Stake Amount ({currencySymbol})</label>
+                  </div>
                   <input 
                     type="number" 
                     className="input-field mt-1" 
@@ -829,7 +845,7 @@ export default function AddBet({ session, profile }) {
                     required 
                     min="0.01" 
                     step="0.01" 
-                    style={{ height: '40px', minHeight: '40px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem', fontWeight: 'bold' }}
                   />
                   <div className="flex gap-1 flex-wrap mt-1.5">
                     {[5, 10, 20, 50, 100, 250].map(amt => (
@@ -838,17 +854,16 @@ export default function AddBet({ session, profile }) {
                         type="button" 
                         onClick={() => setStake(amt.toString())}
                         style={{
-                          background: 'var(--adaptive-white-02)',
-                          border: '1px solid var(--border-glass)',
+                          background: stake === amt.toString() ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                          border: `1px solid ${stake === amt.toString() ? '#38bdf8' : 'rgba(255, 255, 255, 0.1)'}`,
                           borderRadius: '6px',
-                          padding: '0.15rem 0.4rem',
-                          color: 'var(--text-secondary)',
+                          padding: '0.15rem 0.45rem',
+                          color: stake === amt.toString() ? '#38bdf8' : 'rgba(255, 255, 255, 0.7)',
                           fontSize: '0.72rem',
+                          fontWeight: '600',
                           cursor: 'pointer',
                           transition: 'all 0.2s'
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-cyan)'; e.currentTarget.style.color = 'white'; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
                       >
                         {currencySymbol}{amt}
                       </button>
@@ -857,7 +872,7 @@ export default function AddBet({ session, profile }) {
                 </div>
                 
                 <div>
-                  <label className="label" style={{ fontSize: '0.75rem' }}>Odds (Decimal)</label>
+                  <label className="label" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: 'rgba(255,255,255,0.6)' }}>Decimal Odds (@)</label>
                   <input 
                     type="number" 
                     className="input-field mt-1" 
@@ -867,32 +882,42 @@ export default function AddBet({ session, profile }) {
                     required 
                     min="1.01" 
                     step="0.01" 
-                    style={{ height: '40px', minHeight: '40px', padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
+                    style={{ height: '38px', minHeight: '38px', padding: '0.35rem 0.75rem', fontSize: '0.85rem', fontWeight: 'bold', color: '#22d3ee' }}
                   />
+
+                  {/* Live Est. Return Pill */}
+                  <div style={{ marginTop: '0.5rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '6px', padding: '0.35rem 0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.7)', fontWeight: '500' }}>Est. Return:</span>
+                    <span style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: '800', fontFamily: 'monospace' }}>
+                      {currencySymbol}{(parseFloat(stake || 0) * parseFloat(odds || 0)).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Submit Action Button */}
+              {/* 5. Commit Action Button */}
               <button 
-                className="btn btn-secondary" 
+                className="btn-white-pill" 
                 type="submit" 
                 disabled={loading} 
                 style={{ 
                   width: '100%', 
-                  marginTop: '0.5rem', 
-                  padding: '0.75rem',
-                  fontSize: '0.9rem',
-                  background: 'rgba(6, 182, 212, 0.05)', 
-                  border: '1px solid var(--border-glass)', 
-                  color: 'var(--text-primary)', 
-                  cursor: 'pointer', 
-                  transition: 'all 0.2s',
-                  boxShadow: '0 0 10px transparent'
+                  marginTop: '0.4rem', 
+                  padding: '0.85rem',
+                  fontSize: '0.95rem',
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px'
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6, 182, 212, 0.15)'; e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.5)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(6, 182, 212, 0.2)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(6, 182, 212, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.boxShadow = '0 0 10px transparent'; }}
               >
-                {loading ? 'Processing Ledger Ingestion...' : 'Commit Log Entry'}
+                {loading ? 'Processing Ledger Ingestion...' : (
+                  <>
+                    <span>Commit Log Entry to Cryptographic Ledger</span>
+                    <ArrowRight size={18} />
+                  </>
+                )}
               </button>
             </form>
           </div>
