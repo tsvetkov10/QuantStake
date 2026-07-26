@@ -2,8 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BrainCircuit, BarChart3, Shield, CheckCircle, Sparkles, Activity, ShieldCheck, Users, CreditCard, TrendingUp, MoreHorizontal, ArrowRight, Lock, Award, Eye, FileText, ChevronDown, ChevronUp, Calculator, HelpCircle, Sliders, Zap, Star } from 'lucide-react';
 import { playUiSound } from '../utils/soundEffects';
+import { supabase } from '../lib/supabase';
 
-export default function Landing() {
+export default function Landing({ session: initialSession, profile: initialProfile }) {
+  // Session State for logged-in header rendering
+  const [currentUser, setCurrentUser] = useState(initialSession?.user || null);
+  const [currentProfile, setCurrentProfile] = useState(initialProfile || null);
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setCurrentUser(session.user);
+        const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
+        if (data) setCurrentProfile(data);
+      } else {
+        const hasMock = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';
+        if (hasMock) {
+          const p = sessionStorage.getItem('mock_profile');
+          setCurrentUser({ email: 'demo@quantstakes.com' });
+          setCurrentProfile(p ? JSON.parse(p) : { username: 'QuantAnalyst' });
+        }
+      }
+    };
+
+    checkUserSession();
+  }, [initialSession, initialProfile]);
+
   // Animated Revenue Counter (0 -> 10,000)
   const [revenue, setRevenue] = useState(0);
   const targetRevenue = 10000;
@@ -111,9 +136,9 @@ export default function Landing() {
 
       {/* Navigation Header */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(4, 7, 20, 0.75)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
-        </div>
+        </Link>
         
         <nav className="flex gap-8 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
@@ -123,8 +148,30 @@ export default function Landing() {
           <a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>FAQ</a>
           
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
-          <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
-          <Link to="/auth" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>Sign up</Link>
+
+          {currentUser ? (
+            <div className="flex items-center gap-3">
+              <Link to="/settings" style={{ textDecoration: 'none' }}>
+                <div className="flex items-center gap-2" style={{ background: 'rgba(255, 255, 255, 0.08)', padding: '0.4rem 0.85rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.15)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                    {!currentProfile?.avatar_url && (currentProfile?.username?.[0] || currentUser?.email?.[0] || 'U').toUpperCase()}
+                  </div>
+                  <span style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem' }}>
+                    {currentProfile?.username || currentUser?.email?.split('@')[0]}
+                  </span>
+                </div>
+              </Link>
+              <Link to="/dashboard" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Dashboard</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          ) : (
+            <>
+              <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
+              <Link to="/auth" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>Sign up</Link>
+            </>
+          )}
         </nav>
       </header>
 
@@ -146,8 +193,8 @@ export default function Landing() {
 
             {/* CTA Action Group: White Pill + Learn More */}
             <div className="flex items-center gap-6 flex-wrap mb-8">
-              <Link to="/auth" className="btn-white-pill">
-                Open Account
+              <Link to={currentUser ? "/dashboard" : "/auth"} className="btn-white-pill">
+                {currentUser ? "Launch Terminal →" : "Open Account"}
               </Link>
 
               <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>

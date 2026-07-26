@@ -229,7 +229,7 @@ function App() {
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing session={userToUse} profile={profile} />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
