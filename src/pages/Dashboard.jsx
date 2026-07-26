@@ -627,7 +627,7 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
+      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
       const timestamp = Math.floor(Date.now() / 1000);
       download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
@@ -641,7 +641,7 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
+      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
       try {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         setIsCopied(true);

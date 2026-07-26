@@ -50,9 +50,18 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           
-          {/* Logo Data URI to guarantee rendering when copying/downloading */}
+          {/* Logo Data URI background to guarantee 100% rendering when copying/downloading */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img src={LOGO_FULL_BASE64} alt="QuantStakes Logo" style={{ height: '72px', objectFit: 'contain' }} />
+            <div
+              style={{
+                width: '320px',
+                height: '72px',
+                backgroundImage: `url("${LOGO_FULL_BASE64}")`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'right center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
           </div>
         </div>
 
