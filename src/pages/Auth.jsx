@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase, isMockMode } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
-import { AlertCircle, CheckCircle, Sparkles, Shield, BarChart3 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { AlertCircle, CheckCircle, ShieldCheck, BarChart3, ArrowLeft } from 'lucide-react';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -14,8 +14,8 @@ export default function Auth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Welcome";
-  }, []);
+    document.title = isSignUp ? "Sign Up | QuantStakes" : "Log In | QuantStakes";
+  }, [isSignUp]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -96,123 +96,146 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex items-center justify-center auth-panel-wrapper" style={{ minHeight: '100vh', width: '100%' }}>
+    <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', position: 'relative', overflow: 'hidden' }}>
       
-      <div className="flex glass-panel auth-panel" style={{ width: '100%', maxWidth: '1000px', padding: 0, borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px var(--shadow-card)' }}>
+      {/* Dynamic Moving Speed Streaks & Flare FX */}
+      <div className="flowing-speed-container">
+        <div className="flowing-beam beam-cyan"></div>
+        <div className="flowing-beam beam-magenta"></div>
+        <div className="flowing-beam beam-flare"></div>
+      </div>
+
+      {/* Top Header Navigation */}
+      <header className="flex justify-between items-center responsive-header-padding" style={{ position: 'relative', zIndex: 10, paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+        <Link to="/" className="flex items-center gap-3">
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
+        </Link>
         
-        {/* Left Side: Branding / Features (Hidden on very small screens) */}
-        <div className="auth-left" style={{ flex: 1, background: 'linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(138, 43, 226, 0.15))', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <div className="flex items-center gap-3 mb-6">
-            <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-animated" style={{ height: '60px', objectFit: 'contain' }} />
-          </div>
+        <Link to="/" className="flex items-center gap-2 text-secondary" style={{ textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>
+          <ArrowLeft size={18} /> Back to Landing Page
+        </Link>
+      </header>
+
+      {/* Main Auth Container */}
+      <div className="flex items-center justify-center auth-panel-wrapper" style={{ flex: 1, padding: '2rem 1.5rem', zIndex: 10, position: 'relative' }}>
+        
+        <div className="flex glass-panel auth-panel" style={{ width: '100%', maxWidth: '1050px', padding: 0, borderRadius: '28px', overflow: 'hidden', background: 'rgba(11, 16, 35, 0.85)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 30px 60px rgba(0, 0, 0, 0.6)' }}>
           
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: '1.2', marginBottom: '1.5rem' }}>
-            The Marketplace <br/>For Sports Analytics.
-          </h2>
-          <p className="text-secondary mb-8" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
-            Generate cryptographic proof of your edge and monetize your analytics like a hedge fund.
-          </p>
+          {/* Left Side: Branding / Features */}
+          <div className="auth-left" style={{ flex: 1.1, padding: '4rem 3.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%)', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <h2 className="title-cirform" style={{ fontSize: '2.4rem', lineHeight: '1.15', marginBottom: '1.5rem' }}>
+              We create bright <br/>
+              future <span className="serif-italic-accent">for Portfolio Management</span>
+            </h2>
 
-          <div className="flex-col gap-4">
-            <div className="flex items-center gap-4 text-secondary">
-              <Shield size={24} color="var(--success)" />
-              <span>Unforgeable cryptographic verification.</span>
-            </div>
-            <div className="flex items-center gap-4 text-secondary">
-              <BarChart3 size={24} color="var(--accent-cyan)" />
-              <span>Subscribe to analysts with proven edge.</span>
-            </div>
-          </div>
-        </div>
+            <p className="text-secondary mb-8" style={{ fontSize: '1.05rem', lineHeight: '1.6' }}>
+              Institutional-grade sports portfolio management, transparent performance analytics, and cryptographic record proof.
+            </p>
 
-        {/* Right Side: Auth Form */}
-        <div className="auth-right" style={{ flex: 1, padding: '4rem 3rem', background: 'rgba(5, 5, 8, 0.6)' }}>
-          
-          {/* Custom Tabs */}
-          <div className="flex mb-8" style={{ background: 'var(--adaptive-white-05)', borderRadius: '12px', padding: '4px' }}>
-            <button 
-              style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: '600', transition: 'all 0.3s ease', background: !isSignUp ? 'var(--adaptive-white-10)' : 'transparent', color: !isSignUp ? 'white' : 'var(--text-secondary)' }}
-              onClick={() => { setIsSignUp(false); setErrorMsg(null); setSuccessMsg(null); }}
-            >
-              Log In
-            </button>
-            <button 
-              style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: '600', transition: 'all 0.3s ease', background: isSignUp ? 'var(--adaptive-white-10)' : 'transparent', color: isSignUp ? 'white' : 'var(--text-secondary)' }}
-              onClick={() => { setIsSignUp(true); setErrorMsg(null); setSuccessMsg(null); }}
-            >
-              Sign Up
-            </button>
-          </div>
-
-          <h3 style={{ fontSize: '1.8rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>
-            {isSignUp ? 'Create your account' : 'Welcome back'}
-          </h3>
-
-          {errorMsg && (
-            <div className="flex items-center gap-2 mb-6" style={{ padding: '1rem', background: 'rgba(255, 51, 102, 0.1)', border: '1px solid var(--danger)', color: 'var(--danger)', borderRadius: '8px' }}>
-              <AlertCircle size={20} />
-              <p style={{ fontSize: '0.9rem' }}>{errorMsg}</p>
-            </div>
-          )}
-
-          {successMsg && (
-            <div className="flex items-center gap-2 mb-6" style={{ padding: '1rem', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid var(--success)', color: 'var(--success)', borderRadius: '8px' }}>
-              <CheckCircle size={20} />
-              <p style={{ fontSize: '0.9rem' }}>{successMsg}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleAuth} className="flex-col gap-5">
-            <div>
-              <label className="label">Email Address</label>
-              <input
-                className="input-field"
-                type="email"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className="label" style={{ marginBottom: 0 }}>Password</label>
-                {!isSignUp && (
-                   <span onClick={handleResetPassword} style={{ fontSize: '0.8rem', color: 'var(--accent-cyan)', cursor: 'pointer' }}>Forgot password?</span>
-                )}
+            <div className="flex-col gap-4">
+              <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '0.95rem' }}>
+                <ShieldCheck size={22} color="#34d399" />
+                <span>Unforgeable cryptographic performance logs</span>
               </div>
-              <input
-                className="input-field"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-              />
+              <div className="flex items-center gap-3 text-secondary" style={{ fontSize: '0.95rem' }}>
+                <BarChart3 size={22} color="#38bdf8" />
+                <span>Verified ROI metrics & leaderboard tracking</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Auth Form */}
+          <div className="auth-right" style={{ flex: 1, padding: '3.5rem 3rem', background: 'rgba(4, 7, 20, 0.65)' }}>
+            
+            {/* Custom Tab Switcher */}
+            <div className="flex mb-8" style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: '14px', padding: '5px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              <button 
+                style={{ flex: 1, padding: '0.7rem', borderRadius: '10px', border: 'none', cursor: 'pointer', fontWeight: '700', fontSize: '0.95rem', transition: 'all 0.3s ease', background: !isSignUp ? '#ffffff' : 'transparent', color: !isSignUp ? '#040714' : 'var(--text-secondary)' }}
+                onClick={() => { setIsSignUp(false); setErrorMsg(null); setSuccessMsg(null); }}
+              >
+                Log In
+              </button>
+              <button 
+                style={{ flex: 1, padding: '0.7rem', borderRadius: '10px', border: 'none', cursor: 'pointer', fontWeight: '700', fontSize: '0.95rem', transition: 'all 0.3s ease', background: isSignUp ? '#ffffff' : 'transparent', color: isSignUp ? '#040714' : 'var(--text-secondary)' }}
+                onClick={() => { setIsSignUp(true); setErrorMsg(null); setSuccessMsg(null); }}
+              >
+                Sign Up
+              </button>
             </div>
 
-            {isSignUp && (
+            <h3 style={{ fontSize: '1.7rem', marginBottom: '1.5rem', fontWeight: 'bold', color: '#ffffff' }}>
+              {isSignUp ? 'Create your account' : 'Welcome back'}
+            </h3>
+
+            {errorMsg && (
+              <div className="flex items-center gap-2 mb-6" style={{ padding: '0.9rem 1.2rem', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid var(--danger)', color: '#fca5a5', borderRadius: '12px' }}>
+                <AlertCircle size={20} />
+                <p style={{ fontSize: '0.9rem', margin: 0 }}>{errorMsg}</p>
+              </div>
+            )}
+
+            {successMsg && (
+              <div className="flex items-center gap-2 mb-6" style={{ padding: '0.9rem 1.2rem', background: 'rgba(52, 211, 153, 0.15)', border: '1px solid var(--success)', color: '#6ee7b7', borderRadius: '12px' }}>
+                <CheckCircle size={20} />
+                <p style={{ fontSize: '0.9rem', margin: 0 }}>{successMsg}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleAuth} className="flex-col gap-5">
               <div>
-                <label className="label">Confirm Password</label>
+                <label className="label" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '0.4rem', display: 'block' }}>Email Address</label>
+                <input
+                  className="input-field"
+                  type="email"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', borderRadius: '12px', padding: '0.9rem 1.2rem' }}
+                />
+              </div>
+              
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="label" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 0 }}>Password</label>
+                  {!isSignUp && (
+                     <span onClick={handleResetPassword} style={{ fontSize: '0.8rem', color: '#38bdf8', cursor: 'pointer', fontWeight: 600 }}>Forgot password?</span>
+                  )}
+                </div>
                 <input
                   className="input-field"
                   type="password"
                   placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
+                  style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', borderRadius: '12px', padding: '0.9rem 1.2rem' }}
                 />
               </div>
-            )}
 
-            <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', marginTop: '1rem', padding: '1rem', fontSize: '1.1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '56px' }}>
-              {loading ? <div className="spinner"></div> : (isSignUp ? 'Create Account' : 'Sign In')}
-            </button>
-          </form>
+              {isSignUp && (
+                <div>
+                  <label className="label" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '0.4rem', display: 'block' }}>Confirm Password</label>
+                  <input
+                    className="input-field"
+                    type="password"
+                    placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    style={{ background: 'rgba(4, 7, 20, 0.8)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', borderRadius: '12px', padding: '0.9rem 1.2rem' }}
+                  />
+                </div>
+              )}
 
+              <button className="btn-white-pill" type="submit" disabled={loading} style={{ width: '100%', marginTop: '0.75rem', padding: '1rem', fontSize: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {loading ? <div className="spinner"></div> : (isSignUp ? 'Create Account' : 'Sign In')}
+              </button>
+            </form>
+
+          </div>
         </div>
       </div>
     </div>
