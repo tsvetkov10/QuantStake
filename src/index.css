@@ -153,52 +153,65 @@
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
 
-/* --- Dynamic Background Lightning FX --- */
-.lightning-bolt {
+/* --- Dynamic Moving Speed Streaks & Flare FX (Matching Dribbble Video) --- */
+.flowing-speed-container {
   position: absolute;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 1;
-  opacity: 0;
-  filter: drop-shadow(0 0 18px #38bdf8) drop-shadow(0 0 35px #a855f7);
-  animation: lightningStrike 5s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-.lightning-left {
-  top: 10%;
-  left: 5%;
-  width: 280px;
-  animation-delay: 0.5s;
+.flowing-beam {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(28px);
+  will-change: transform, opacity;
 }
 
-.lightning-right {
-  top: 30%;
-  right: 6%;
-  width: 320px;
-  animation-delay: 2.8s;
+.beam-cyan {
+  top: 15%;
+  left: -15%;
+  width: 1400px;
+  height: 90px;
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.85) 45%, rgba(59, 130, 246, 0.5) 75%, transparent 100%);
+  transform: rotate(-14deg);
+  animation: flowStreamCyan 7s ease-in-out infinite alternate;
 }
 
-@keyframes lightningStrike {
-  0%, 86%, 94%, 100% {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  87% {
-    opacity: 0.9;
-    transform: scale(1.02);
-    filter: drop-shadow(0 0 30px #38bdf8) drop-shadow(0 0 60px #ffffff);
-  }
-  89% {
-    opacity: 0.15;
-    transform: scale(1);
-  }
-  91% {
-    opacity: 0.95;
-    transform: scale(1.03);
-    filter: drop-shadow(0 0 35px #a855f7) drop-shadow(0 0 70px #38bdf8);
-  }
-  93% {
-    opacity: 0.3;
-  }
+.beam-magenta {
+  top: 48%;
+  left: 10%;
+  width: 1300px;
+  height: 110px;
+  background: linear-gradient(90deg, transparent 0%, rgba(236, 72, 153, 0.75) 35%, rgba(168, 85, 247, 0.6) 70%, transparent 100%);
+  transform: rotate(-14deg);
+  animation: flowStreamMagenta 9s ease-in-out infinite alternate;
+}
+
+.beam-flare {
+  top: 28%;
+  left: 30%;
+  width: 400px;
+  height: 140px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.9) 0%, rgba(99, 102, 241, 0.5) 50%, transparent 80%);
+  filter: blur(40px);
+  animation: flarePulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes flowStreamCyan {
+  0% { transform: translateX(-10%) translateY(-15px) rotate(-14deg); opacity: 0.6; }
+  100% { transform: translateX(12%) translateY(15px) rotate(-11deg); opacity: 0.95; }
+}
+
+@keyframes flowStreamMagenta {
+  0% { transform: translateX(-8%) translateY(15px) rotate(-14deg); opacity: 0.55; }
+  100% { transform: translateX(14%) translateY(-15px) rotate(-12deg); opacity: 0.9; }
+}
+
+@keyframes flarePulse {
+  0% { transform: scale(0.85); opacity: 0.65; }
+  100% { transform: scale(1.2); opacity: 1; }
 }
 
 :root {

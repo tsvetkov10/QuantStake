@@ -52,17 +52,12 @@ export default function Landing() {
   return (
     <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       
-      {/* Dynamic Light Speed Streaks Background */}
-      <div className="light-streak-beam-1"></div>
-      <div className="light-streak-beam-2"></div>
-
-      {/* Electric Background Lightning Bolts */}
-      <svg className="lightning-bolt lightning-left" viewBox="0 0 100 200">
-        <path d="M 50 0 L 20 80 L 55 85 L 15 200 L 80 95 L 45 90 Z" fill="none" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <svg className="lightning-bolt lightning-right" viewBox="0 0 100 200">
-        <path d="M 60 0 L 30 75 L 65 80 L 20 200 L 85 90 L 50 85 Z" fill="none" stroke="#a855f7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      {/* Dynamic Moving Speed Streaks & Flare FX (Matching Dribbble Video) */}
+      <div className="flowing-speed-container">
+        <div className="flowing-beam beam-cyan"></div>
+        <div className="flowing-beam beam-magenta"></div>
+        <div className="flowing-beam beam-flare"></div>
+      </div>
 
       {/* Navigation Header */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(4, 7, 20, 0.75)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
