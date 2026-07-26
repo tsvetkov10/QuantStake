@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email parameter missing' });
     }
 
-    const adminEmail = process.env.NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'admin@quantstakes.com';
+    const adminEmail = process.env.NOTIFICATION_EMAIL || process.env.ADMIN_EMAIL || 'contact@quantstakes.com';
     const resendApiKey = process.env.RESEND_API_KEY;
 
     console.log(`[Signup Notification] New user registered: ${email} at ${timestamp || new Date().toISOString()}`);
