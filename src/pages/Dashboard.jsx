@@ -1059,8 +1059,8 @@ export default function Dashboard({ session, profile }) {
       <div className="flex-col gap-12" style={{ animation: 'fade-in 0.6s ease' }}>
         
         {/* Bankroll Trajectory */}
-        <div className="glass-panel" style={{ padding: '2rem' }}>
-          <div className="flex justify-between items-center mb-6">
+        <div className="glass-panel dashboard-chart-card" style={{ padding: '2rem' }}>
+          <div className="flex justify-between items-center mb-6 dashboard-card-header">
             <div>
               <h3 className="label mb-0 text-gradient" style={{ fontSize: '1.5rem' }}>Bankroll Trajectory</h3>
               <p className="text-secondary" style={{ fontSize: '0.9rem' }}>Cumulative PnL growth & trajectory over time.</p>
@@ -1131,12 +1131,12 @@ export default function Dashboard({ session, profile }) {
             </div>
           </div>
 
-          <div style={{ height: '350px' }}>
+          <div className="dashboard-chart-container" style={{ height: '350px' }}>
             {filteredBets.length === 0 ? (
               <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div>
             ) : chartType === 'line' ? (
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 20, right: 10, left: 0, bottom: 0 }}>
+                <AreaChart data={chartData} margin={{ top: 20, right: 10, left: -15, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorBalanceGraph" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={netProfit >= 0 ? "#22d3ee" : "#ef4444"} stopOpacity={0.4}/>
@@ -1146,7 +1146,7 @@ export default function Dashboard({ session, profile }) {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.08)" vertical={false} />
                   <XAxis dataKey="date" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} dy={10} />
-                  <YAxis yAxisId="left" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${sym}${value}`} dx={-10} domain={[chartYMin, chartYMax]} />
+                  <YAxis yAxisId="left" stroke="rgba(255, 255, 255, 0.4)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${sym}${value}`} dx={-5} domain={[chartYMin, chartYMax]} />
                   <Tooltip content={<CustomTooltip sym={sym} />} cursor={{ stroke: 'rgba(6, 182, 212, 0.4)', strokeDasharray: '3 3' }} />
                   <Area 
                     yAxisId="left" 
@@ -1167,8 +1167,8 @@ export default function Dashboard({ session, profile }) {
         </div>
 
         {/* Recent Performance Calendar */}
-        <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
-          <div className="flex justify-between items-center mb-6">
+        <div className="glass-panel dashboard-calendar-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex justify-between items-center mb-6 dashboard-card-header">
             <h3 className="label mb-0 text-gradient" style={{ fontSize: '1.5rem' }}>Performance Calendar</h3>
             <div className="flex items-center gap-4" style={{ background: 'var(--adaptive-white-03)', padding: '0.4rem 1rem', borderRadius: '100px', border: '1px solid var(--border-glass)' }}>
               <button 

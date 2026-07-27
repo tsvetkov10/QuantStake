@@ -590,10 +590,17 @@ input[type="number"] {
   /* Dashboard Filter Bar Mobile Alignment & Spacing */
   .dashboard-filter-bar {
     width: 100% !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    gap: 0.5rem !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    padding-bottom: 0.5rem !important;
+    gap: 0.65rem !important;
     margin-top: 0.75rem !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-filter-bar .flex-col {
+    flex-shrink: 0 !important;
   }
 
   .dashboard-filter-bar .btn {
@@ -608,6 +615,27 @@ input[type="number"] {
     padding: 0 0.5rem !important;
     height: 36px !important;
     min-width: 90px !important;
+  }
+
+  /* Bankroll Trajectory Chart Mobile Optimization */
+  .dashboard-chart-card {
+    padding: 1rem 0.75rem !important;
+  }
+
+  .dashboard-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .dashboard-chart-container {
+    height: 260px !important;
+  }
+
+  /* Performance Calendar Mobile Optimization */
+  .dashboard-calendar-card {
+    padding: 1rem 0.5rem !important;
+    overflow-x: auto !important;
   }
 
   /* Landing Hero & Terminal Preview Mobile Optimization */
