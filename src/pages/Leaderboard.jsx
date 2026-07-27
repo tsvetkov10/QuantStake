@@ -161,15 +161,20 @@ export default function Leaderboard({ session, profile }) {
           <h2 className="text-gradient" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Quant Analyst Leaderboard</h2>
           <p className="text-secondary">Explore top quantitative strategies and subscribe to unlock live signals.</p>
         </div>
+      </div>
 
-        <div className="flex gap-4 items-center">
-          <div style={{ position: 'relative' }}>
-            <Search size={18} className="text-secondary" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5 }} />
+      {/* Search and Sort controls */}
+      <div className="flex justify-between items-center mb-8 flex-wrap gap-4 leaderboard-search-bar">
+        <h3 className="label text-gradient mb-0" style={{ fontSize: '1.2rem' }}>Analyst Rankings</h3>
+
+        <div className="flex items-center gap-4 flex-wrap leaderboard-controls">
+          <div style={{ position: 'relative', minWidth: '220px' }}>
+            <Search size={18} className="text-secondary" style={{ position: 'absolute', left: '0.8rem', top: '50%', transform: 'translateY(-50%)' }} />
             <input 
               type="text" 
               placeholder="Search analysts..." 
               className="input-field" 
-              style={{ paddingLeft: '2.5rem', width: '220px', height: '38px', fontSize: '0.85rem' }} 
+              style={{ paddingLeft: '2.5rem', width: '100%', height: '38px', fontSize: '0.85rem' }} 
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />
