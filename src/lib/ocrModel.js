@@ -238,54 +238,61 @@ function parseSpatialData(data) {
     result.teams = foundTeams[0];
   }
 
-  // 3. Spatial Odds Extraction
-  const potentialOdds = [];
-  const fullRawText = data.text || allWords.map(w => w.text).join(' ');
-
-  // Extract all full date strings to blacklist them from odds
-  const dateSubstrings = [];
-  const dateRegex = /(\d{1,2})[\.\/](\d{1,2})(?:[\.\/](\d{2,4}))?/g;
-  let dMatch;
-  while ((dMatch = dateRegex.exec(fullRawText)) !== null) {
-    dateSubstrings.push(dMatch[0]);
-    if (dMatch[1] && dMatch[2]) {
-      dateSubstrings.push(`${dMatch[1]}.${dMatch[2]}`);
-      dateSubstrings.push(`${dMatch[1].padStart(2, '0')}.${dMatch[2].padStart(2, '0')}`);
+  // 2.5 Explicit Odds & Matchup Extraction via Bookmaker Labels
+  const oddsExplicitMatch = flatText.match(/[@@]\s*(\d+[\.,]\d{1,2})/i) ||
+                            flatText.match(/(?:коеф|коефициент|odds)\s*[:\-\s]*(\d+[\.,]\d{1,2})/i);
+  if (oddsExplicitMatch) {
+    const extractedExplicitOdds = parseFloat(oddsExplicitMatch[1].replace(',', '.'));
+    if (extractedExplicitOdds > 1.00 && extractedExplicitOdds < 100.00) {
+      result.odds = extractedExplicitOdds.toFixed(2);
     }
   }
 
-  for (const w of allWords) {
-    const rawText = w.text.trim();
-    const decimalMatch = rawText.match(/(?:^|[^\d])(\d+[\.,]\d{2})(?:[^\d]|$)/);
-    if (decimalMatch && !rawText.match(/[€$£лв]/i)) {
-      const numStr = decimalMatch[1].replace(',', '.');
-      const num = parseFloat(numStr);
-      
-      // Blacklist dates (e.g. 27.07 or 27.07.2026), times (16:43), and year numbers (2026)
-      const isDate = dateSubstrings.some(ds => rawText.includes(ds) || ds.includes(numStr)) ||
-                     (numStr.includes('.') && parseInt(numStr.split('.')[0], 10) > 12 && parseInt(numStr.split('.')[1], 10) <= 12) ||
-                     (numStr.includes('.') && parseInt(numStr.split('.')[1], 10) > 12 && parseInt(numStr.split('.')[0], 10) <= 12);
-      const isLikelyTime = rawText.includes(':') || (rawText.endsWith('.00') && num >= 10 && num <= 24 && (w.bbox.y0 / maxY) > 0.8);
-      const isYear = num >= 2020 && num <= 2035;
-      const isStake = result.stake && Math.abs(num - parseFloat(result.stake)) < 0.01;
-
-      if (num > 1.00 && num < 100.00 && !isDate && !isLikelyTime && !isYear && !isStake) {
-        potentialOdds.push({ val: num, bbox: w.bbox, isSmall: num < 15.0 });
+  // Explicit Team Matchup Extraction for European / Bulgarian slips
+  if (!result.teams) {
+    const vsMatch = flatText.match(/([A-Za-z\u0400-\u04FF\s]{3,25})\s+(?:vs|v\.|:)\s+([A-Za-z\u0400-\u04FF\s]{3,25})/i);
+    if (vsMatch) {
+      const t1 = vsMatch[1].trim();
+      const t2 = vsMatch[2].trim();
+      if (!t1.match(/залог|печалба|фиш|сингъл|коеф/i) && !t2.match(/залог|печалба|фиш|сингъл|коеф/i)) {
+        result.teams = `${t1} vs ${t2}`;
+      }
+    } else {
+      const winnerMatch = flatText.match(/(?:победител|winner|залог|selection)\s*[:\-\s]+\s*([A-Za-z\u0400-\u04FF\s]{3,25})/i);
+      if (winnerMatch) {
+        const sel = winnerMatch[1].trim();
+        if (!sel.match(/залог|печалба|фиш|сингъл|коеф/i)) {
+          result.teams = sel;
+        }
       }
     }
   }
 
-  if (potentialOdds.length > 0) {
-    // Prefer reasonable decimal odds (< 15.0) over large anomalies
-    const reasonableOdds = potentialOdds.filter(o => o.isSmall);
-    const poolToUse = reasonableOdds.length > 0 ? reasonableOdds : potentialOdds;
+  // 3. Spatial Odds Extraction (Fallback if explicit @ odds badge not found)
+  if (!result.odds) {
+    const potentialOdds = [];
+    for (const w of allWords) {
+      const rawText = w.text.trim();
+      const decimalMatch = rawText.match(/(?:^|[^\d])(\d+[\.,]\d{2})(?:[^\d]|$)/);
+      if (decimalMatch && !rawText.match(/[€$£лв]/i)) {
+        const numStr = decimalMatch[1].replace(',', '.');
+        const num = parseFloat(numStr);
+        
+        const isDate = dateSubstrings.some(ds => rawText.includes(ds) || ds.includes(numStr)) ||
+                       (numStr.includes('.') && parseInt(numStr.split('.')[0], 10) > 12 && parseInt(numStr.split('.')[1], 10) <= 12);
+        const isLikelyTime = rawText.includes(':') || (rawText.endsWith('.00') && num >= 10 && num <= 24 && (w.bbox.y0 / maxY) > 0.8);
+        const isYear = num >= 2020 && num <= 2035;
+        const isStake = result.stake && Math.abs(num - parseFloat(result.stake)) < 0.01;
 
-    if (foundTeamBBoxes.length > 0) {
-      // Find odds physically closest to the Matchup (Y-axis distance)
-      const avgTeamY = foundTeamBBoxes.reduce((sum, box) => sum + box.y0, 0) / foundTeamBBoxes.length;
-      poolToUse.sort((a, b) => Math.abs(a.bbox.y0 - avgTeamY) - Math.abs(b.bbox.y0 - avgTeamY));
-      result.odds = poolToUse[0].val.toFixed(2);
-    } else {
+        if (num > 1.00 && num < 100.00 && !isDate && !isLikelyTime && !isYear && !isStake) {
+          potentialOdds.push({ val: num, bbox: w.bbox, isSmall: num < 15.0 });
+        }
+      }
+    }
+
+    if (potentialOdds.length > 0) {
+      const reasonableOdds = potentialOdds.filter(o => o.isSmall);
+      const poolToUse = reasonableOdds.length > 0 ? reasonableOdds : potentialOdds;
       result.odds = poolToUse[0].val.toFixed(2);
     }
   }
