@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, Pencil, Edit2, LogOut } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, Pencil, Edit2, LogOut, Calendar } from 'lucide-react';
 
 export default function Settings({ session, profile: initialProfile, onProfileUpdate }) {
   const [profile, setProfile] = useState(initialProfile || { username: '', bio: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
@@ -359,9 +359,25 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                   </div>
                 )}
 
-                <span style={{ fontSize: '0.82rem', color: isAnalyst ? '#c084fc' : 'var(--text-secondary)', fontWeight: 500 }}>
-                  {isAnalyst ? 'Verified Quant Analyst / Tipster' : 'Standard Member'}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap', marginTop: '0.1rem' }}>
+                  <span style={{ fontSize: '0.82rem', color: isAnalyst ? '#c084fc' : 'var(--text-secondary)', fontWeight: 500 }}>
+                    {isAnalyst ? 'Verified Quant Analyst / Tipster' : 'Standard Member'}
+                  </span>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.2)', fontSize: '0.75rem' }}>•</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <Calendar size={13} color="var(--accent-cyan)" />
+                    Member since {(() => {
+                      const dStr = profile?.created_at || session?.user?.created_at;
+                      if (!dStr) return 'Jan 2026';
+                      try {
+                        const d = new Date(dStr);
+                        return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                      } catch(e) {
+                        return 'Jan 2026';
+                      }
+                    })()}
+                  </span>
+                </div>
               </div>
             </div>
 

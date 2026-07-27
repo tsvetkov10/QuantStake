@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Target, Sparkles, Activity, CheckCircle, DollarSign, Percent, Banknote, ShieldCheck } from 'lucide-react';
+import { Target, Sparkles, Activity, CheckCircle, DollarSign, Percent, Banknote, ShieldCheck, Calendar } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const MOCK_ANALYSTS = {
@@ -149,7 +149,16 @@ export default function TraderProfile({ session, profile }) {
             <h2 className="text-gradient" style={{ fontSize: '2rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
               {trader.username}
             </h2>
-            <p className="text-secondary" style={{ fontSize: '0.95rem' }}>Quant Analyst • {trader.region} • Public Track Record</p>
+            <p className="text-secondary" style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <span>Quant Analyst</span>
+              <span>•</span>
+              <span>{trader.region}</span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <Calendar size={13} color="var(--accent-cyan)" />
+                Joined Jan 2026
+              </span>
+            </p>
           </div>
         </div>
       </div>
