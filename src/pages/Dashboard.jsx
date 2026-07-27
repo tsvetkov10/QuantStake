@@ -4,7 +4,7 @@ import { ComposedChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tool
 import { DollarSign, Percent, Target, Euro, PoundSterling, Banknote, Filter, TrendingDown, Sparkles, Activity, AlertTriangle, Zap, BarChart2, Share2, Copy, X, Download, Check, Plus, Flame } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ShareCard from '../components/ShareCard';
-import * as htmlToImage from 'html-to-image';
+import html2canvas from 'html2canvas';
 import download from 'downloadjs';
 
 const BetCardPopup = ({ rawBet, sym }) => {
@@ -646,9 +646,15 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      await new Promise(r => setTimeout(r, 400));
       await ensureImagesLoaded(shareCardRef.current);
-      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1.5, cacheBust: false });
+      const canvas = await html2canvas(shareCardRef.current, {
+        useCORS: true,
+        allowTaint: true,
+        scale: 2,
+        backgroundColor: '#090d16',
+        logging: false,
+      });
+      const dataUrl = canvas.toDataURL('image/png');
       const timestamp = Math.floor(Date.now() / 1000);
       download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
@@ -662,23 +668,37 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      await new Promise(r => setTimeout(r, 400));
       await ensureImagesLoaded(shareCardRef.current);
-      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1.5, cacheBust: false });
-      try {
-        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
-      } catch (clipErr) {
-        console.warn('Clipboard write failed, downloading instead...', clipErr);
-        const timestamp = Math.floor(Date.now() / 1000);
-        download(blob, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
-        alert('Image exported to downloads folder.');
-      }
+      const canvas = await html2canvas(shareCardRef.current, {
+        useCORS: true,
+        allowTaint: true,
+        scale: 2,
+        backgroundColor: '#090d16',
+        logging: false,
+      });
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          alert('Failed to generate image blob.');
+          setIsGeneratingShare(false);
+          return;
+        }
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000);
+        } catch (clipErr) {
+          console.warn('Clipboard write failed, downloading instead...', clipErr);
+          const timestamp = Math.floor(Date.now() / 1000);
+          download(blob, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
+          alert('Image exported to downloads folder.');
+        } finally {
+          setIsGeneratingShare(false);
+        }
+      }, 'image/png');
     } catch (err) {
       console.error('Failed to copy/download image', err);
       alert('Failed to generate image.');
-    } finally {
       setIsGeneratingShare(false);
     }
   };

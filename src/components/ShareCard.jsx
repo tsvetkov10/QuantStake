@@ -107,8 +107,8 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
-              {avatarDataUrl ? (
-                <img src={avatarDataUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {avatarDataUrl || profile?.avatar_url ? (
+                <img src={avatarDataUrl || profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <span style={{ fontSize: '3.2rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
               )}
@@ -119,22 +119,20 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             </div>
           </div>
           
-          {/* 100% Pure Vector SVG & Typography Logo (Guaranteed 100% Render in HTML-to-Image / Canvas Exports) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <svg width="72" height="72" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-              <defs>
-                <linearGradient id="quantLogoShareGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#06b6d4" />
-                  <stop offset="100%" stopColor="#8b5cf6" />
-                </linearGradient>
-              </defs>
-              <circle cx="50" cy="50" r="48" fill="url(#quantLogoShareGrad)" />
-              <circle cx="50" cy="50" r="44" fill="#090d16" opacity="0.4" />
-              <path d="M50 15 C50 35 65 50 85 50 C65 50 50 65 50 85 C50 65 35 50 15 50 C35 50 50 35 50 15 Z" fill="#ffffff" />
-            </svg>
-            <span style={{ fontSize: '3.8rem', fontWeight: '900', color: '#ffffff', letterSpacing: '-1.5px', lineHeight: 1, fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
-              Quant<span style={{ color: '#38bdf8' }}>Stakes</span>
-            </span>
+          {/* Exact QuantStakes Asset Logo */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img
+              src="/logo-full.png"
+              crossOrigin="anonymous"
+              alt="QuantStakes Logo"
+              style={{
+                height: '115px',
+                maxWidth: '480px',
+                objectFit: 'contain',
+                display: 'block',
+                margin: 0
+              }}
+            />
           </div>
         </div>
 
