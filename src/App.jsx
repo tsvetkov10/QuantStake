@@ -17,32 +17,9 @@ import Leaderboard from './pages/Leaderboard';
 import TraderProfile from './pages/TraderProfile';
 import Social from './pages/Social';
 import Maintenance from './components/Maintenance';
+import HeaderNav from './components/HeaderNav';
 import { MAINTENANCE_CONFIG } from './config/maintenanceConfig';
 import './index.css';
-
-function TopNavLink({ to, children }) {
-  const location = useLocation();
-  const isActive = location.pathname === to || (to === '/dashboard' && location.pathname === '/');
-  return (
-    <Link 
-      to={to} 
-      style={{ 
-        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-        fontWeight: isActive ? '700' : '500',
-        fontSize: '0.92rem',
-        textDecoration: 'none',
-        padding: '0.45rem 0.9rem',
-        borderRadius: '8px',
-        background: isActive ? 'var(--adaptive-white-08)' : 'transparent',
-        border: isActive ? '1px solid var(--border-glass)' : '1px solid transparent',
-        transition: 'all 0.2s ease',
-        whiteSpace: 'nowrap'
-      }}
-    >
-      {children}
-    </Link>
-  );
-}
 
 function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProfileCompleted, onProfileUpdate }) {
   if (isCheckingProfile && !profile) {
@@ -65,61 +42,8 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
 
-      {/* Top Landing Header Navbar */}
-      <header className="flex justify-between items-center" style={{ borderBottom: '1px solid var(--border-glass)', background: 'var(--bg-glass)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', height: '76px', zIndex: 1000, padding: '0 2rem' }}>
-        <Link to="/" className="flex items-center gap-3">
-          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '52px', objectFit: 'contain', cursor: 'pointer' }} />
-        </Link>
-
-        {/* Center Navigation Tabs */}
-        <nav className="flex items-center gap-2 desktop-only" style={{ overflowX: 'auto' }}>
-          <TopNavLink to="/dashboard">Terminal</TopNavLink>
-          <TopNavLink to="/history">History</TopNavLink>
-          <TopNavLink to="/leaderboard">Leaderboard</TopNavLink>
-          <TopNavLink to="/add">Log Entry</TopNavLink>
-          <TopNavLink to="/tools">Tools</TopNavLink>
-          <a href="/#faq" onClick={(e) => {
-            if (window.location.pathname === '/' || window.location.pathname === '/dashboard') {
-              e.preventDefault();
-              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-            }
-          }} style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.92rem', textDecoration: 'none', padding: '0.45rem 0.9rem', whiteSpace: 'nowrap' }}>FAQ</a>
-        </nav>
-
-        {/* Right Tools & User Profile */}
-        <div className="flex items-center gap-4">
-          <button onClick={toggleTheme} className="btn btn-secondary" style={{ borderRadius: '50%', width: '38px', height: '38px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--adaptive-white-05)', border: '1px solid var(--border-glass)', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            {theme === 'dark' ? <Sun size={18} color="#facc15" /> : <Moon size={18} color="#475569" />}
-          </button>
-
-          <Link to="/settings" style={{ textDecoration: 'none' }}>
-            <div className="flex items-center gap-2.5" style={{ background: 'var(--adaptive-white-05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid var(--border-glass)', transition: 'all 0.2s ease' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
-                {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
-              </div>
-              <span style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-                {profile?.username || session.user?.email?.split('@')[0]}
-              </span>
-            </div>
-          </Link>
-
-          <button 
-            className="flex items-center gap-1.5"
-            style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444', padding: '0.45rem 0.85rem', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', transition: 'all 0.25s ease' }}
-            onClick={async () => {
-              sessionStorage.removeItem('mock_session');
-              localStorage.removeItem('mock_session');
-              sessionStorage.removeItem('mock_profile');
-              if (!isMock) {
-                await supabase.auth.signOut();
-              }
-              window.location.replace('/');
-            }}
-          >
-            <LogOut size={16} /> <span className="desktop-only">Disconnect</span>
-          </button>
-        </div>
-      </header>
+      {/* Top Universal Header Navbar */}
+      <HeaderNav session={session} profile={profile} isMock={isMock} theme={theme} toggleTheme={toggleTheme} />
 
       {/* Main Content Area */}
       <main className="main-content" style={{ width: '100%', maxWidth: '1440px', margin: '0 auto', paddingTop: '96px', paddingBottom: '3rem', paddingLeft: '2rem', paddingRight: '2rem', flexGrow: 1 }}>
