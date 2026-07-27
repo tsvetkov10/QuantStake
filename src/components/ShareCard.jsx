@@ -37,15 +37,19 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         img.crossOrigin = 'anonymous';
         img.onload = () => {
           try {
-            const size = Math.min(img.naturalWidth || 300, img.naturalHeight || 300);
+            const targetSize = 1024;
             const canvas = document.createElement('canvas');
-            canvas.width = size;
-            canvas.height = size;
+            canvas.width = targetSize;
+            canvas.height = targetSize;
             const ctx = canvas.getContext('2d');
-            const sx = (img.naturalWidth - size) / 2;
-            const sy = (img.naturalHeight - size) / 2;
-            ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
-            resolve(canvas.toDataURL('image/png'));
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const srcSize = Math.min(img.naturalWidth || 300, img.naturalHeight || 300);
+            const sx = (img.naturalWidth - srcSize) / 2;
+            const sy = (img.naturalHeight - srcSize) / 2;
+            ctx.drawImage(img, sx, sy, srcSize, srcSize, 0, 0, targetSize, targetSize);
+            resolve(canvas.toDataURL('image/png', 1.0));
           } catch (e) {
             resolve(null);
           }
@@ -64,6 +68,10 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       let dataUrl = await convertViaFetch(profile.avatar_url);
       if (!dataUrl) {
         dataUrl = await convertViaCanvas(profile.avatar_url);
+      } else {
+        // Upscale fetch blob data to 1024x1024 HD texture
+        const hdDataUrl = await convertViaCanvas(dataUrl);
+        if (hdDataUrl) dataUrl = hdDataUrl;
       }
 
       if (isMounted) {
@@ -111,14 +119,13 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            {/* Avatar Badge with clean border and zero cyan glow cloud shadow */}
+            {/* Avatar Badge with high-definition crisp 4K rendering */}
             <div 
               style={{ 
                 width: '90px', 
                 height: '90px', 
                 borderRadius: '50%', 
                 backgroundColor: '#090e1a',
-                background: activeAvatar ? `url(${activeAvatar}) center/cover no-repeat #090e1a` : 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', 
                 border: '3px solid rgba(255, 255, 255, 0.25)', 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -128,7 +135,22 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
                 boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6)' 
               }}
             >
-              {!activeAvatar && (
+              {activeAvatar ? (
+                <img 
+                  src={activeAvatar} 
+                  crossOrigin="anonymous" 
+                  alt="Profile" 
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover', 
+                    objectPosition: 'center', 
+                    display: 'block', 
+                    borderRadius: '50%',
+                    imageRendering: 'high-quality'
+                  }} 
+                />
+              ) : (
                 <span style={{ fontSize: '3.2rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {(profile?.username?.[0] || 'U').toUpperCase()}
                 </span>
