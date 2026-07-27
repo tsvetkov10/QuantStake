@@ -30,16 +30,16 @@ export default function HeaderNav({ session, profile, isMock }) {
         <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '50px', objectFit: 'contain', cursor: 'pointer' }} />
       </Link>
 
-      {/* Center Navigation Bar (App Navigation Only - FAQ Removed) */}
+      {/* Center Navigation Bar (Fixed font-weight to prevent layout shift) */}
       <nav className="flex items-center gap-2 desktop-only" style={{ overflowX: 'auto' }}>
         <Link 
           to="/dashboard" 
           style={{ 
             color: isLinkActive('/dashboard') ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: isLinkActive('/dashboard') ? '700' : '500',
+            fontWeight: '600',
             fontSize: '0.92rem',
             textDecoration: 'none',
-            padding: '0.45rem 0.9rem',
+            padding: '0.45rem 0.95rem',
             borderRadius: '8px',
             background: isLinkActive('/dashboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
             transition: 'all 0.2s ease',
@@ -53,10 +53,10 @@ export default function HeaderNav({ session, profile, isMock }) {
           to="/history" 
           style={{ 
             color: isLinkActive('/history') ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: isLinkActive('/history') ? '700' : '500',
+            fontWeight: '600',
             fontSize: '0.92rem',
             textDecoration: 'none',
-            padding: '0.45rem 0.9rem',
+            padding: '0.45rem 0.95rem',
             borderRadius: '8px',
             background: isLinkActive('/history') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
             transition: 'all 0.2s ease',
@@ -70,10 +70,10 @@ export default function HeaderNav({ session, profile, isMock }) {
           to="/leaderboard" 
           style={{ 
             color: isLinkActive('/leaderboard') ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: isLinkActive('/leaderboard') ? '700' : '500',
+            fontWeight: '600',
             fontSize: '0.92rem',
             textDecoration: 'none',
-            padding: '0.45rem 0.9rem',
+            padding: '0.45rem 0.95rem',
             borderRadius: '8px',
             background: isLinkActive('/leaderboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
             transition: 'all 0.2s ease',
@@ -87,10 +87,10 @@ export default function HeaderNav({ session, profile, isMock }) {
           to="/add" 
           style={{ 
             color: isLinkActive('/add') ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: isLinkActive('/add') ? '700' : '500',
+            fontWeight: '600',
             fontSize: '0.92rem',
             textDecoration: 'none',
-            padding: '0.45rem 0.9rem',
+            padding: '0.45rem 0.95rem',
             borderRadius: '8px',
             background: isLinkActive('/add') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
             transition: 'all 0.2s ease',
@@ -104,10 +104,10 @@ export default function HeaderNav({ session, profile, isMock }) {
           to="/tools" 
           style={{ 
             color: isLinkActive('/tools') ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: isLinkActive('/tools') ? '700' : '500',
+            fontWeight: '600',
             fontSize: '0.92rem',
             textDecoration: 'none',
-            padding: '0.45rem 0.9rem',
+            padding: '0.45rem 0.95rem',
             borderRadius: '8px',
             background: isLinkActive('/tools') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
             transition: 'all 0.2s ease',
@@ -123,7 +123,7 @@ export default function HeaderNav({ session, profile, isMock }) {
         {session ? (
           <div className="flex items-center gap-3">
             <Link to="/settings" style={{ textDecoration: 'none' }}>
-              <div className="flex items-center gap-3.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
+              <div className="flex items-center" style={{ gap: '14px', background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1.25rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
                 <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
                   {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
                 </div>

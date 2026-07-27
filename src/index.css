@@ -263,6 +263,11 @@
   padding: 0;
 }
 
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 html, body {
   font-family: 'Space Grotesk', sans-serif;
   background-color: var(--bg-dark);
