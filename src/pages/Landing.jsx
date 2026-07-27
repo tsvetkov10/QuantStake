@@ -192,7 +192,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </header>
 
       {/* Hero Section */}
-      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', minHeight: '88vh' }}>
+      <section className="hero-landing-section" style={{ position: 'relative', width: '100%' }}>
         
         <div className="hero-cirform-grid responsive-padding">
           
