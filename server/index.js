@@ -1,28 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import multer from 'multer';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'fs';
+import { exec } from 'child_process';
 
-// Setup ES module filename
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load .env from parent directory (Quant Stake root)
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Setup multer for memory storage (we don't need to save the file to disk)
-const upload = multer({ storage: multer.memoryStorage() });
-
-// Initialize Gemini
-// Fallback to empty string to prevent crashing on startup if key is missing
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Ensure dataset images directory exists
+const datasetDir = path.join(__dirname, '..', 'scripts', 'dataset');
+const imagesDir = path.join(datasetDir, 'images');
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
 
 app.post('/api/parse-slip', upload.single('image'), async (req, res) => {
   if (!process.env.GEMINI_API_KEY) {
@@ -36,6 +20,11 @@ app.post('/api/parse-slip', upload.single('image'), async (req, res) => {
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     
+    // Save image to automatic training dataset folder
+    const imgFilename = `slip_${Date.now()}.png`;
+    const imgPath = path.join(imagesDir, imgFilename);
+    fs.writeFileSync(imgPath, req.file.buffer);
+
     // Prepare the image for Gemini
     const imageParts = [
       {
@@ -84,7 +73,12 @@ app.post('/api/parse-slip', upload.single('image'), async (req, res) => {
     const jsonString = responseText.replace(/```json\n?|\n?```/g, '').trim();
     
     const parsedData = JSON.parse(jsonString);
+    parsedData.imgFilename = imgFilename;
+
     res.json(parsedData);
+
+    // Auto-trigger background training dataset update and fine-tuning execution
+    triggerAutoTraining(imgFilename, parsedData);
     
   } catch (error) {
     console.error("AI Parsing Error:", error);
@@ -92,7 +86,40 @@ app.post('/api/parse-slip', upload.single('image'), async (req, res) => {
   }
 });
 
+// Automatic Active Learning Training Trigger
+function triggerAutoTraining(filename, groundTruth) {
+  try {
+    const labelsPath = path.join(datasetDir, 'labels.json');
+    let labels = [];
+    if (fs.existsSync(labelsPath)) {
+      labels = JSON.parse(fs.readFileSync(labelsPath, 'utf8'));
+    }
+
+    labels.push({
+      image_filename: filename,
+      bookmaker: "AutoCaptured",
+      timestamp: new Date().toISOString(),
+      ground_truth: groundTruth
+    });
+
+    fs.writeFileSync(labelsPath, JSON.stringify(labels, null, 2));
+    console.log(`[🤖 AUTO-AI] Saved new labeled sample "${filename}". Total samples: ${labels.length}`);
+
+    // Spawn Python Fine-Tuning Script asynchronously in the background
+    const trainScript = path.join(__dirname, '..', 'scripts', 'train_betslip_llm.py');
+    exec(`python3 "${trainScript}" --epochs 3`, (err, stdout, stderr) => {
+      if (err) {
+        console.error('[-] Auto-training background job failed:', err);
+        return;
+      }
+      console.log('[🤖 AUTO-AI] Automatic Fine-Tuning background training complete!');
+    });
+  } catch (e) {
+    console.error('[-] Auto-training error:', e);
+  }
+}
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`AI Vision Server running on http://localhost:${PORT}`);
+  console.log(`AI Vision & Automatic Training Server running on http://localhost:${PORT}`);
 });
