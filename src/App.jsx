@@ -63,7 +63,14 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
 
 function App() {
   const [session, setSession] = useState(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(() => {
+    try {
+      const cached = localStorage.getItem('quant_cached_profile');
+      return cached ? JSON.parse(cached) : null;
+    } catch(e) {
+      return null;
+    }
+  });
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
   const currentUserId = useRef(null);
   const isMock = isMockMode;
@@ -71,9 +78,13 @@ function App() {
   useEffect(() => {
     const checkProfile = async (currentSession) => {
       if (isMock) {
-        const p = sessionStorage.getItem('mock_profile');
+        const p = sessionStorage.getItem('mock_profile') || localStorage.getItem('quant_cached_profile');
         if (p) {
-          setProfile(JSON.parse(p));
+          try {
+            setProfile(typeof p === 'string' ? JSON.parse(p) : p);
+          } catch(e) {
+            setProfile(p);
+          }
         } else {
           setProfile({ username: 'QuantAnalyst', winRate: 68.4, roi: 34.2, netProfit: 24850 });
         }
@@ -86,6 +97,9 @@ function App() {
         const { data } = await supabase.from('profiles').select('*').eq('id', currentSession.user.id).single();
         if (data) {
           setProfile(data);
+          try {
+            localStorage.setItem('quant_cached_profile', JSON.stringify(data));
+          } catch(e) {}
         } else {
           setProfile(null);
         }
