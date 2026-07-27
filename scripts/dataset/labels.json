@@ -1,0 +1,32 @@
+[
+  {
+    "image_filename": "betano_bulgarian_single_1.png",
+    "bookmaker": "Betano",
+    "language": "bg",
+    "ground_truth": {
+      "sport": "Tennis",
+      "type": "Single",
+      "teams": "Andrey Martin vs Alec Beckley",
+      "stake": 250.00,
+      "odds": 2.05,
+      "payout": 512.50,
+      "date": "2026-07-27",
+      "status": "Won"
+    }
+  },
+  {
+    "image_filename": "bet365_english_parlay_1.png",
+    "bookmaker": "Bet365",
+    "language": "en",
+    "ground_truth": {
+      "sport": "Football",
+      "type": "Parlay",
+      "teams": "Real Madrid vs Barcelona | Arsenal vs Chelsea",
+      "stake": 50.00,
+      "odds": 3.85,
+      "payout": 192.50,
+      "date": "2026-07-26",
+      "status": "Won"
+    }
+  }
+]
