@@ -578,6 +578,24 @@ input[type="number"] {
   padding-bottom: 5rem;
 }
 
+/* Dashboard Filter Bar Base (Desktop) */
+.dashboard-filter-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.dashboard-share-wrapper {
+  display: flex;
+}
+
+.dashboard-filters-grid {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
   .mobile-only {
@@ -587,34 +605,40 @@ input[type="number"] {
     display: none !important;
   }
 
-  /* Dashboard Filter Bar Mobile Alignment & Spacing */
+  /* Dashboard Filter Bar Mobile Stack & 2x2 Grid */
   .dashboard-filter-bar {
-    width: 100% !important;
     display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    padding-bottom: 0.5rem !important;
-    gap: 0.65rem !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.75rem !important;
     margin-top: 0.75rem !important;
-    -webkit-overflow-scrolling: touch;
   }
 
-  .dashboard-filter-bar .flex-col {
-    flex-shrink: 0 !important;
+  .dashboard-share-wrapper {
+    width: 100% !important;
   }
 
-  .dashboard-filter-bar .btn {
+  .dashboard-share-btn {
+    width: 100% !important;
+    height: 42px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .dashboard-filters-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+
+  .dashboard-filters-grid > div {
+    width: 100% !important;
+  }
+
+  .dashboard-filters-grid select {
+    width: 100% !important;
     font-size: 0.8rem !important;
-    padding: 0 0.85rem !important;
-    height: 36px !important;
-    white-space: nowrap !important;
-  }
-
-  .dashboard-filter-bar select {
-    font-size: 0.8rem !important;
-    padding: 0 0.5rem !important;
-    height: 36px !important;
-    min-width: 90px !important;
+    height: 38px !important;
   }
 
   /* Bankroll Trajectory Chart Mobile Optimization */

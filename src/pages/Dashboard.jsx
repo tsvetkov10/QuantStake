@@ -823,24 +823,23 @@ export default function Dashboard({ session, profile }) {
       )}
 
       <div className="flex justify-between items-end flex-wrap gap-4" style={{ width: '100%' }}>
-        <div>
-          <h2 className="text-gradient" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Portfolio Analytics</h2>
-          <p className="text-secondary">Comprehensive quantitative breakdown of your betting strategy.</p>
+        <div style={{ width: '100%' }}>
+          <h2 className="text-gradient" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', marginBottom: '0.5rem' }}>Portfolio Analytics</h2>
+          <p className="text-secondary" style={{ fontSize: '0.9rem' }}>Comprehensive quantitative breakdown of your betting strategy.</p>
         </div>
         
-        <div className="dashboard-filter-bar flex gap-3 items-end flex-wrap" style={{ animation: 'fade-in 0.3s ease' }}>
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', opacity: 0, pointerEvents: 'none', userSelect: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Export</label>
+        <div className="dashboard-filter-bar" style={{ animation: 'fade-in 0.3s ease', width: '100%' }}>
+          <div className="dashboard-share-wrapper">
             <button 
               onClick={() => setShowSharePreview(true)}
-              className="btn" 
+              className="btn dashboard-share-btn" 
               style={{ 
                 display: 'inline-flex',
                 alignItems: 'center',
-                justify: 'center',
+                justifyContent: 'center',
                 gap: '9px',
                 padding: '0 1.35rem', 
-                height: '38px', 
+                height: '40px', 
                 background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)', 
                 border: '1px solid rgba(56, 189, 248, 0.35)', 
                 color: '#ffffff', 
@@ -851,69 +850,61 @@ export default function Dashboard({ session, profile }) {
                 transition: 'all 0.25s ease',
                 boxShadow: '0 4px 15px rgba(56, 189, 248, 0.1)'
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(168, 85, 247, 0.2) 100%)';
-                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(56, 189, 248, 0.25)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(168, 85, 247, 0.12) 100%)';
-                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(56, 189, 248, 0.1)';
-              }}
             >
               <Share2 size={16} color="#38bdf8" />
               <span>Share Performance</span>
             </button>
           </div>
 
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timeframe</label>
-            <div style={{ display: 'flex', gap: '4px', background: 'var(--adaptive-white-02)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-glass)', height: '38px', alignItems: 'center' }}>
-              {[{ val: 'ALL', label: 'ALL' }, { val: '1D', label: '24H' }, { val: '1M', label: '30D' }, { val: '1Y', label: '1Y' }].map(opt => (
-                <button
-                  key={opt.val}
-                  onClick={() => setTimeframe(opt.val)}
-                  style={{
-                    padding: '0.3rem 0.6rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    background: timeframe === opt.val ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-                    color: timeframe === opt.val ? '#fff' : 'var(--text-secondary)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  {opt.label}
-                </button>
-              ))}
+          <div className="dashboard-filters-grid">
+            <div className="flex-col">
+              <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timeframe</label>
+              <div style={{ display: 'flex', gap: '2px', background: 'var(--adaptive-white-02)', padding: '3px', borderRadius: '8px', border: '1px solid var(--border-glass)', height: '38px', alignItems: 'center' }}>
+                {[{ val: 'ALL', label: 'ALL' }, { val: '1D', label: '24H' }, { val: '1M', label: '30D' }, { val: '1Y', label: '1Y' }].map(opt => (
+                  <button
+                    key={opt.val}
+                    onClick={() => setTimeframe(opt.val)}
+                    style={{
+                      padding: '0.3rem 0.5rem',
+                      borderRadius: '4px',
+                      fontSize: '0.72rem',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      background: timeframe === opt.val ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+                      color: timeframe === opt.val ? '#fff' : 'var(--text-secondary)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sport</label>
-            <select className="input-field" style={{ padding: '0 0.75rem', height: '38px', fontSize: '0.85rem', minWidth: '110px', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterSport} onChange={e => setFilterSport(e.target.value)}>
-              {uniqueSports.map(s => <option key={s} value={s} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{s}</option>)}
-            </select>
-          </div>
-          
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bookmaker</label>
-            <select className="input-field" style={{ padding: '0 0.75rem', height: '38px', fontSize: '0.85rem', minWidth: '110px', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterBookmaker} onChange={e => setFilterBookmaker(e.target.value)}>
-              {uniqueBookmakers.map(b => <option key={b} value={b} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{b}</option>)}
-            </select>
-          </div>
-          
-          <div className="flex-col">
-            <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bet Type</label>
-            <select className="input-field" style={{ padding: '0 0.75rem', height: '38px', fontSize: '0.85rem', minWidth: '110px', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterType} onChange={e => setFilterType(e.target.value)}>
-              {uniqueTypes.map(t => <option key={t} value={t} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{t}</option>)}
-            </select>
+            <div className="flex-col">
+              <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sport</label>
+              <select className="input-field" style={{ padding: '0 0.6rem', height: '38px', fontSize: '0.82rem', width: '100%', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterSport} onChange={e => setFilterSport(e.target.value)}>
+                {uniqueSports.map(s => <option key={s} value={s} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{s}</option>)}
+              </select>
+            </div>
+            
+            <div className="flex-col">
+              <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bookmaker</label>
+              <select className="input-field" style={{ padding: '0 0.6rem', height: '38px', fontSize: '0.82rem', width: '100%', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterBookmaker} onChange={e => setFilterBookmaker(e.target.value)}>
+                {uniqueBookmakers.map(b => <option key={b} value={b} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{b}</option>)}
+              </select>
+            </div>
+            
+            <div className="flex-col">
+              <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bet Type</label>
+              <select className="input-field" style={{ padding: '0 0.6rem', height: '38px', fontSize: '0.82rem', width: '100%', background: 'var(--adaptive-white-02)', borderColor: 'var(--border-glass)' }} value={filterType} onChange={e => setFilterType(e.target.value)}>
+                {uniqueTypes.map(t => <option key={t} value={t} style={{ background: 'var(--bg-glass)', color: 'var(--text-primary)' }}>{t}</option>)}
+              </select>
+            </div>
           </div>
         </div>
       </div>
