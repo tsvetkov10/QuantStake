@@ -263,6 +263,36 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
           </div>
         </div>
 
+        {/* Social Metrics Bar: Followers, Following, Subscribers */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '16px', padding: '1rem 0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+              Followers
+            </span>
+            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: '#ffffff', marginTop: '0.2rem' }}>
+              {profile?.followers_count ?? 1284}
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+              Following
+            </span>
+            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: '#ffffff', marginTop: '0.2rem' }}>
+              {profile?.following_count ?? 142}
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-cyan)' }}>
+              Subscribers
+            </span>
+            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: isAnalyst ? '#c084fc' : '#ffffff', marginTop: '0.2rem' }}>
+              {profile?.subscribers_count ?? (isAnalyst ? 89 : 0)}
+            </span>
+          </div>
+        </div>
+
         {/* Username Input */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
           <label style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
