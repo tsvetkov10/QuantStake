@@ -916,19 +916,26 @@ export default function Dashboard({ session, profile }) {
         <div className={`glass-card ${netProfit > 0 ? 'full-box-money-card' : ''}`}>
           {netProfit > 0 && (
             <div className="falling-money-container">
-              {['10%', '25%', '40%', '55%', '70%', '85%'].map((left, idx) => (
+              {[
+                { left: '8%', delay: '-0.4s', dur: '3.0s', item: '💵' },
+                { left: '24%', delay: '-1.2s', dur: '2.8s', item: '$' },
+                { left: '40%', delay: '-2.0s', dur: '3.2s', item: '💰' },
+                { left: '56%', delay: '-0.8s', dur: '2.6s', item: sym },
+                { left: '72%', delay: '-1.6s', dur: '3.1s', item: '💸' },
+                { left: '88%', delay: '-2.4s', dur: '2.9s', item: '💵' }
+              ].map((p, idx) => (
                 <span 
                   key={idx} 
                   className="dense-money-particle" 
                   style={{ 
-                    left, 
-                    animationDuration: `${2.2 + idx * 0.4}s`, 
-                    animationDelay: `${idx * 0.3}s`,
+                    left: p.left, 
+                    animationDuration: p.dur, 
+                    animationDelay: p.delay,
                     fontSize: idx % 2 === 0 ? '0.95rem' : '1.2rem',
                     color: '#10b981'
                   }}
                 >
-                  {idx % 4 === 0 ? '💵' : idx % 4 === 1 ? '$' : idx % 4 === 2 ? '💰' : sym}
+                  {p.item}
                 </span>
               ))}
             </div>
@@ -970,14 +977,18 @@ export default function Dashboard({ session, profile }) {
         <div className={`glass-card ${roi > 0 ? 'full-box-money-card' : ''}`}>
           {roi > 0 && (
             <div className="falling-money-container">
-              {['15%', '45%', '75%'].map((left, idx) => (
+              {[
+                { left: '15%', delay: '-0.6s', dur: '2.9s' },
+                { left: '50%', delay: '-1.8s', dur: '3.1s' },
+                { left: '80%', delay: '-1.2s', dur: '2.7s' }
+              ].map((p, idx) => (
                 <span 
                   key={idx} 
                   className="dense-money-particle" 
                   style={{ 
-                    left, 
-                    animationDuration: `${2.6 + idx * 0.4}s`, 
-                    animationDelay: `${idx * 0.4}s`,
+                    left: p.left, 
+                    animationDuration: p.dur, 
+                    animationDelay: p.delay,
                     fontSize: '1rem',
                     color: '#10b981'
                   }}
@@ -1000,14 +1011,18 @@ export default function Dashboard({ session, profile }) {
         {/* 4. Total Wagered - Full Box Money Rain */}
         <div className="glass-card full-box-money-card">
           <div className="falling-money-container">
-            {['20%', '50%', '80%'].map((left, idx) => (
+            {[
+              { left: '20%', delay: '-0.7s', dur: '3.2s' },
+              { left: '50%', delay: '-1.9s', dur: '2.8s' },
+              { left: '80%', delay: '-1.1s', dur: '3.0s' }
+            ].map((p, idx) => (
               <span 
                 key={idx} 
                 className="dense-money-particle" 
                 style={{ 
-                  left, 
-                  animationDuration: `${3.0 + idx * 0.5}s`, 
-                  animationDelay: `${idx * 0.5}s`,
+                  left: p.left, 
+                  animationDuration: p.dur, 
+                  animationDelay: p.delay,
                   fontSize: '0.9rem',
                   color: '#a13bf7'
                 }}
@@ -1058,14 +1073,17 @@ export default function Dashboard({ session, profile }) {
         {/* 7. Avg Stake - Full Box Money Rain */}
         <div className="glass-card full-box-money-card" style={{ padding: '1.5rem' }}>
           <div className="falling-money-container">
-            {['30%', '70%'].map((left, idx) => (
+            {[
+              { left: '30%', delay: '-0.8s', dur: '3.0s' },
+              { left: '70%', delay: '-2.1s', dur: '3.3s' }
+            ].map((p, idx) => (
               <span 
                 key={idx} 
                 className="dense-money-particle" 
                 style={{ 
-                  left, 
-                  animationDuration: `${3.2 + idx * 0.5}s`, 
-                  animationDelay: `${idx * 0.6}s`,
+                  left: p.left, 
+                  animationDuration: p.dur, 
+                  animationDelay: p.delay,
                   fontSize: '0.85rem',
                   color: '#ec4899'
                 }}
@@ -1095,30 +1113,41 @@ export default function Dashboard({ session, profile }) {
                 position: 'relative'
               }}
             >
-              {/* Full Box Rising Flame Tongues & Embers */}
+              {/* Full Box Rising Flame Tongues & Embers with Pre-Warmed Negative Delays */}
               {isHotStreak && (
                 <>
-                  {['8%', '28%', '48%', '68%', '88%'].map((left, idx) => (
+                  {[
+                    { left: '8%', delay: '-0.3s', dur: '1.8s' },
+                    { left: '28%', delay: '-1.1s', dur: '1.6s' },
+                    { left: '48%', delay: '-0.7s', dur: '2.0s' },
+                    { left: '68%', delay: '-1.5s', dur: '1.7s' },
+                    { left: '88%', delay: '-0.9s', dur: '1.9s' }
+                  ].map((p, idx) => (
                     <span 
                       key={`flame-${idx}`} 
                       className="flame-tongue" 
                       style={{ 
-                        left, 
-                        animationDuration: `${1.6 + idx * 0.3}s`, 
-                        animationDelay: `${idx * 0.25}s` 
+                        left: p.left, 
+                        animationDuration: p.dur, 
+                        animationDelay: p.delay 
                       }} 
                     >
                       🔥
                     </span>
                   ))}
-                  {['18%', '38%', '58%', '78%'].map((left, idx) => (
+                  {[
+                    { left: '18%', delay: '-0.5s', dur: '1.5s' },
+                    { left: '38%', delay: '-1.2s', dur: '1.7s' },
+                    { left: '58%', delay: '-0.8s', dur: '1.4s' },
+                    { left: '78%', delay: '-1.6s', dur: '1.6s' }
+                  ].map((p, idx) => (
                     <span 
                       key={`ember-${idx}`} 
                       className="fire-ember-particle" 
                       style={{ 
-                        left, 
-                        animationDuration: `${1.4 + idx * 0.4}s`, 
-                        animationDelay: `${idx * 0.2}s` 
+                        left: p.left, 
+                        animationDuration: p.dur, 
+                        animationDelay: p.delay 
                       }} 
                     />
                   ))}
