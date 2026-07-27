@@ -37,11 +37,14 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         img.crossOrigin = 'anonymous';
         img.onload = () => {
           try {
+            const size = Math.min(img.naturalWidth || 300, img.naturalHeight || 300);
             const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth || 120;
-            canvas.height = img.naturalHeight || 120;
+            canvas.width = size;
+            canvas.height = size;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
+            const sx = (img.naturalWidth - size) / 2;
+            const sy = (img.naturalHeight - size) / 2;
+            ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
             resolve(canvas.toDataURL('image/png'));
           } catch (e) {
             resolve(null);
@@ -81,7 +84,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       style={{
         width: '1080px',
         height: '1080px',
-        background: '#090d16',
+        background: '#040714',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -91,8 +94,8 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       }}
     >
       {/* Background Graphic Elements */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.18) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
       
       {/* Grid Overlay */}
       <div style={{
@@ -106,9 +109,9 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
+            <div style={{ width: '90px', height: '90px', minWidth: '90px', minHeight: '90px', aspectRatio: '1 / 1', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
               {avatarDataUrl || profile?.avatar_url ? (
-                <img src={avatarDataUrl || profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={avatarDataUrl || profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', aspectRatio: '1 / 1', objectFit: 'cover', objectPosition: 'center', display: 'block', borderRadius: '50%' }} />
               ) : (
                 <span style={{ fontSize: '3.2rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
               )}

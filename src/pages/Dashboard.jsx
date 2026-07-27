@@ -655,7 +655,7 @@ export default function Dashboard({ session, profile }) {
         height: 1080,
         windowWidth: 1080,
         windowHeight: 1080,
-        backgroundColor: '#090d16',
+        backgroundColor: '#040714',
         logging: false,
       });
       const dataUrl = canvas.toDataURL('image/png');
@@ -681,7 +681,7 @@ export default function Dashboard({ session, profile }) {
         height: 1080,
         windowWidth: 1080,
         windowHeight: 1080,
-        backgroundColor: '#090d16',
+        backgroundColor: '#040714',
         logging: false,
       });
 
