@@ -26,6 +26,7 @@
   line-height: 1.05;
   letter-spacing: -1px;
   color: #ffffff;
+  margin-top: 0 !important;
 }
 
 @media (max-width: 768px) {
