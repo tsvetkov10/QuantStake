@@ -136,7 +136,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </div>
 
       {/* Navigation Header */}
-      <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', background: '#040714', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
+      <header className="flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', background: '#040714', position: 'fixed', top: 0, left: 0, width: '100%', height: '76px', zIndex: 100, padding: '0 2rem' }}>
         <Link to="/" className="flex items-center gap-3">
           <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '50px', objectFit: 'contain' }} />
         </Link>
@@ -153,8 +153,8 @@ export default function Landing({ session: initialSession, profile: initialProfi
           {currentUser ? (
             <div className="flex items-center gap-3">
               <Link to="/settings" style={{ textDecoration: 'none' }}>
-                <div className="flex items-center gap-2" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 0.85rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                <div className="flex items-center gap-3.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem' }}>
                     {!currentProfile?.avatar_url && (currentProfile?.username?.[0] || currentUser?.email?.[0] || 'U').toUpperCase()}
                   </div>
                   <span style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem' }}>

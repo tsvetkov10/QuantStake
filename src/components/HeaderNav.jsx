@@ -30,7 +30,7 @@ export default function HeaderNav({ session, profile, isMock }) {
         <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '50px', objectFit: 'contain', cursor: 'pointer' }} />
       </Link>
 
-      {/* Center Navigation Bar */}
+      {/* Center Navigation Bar (App Navigation Only - FAQ Removed) */}
       <nav className="flex items-center gap-2 desktop-only" style={{ overflowX: 'auto' }}>
         <Link 
           to="/dashboard" 
@@ -116,19 +116,6 @@ export default function HeaderNav({ session, profile, isMock }) {
         >
           Tools
         </Link>
-
-        <a 
-          href="/#faq" 
-          onClick={(e) => {
-            if (location.pathname === '/' || location.pathname === '/dashboard') {
-              e.preventDefault();
-              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-            }
-          }} 
-          style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.92rem', textDecoration: 'none', padding: '0.45rem 0.9rem', whiteSpace: 'nowrap' }}
-        >
-          FAQ
-        </a>
       </nav>
 
       {/* Right Action Tools */}
@@ -136,7 +123,7 @@ export default function HeaderNav({ session, profile, isMock }) {
         {session ? (
           <div className="flex items-center gap-3">
             <Link to="/settings" style={{ textDecoration: 'none' }}>
-              <div className="flex items-center gap-2.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
+              <div className="flex items-center gap-3.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
                 <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
                   {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
                 </div>
