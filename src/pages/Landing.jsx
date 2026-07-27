@@ -193,9 +193,9 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </header>
 
       {/* Hero Section */}
-      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', paddingTop: '6.5rem', paddingBottom: '2rem', marginTop: 0 }}>
+      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', minHeight: 'calc(100vh - 60px)', paddingTop: '8.5rem', paddingBottom: '3rem', marginTop: 0 }}>
         
-        <div className="hero-cirform-grid" style={{ padding: '0 2rem', alignItems: 'flex-start', marginTop: 0 }}>
+        <div className="hero-cirform-grid" style={{ padding: '0 2rem', alignItems: 'center', marginTop: 0 }}>
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col" style={{ alignItems: 'flex-start', marginTop: 0, paddingTop: 0, opacity: 1, transform: 'none' }}>

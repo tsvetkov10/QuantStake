@@ -575,8 +575,12 @@ input[type="number"] {
 .col-span-2 { grid-column: span 2; }
 
 .hero-landing-section {
-  padding-top: 6.5rem;
-  padding-bottom: 2rem;
+  padding-top: 8.5rem;
+  padding-bottom: 4rem;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Dashboard Filter Bar Base (Desktop) */
