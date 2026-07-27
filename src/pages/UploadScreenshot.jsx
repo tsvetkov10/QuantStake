@@ -8,7 +8,63 @@ export default function UploadScreenshot({ session }) {
   const [analyzing, setAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
+
+  const validateAndSelectFile = (selectedFile) => {
+    if (!selectedFile) return false;
+    setError(null);
+
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/heic', 'image/heif'];
+    const fileNameLower = selectedFile.name.toLowerCase();
+    const validExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif'];
+    const hasValidExt = validExtensions.some(ext => fileNameLower.endsWith(ext));
+    const isValidType = validTypes.includes(selectedFile.type) || hasValidExt;
+
+    if (!isValidType) {
+      setError(`Invalid file format "${selectedFile.name}". Please upload a supported image file (PNG, JPG, JPEG, WEBP, HEIC).`);
+      setFile(null);
+      return false;
+    }
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      setError(`File "${selectedFile.name}" is too large (${(selectedFile.size / (1024 * 1024)).toFixed(1)}MB). Maximum allowed size is 10MB.`);
+      setFile(null);
+      return false;
+    }
+
+    setFile(selectedFile);
+    return true;
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const droppedFile = e.dataTransfer.files[0];
+      validateAndSelectFile(droppedFile);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      validateAndSelectFile(e.target.files[0]);
+    }
+  };
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -78,38 +134,67 @@ export default function UploadScreenshot({ session }) {
     <div className="flex-col gap-8 items-center">
       <div style={{ textAlign: 'center' }}>
         <h2 className="text-gradient" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>AI Slip Scanning</h2>
-        <p className="text-secondary">Upload a screenshot of any bet slip (in any language) to automatically extract stake, odds, date, payout & teams.</p>
+        <p className="text-secondary">Upload or drop a screenshot of any bet slip (in any language) to automatically extract stake, odds, date, payout & teams.</p>
       </div>
 
-      <div className="glass-panel flex-col items-center justify-center gap-6" style={{ width: '100%', maxWidth: '600px', padding: '3rem 2rem', borderStyle: 'dashed', borderWidth: '2px', borderColor: error ? 'var(--danger)' : 'var(--border-glass)' }}>
+      <div 
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className="glass-panel flex-col items-center justify-center gap-6" 
+        style={{ 
+          width: '100%', 
+          maxWidth: '600px', 
+          padding: '3rem 2rem', 
+          borderStyle: 'dashed', 
+          borderWidth: '2px', 
+          borderColor: error ? 'var(--danger)' : isDragging ? '#38bdf8' : 'var(--border-glass)',
+          background: isDragging ? 'rgba(56, 189, 248, 0.08)' : 'var(--bg-glass)',
+          transition: 'all 0.2s ease',
+          boxShadow: isDragging ? '0 0 25px rgba(56, 189, 248, 0.25)' : 'none'
+        }}
+      >
         
         {error && (
-           <div style={{ padding: '1rem', background: 'rgba(255, 51, 102, 0.1)', color: 'var(--danger)', borderRadius: '8px', width: '100%', textAlign: 'center' }}>
-             Error: {error}
+           <div style={{ padding: '1rem', background: 'rgba(255, 51, 102, 0.15)', color: 'var(--danger)', border: '1px solid rgba(255, 51, 102, 0.3)', borderRadius: '12px', width: '100%', textAlign: 'center', fontWeight: '500' }}>
+             {error}
            </div>
         )}
 
         {!result && !analyzing && (
           <>
-            <div style={{ background: 'rgba(0, 243, 255, 0.1)', padding: '1.5rem', borderRadius: '50%' }}>
-              <Upload size={48} color="var(--accent-cyan)" />
+            <div style={{ background: isDragging ? 'rgba(56, 189, 248, 0.2)' : 'rgba(0, 243, 255, 0.1)', padding: '1.5rem', borderRadius: '50%', transition: 'all 0.2s ease' }}>
+              <Upload size={48} color={isDragging ? '#38bdf8' : 'var(--accent-cyan)'} />
             </div>
-            <h3 style={{ fontSize: '1.2rem' }}>Drag & drop your bet slip screenshot</h3>
-            <p className="text-secondary" style={{ fontSize: '0.9rem' }}>Supports Bulgarian, English, German & all bookmaker slips (JPG, PNG)</p>
+            
+            <div style={{ textAlign: 'center' }}>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '0.3rem' }}>
+                {isDragging ? 'Drop your bet slip screenshot here!' : 'Drag & drop your bet slip screenshot'}
+              </h3>
+              <p className="text-secondary" style={{ fontSize: '0.95rem' }}>
+                or click below to choose a file from your device
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--adaptive-white-08)', borderRadius: '8px', padding: '0.6rem 1.2rem' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
+                Supported Formats: <strong style={{ color: '#ffffff' }}>PNG, JPG, JPEG, WEBP, HEIC</strong> (Max 10MB)
+              </p>
+            </div>
             
             <input 
               type="file" 
-              accept="image/*" 
+              accept="image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif" 
               id="file-upload" 
               style={{ display: 'none' }} 
-              onChange={(e) => setFile(e.target.files[0])} 
+              onChange={handleFileChange} 
             />
-            <label htmlFor="file-upload" className="btn btn-secondary">
-              {file ? file.name : 'Select File'}
+            <label htmlFor="file-upload" className="btn btn-secondary" style={{ cursor: 'pointer' }}>
+              {file ? `Selected: ${file.name}` : 'Select File'}
             </label>
 
             {file && (
-               <button className="btn btn-primary" onClick={handleUpload}>
+               <button className="btn btn-primary" onClick={handleUpload} style={{ width: '100%', maxWidth: '280px' }}>
                  Analyze Bet Slip
                </button>
             )}
