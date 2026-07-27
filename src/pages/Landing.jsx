@@ -11,6 +11,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
   const [currentProfile, setCurrentProfile] = useState(initialProfile || null);
 
   useEffect(() => {
+    document.title = "QuantStakes - Welcome!";
     const checkUserSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
@@ -640,7 +641,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
               </li>
               <li className="flex items-start gap-3 text-secondary" style={{ marginBottom: '1.25rem', lineHeight: '1.5' }}>
                 <CheckCircle size={20} color="#a855f7" style={{ flexShrink: 0, marginTop: '1px' }}/> 
-                <span>100% free non-profit platform</span>
+                <span>100% free platform</span>
               </li>
             </ul>
             <div style={{ marginTop: 'auto' }}>
@@ -695,7 +696,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
           {[
             {
               q: "What is QuantStakes?",
-              a: "QuantStakes is a non-profit, institutional-grade sports portfolio management and analytics terminal. It empowers sports analysts and portfolio managers to log positions, verify mathematical compounding ROI, and establish unforgeable track records with zero fake records."
+              a: "QuantStakes is an institutional-grade sports portfolio management and analytics terminal. It empowers sports analysts and portfolio managers to log positions, verify mathematical compounding ROI, and establish unforgeable track records with zero fake records."
             },
             {
               q: "How does the SHA-256 Cryptographic Record Verification work?",
@@ -707,7 +708,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
             },
             {
               q: "Is QuantStakes completely free to use?",
-              a: "Yes, QuantStakes is a 100% free non-profit platform designed specifically for quantitative sports analysts, bankroll managers, and portfolio investors seeking transparent metrics."
+              a: "Yes, QuantStakes is a 100% free platform designed specifically for quantitative sports analysts, bankroll managers, and portfolio investors seeking transparent metrics."
             },
             {
               q: "How is ROI and bankroll growth calculated?",
@@ -815,7 +816,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
           <div className="flex items-center gap-4">
             <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '44px', objectFit: 'contain' }} />
             <span className="text-secondary desktop-only" style={{ fontSize: '0.85rem', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '1rem' }}>
-              Non-profit sports portfolio management terminal
+              Institutional-grade sports portfolio management terminal
             </span>
           </div>
 

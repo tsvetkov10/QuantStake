@@ -93,7 +93,7 @@ export default async function handler(req, res) {
                       <tr>
                         <td style="padding: 36px 40px;">
                           <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #e2e8f0;">
-                            Welcome aboard! Your QuantStakes account has been successfully created. You now have access to a non-profit, institutional-grade sports portfolio management engine built on mathematical proof and zero fake records.
+                            Welcome aboard! Your QuantStakes account has been successfully created. You now have access to an institutional-grade sports portfolio management engine built on mathematical proof and zero fake records.
                           </p>
 
                           <!-- Quick Start Features Grid -->
@@ -148,7 +148,7 @@ export default async function handler(req, res) {
                             © ${new Date().getFullYear()} QuantStakes Quantitative Terminal. All rights reserved.
                           </p>
                           <p style="margin: 0; font-size: 12px; color: #475569;">
-                            Non-Profit Sports Portfolio Analytics Platform
+                            Sports Portfolio Analytics Platform
                           </p>
                         </td>
                       </tr>

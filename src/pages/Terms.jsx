@@ -46,7 +46,7 @@ export default function Terms() {
           <p style={{ marginBottom: '1.5rem', color: '#cbd5e1' }}>By accessing or using the QuantStakes analytics terminal ("Service"), you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you do not have permission to access the Service.</p>
           
           <h3 style={{ color: '#ffffff', fontSize: '1.3rem', marginBottom: '1rem', marginTop: '2rem', fontWeight: 700 }}>2. Description of Service</h3>
-          <p style={{ marginBottom: '1.5rem', color: '#cbd5e1' }}>QuantStakes provides sports portfolio management, performance data visualization, and automated record parsing tools. We are strictly a non-profit software platform. We do not accept wagers, host gambling operations, or facilitate financial gambling transactions.</p>
+          <p style={{ marginBottom: '1.5rem', color: '#cbd5e1' }}>QuantStakes provides sports portfolio management, performance data visualization, and automated record parsing tools. We are a software platform. We do not accept wagers, host gambling operations, or facilitate financial gambling transactions.</p>
           
           <h3 style={{ color: '#ffffff', fontSize: '1.3rem', marginBottom: '1rem', marginTop: '2rem', fontWeight: 700 }}>3. User Accounts</h3>
           <p style={{ marginBottom: '1.5rem', color: '#cbd5e1' }}>When you create an account, you must provide accurate and complete information. You are solely responsible for maintaining the confidentiality of your account and password. QuantStakes reserves the right to terminate accounts that violate our terms or engage in abusive behavior.</p>
