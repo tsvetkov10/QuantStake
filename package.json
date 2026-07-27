@@ -8,8 +8,7 @@
     "server": "node server/index.js",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview",
-    "train:ai": "python3 scripts/train_betslip_llm.py"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
