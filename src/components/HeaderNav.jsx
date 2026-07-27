@@ -133,11 +133,7 @@ export default function HeaderNav({ session, profile, isMock }) {
               </div>
             </Link>
 
-            {location.pathname !== '/dashboard' && (
-              <Link to="/dashboard" className="btn-white-pill" style={{ padding: '0.45rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-                <span>Dashboard</span>
-              </Link>
-            )}
+            {/* Profile Pill Badge & Disconnect */}
 
             <button 
               className="flex items-center gap-1.5"
