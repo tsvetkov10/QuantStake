@@ -1164,7 +1164,7 @@ export default function Dashboard({ session, profile }) {
                     </div>
                   )}
                 </div>
-                <Zap size={16} color="#FFD700" />
+                <Flame size={16} color="#f59e0b" />
               </div>
               {filteredBets.length === 0 ? <NoDataSmall /> : (
                 <div className="flex gap-4 mt-2 relative z-10">

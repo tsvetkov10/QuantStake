@@ -1343,8 +1343,11 @@ input[type="number"] {
   0% {
     transform: translateX(-100%) rotate(25deg);
   }
+  50% {
+    transform: translateX(220%) rotate(25deg);
+  }
   100% {
-    transform: translateX(200%) rotate(25deg);
+    transform: translateX(-100%) rotate(25deg);
   }
 }
 
@@ -1362,7 +1365,7 @@ input[type="number"] {
   width: 40%;
   height: 200%;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.35) 50%, transparent 100%);
-  animation: goldShimmerSweep 3s infinite ease-in-out;
+  animation: goldShimmerSweep 4s infinite ease-in-out;
   pointer-events: none;
   z-index: 1;
 }
