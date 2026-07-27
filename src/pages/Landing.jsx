@@ -192,13 +192,13 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </header>
 
       {/* Hero Section */}
-      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', paddingTop: 0, paddingBottom: 0, marginTop: '-50px' }}>
+      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', paddingTop: '76px', paddingBottom: 0, marginTop: '-60px' }}>
         
-        <div className="hero-cirform-grid" style={{ padding: '0 2rem 0 2rem', alignItems: 'flex-start', transform: 'translateY(-65px)' }}>
+        <div className="hero-cirform-grid" style={{ padding: '0 2rem 0 2rem', alignItems: 'flex-start', marginTop: '-30px' }}>
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
-          <div className="flex-col" style={{ alignItems: 'flex-start', marginTop: '-20px', paddingTop: 0, opacity: 1 }}>
-            <h1 className="title-cirform mb-3" style={{ marginTop: 0, paddingTop: 0, textAlign: 'left', letterSpacing: '-2px', fontSize: 'clamp(2.6rem, 4.2vw, 4.2rem)' }}>
+          <div className="flex-col" style={{ alignItems: 'flex-start', marginTop: '-30px', paddingTop: 0, opacity: 1, transform: 'none' }}>
+            <h1 className="title-cirform mb-2" style={{ marginTop: 0, paddingTop: 0, textAlign: 'left', letterSpacing: '-2px', fontSize: 'clamp(2.6rem, 4.2vw, 4.2rem)' }}>
               We create bright <br />
               future for Portfolio Management
             </h1>
