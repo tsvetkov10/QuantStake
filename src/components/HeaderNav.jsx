@@ -30,161 +30,105 @@ export default function HeaderNav({ session, profile, isMock }) {
         <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '50px', objectFit: 'contain', cursor: 'pointer' }} />
       </Link>
 
-      {/* Center Navigation Bar with Section Distinction */}
-      <nav className="flex items-center gap-4 desktop-only" style={{ overflowX: 'auto' }}>
-        
-        {/* GROUP 1: Terminal App Modules */}
-        <div className="flex items-center gap-1" style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '4px 6px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-          <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-cyan)', padding: '0 6px 0 4px' }}>
-            Terminal
-          </span>
-          <Link 
-            to="/dashboard" 
-            style={{ 
-              color: isLinkActive('/dashboard') ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: isLinkActive('/dashboard') ? '700' : '500',
-              fontSize: '0.88rem',
-              textDecoration: 'none',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '8px',
-              background: isLinkActive('/dashboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            Dashboard
-          </Link>
+      {/* Center Navigation Bar */}
+      <nav className="flex items-center gap-2 desktop-only" style={{ overflowX: 'auto' }}>
+        <Link 
+          to="/dashboard" 
+          style={{ 
+            color: isLinkActive('/dashboard') ? '#ffffff' : 'var(--text-secondary)',
+            fontWeight: isLinkActive('/dashboard') ? '700' : '500',
+            fontSize: '0.92rem',
+            textDecoration: 'none',
+            padding: '0.45rem 0.9rem',
+            borderRadius: '8px',
+            background: isLinkActive('/dashboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Dashboard
+        </Link>
 
-          <Link 
-            to="/history" 
-            style={{ 
-              color: isLinkActive('/history') ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: isLinkActive('/history') ? '700' : '500',
-              fontSize: '0.88rem',
-              textDecoration: 'none',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '8px',
-              background: isLinkActive('/history') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            History
-          </Link>
+        <Link 
+          to="/history" 
+          style={{ 
+            color: isLinkActive('/history') ? '#ffffff' : 'var(--text-secondary)',
+            fontWeight: isLinkActive('/history') ? '700' : '500',
+            fontSize: '0.92rem',
+            textDecoration: 'none',
+            padding: '0.45rem 0.9rem',
+            borderRadius: '8px',
+            background: isLinkActive('/history') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          History
+        </Link>
 
-          <Link 
-            to="/leaderboard" 
-            style={{ 
-              color: isLinkActive('/leaderboard') ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: isLinkActive('/leaderboard') ? '700' : '500',
-              fontSize: '0.88rem',
-              textDecoration: 'none',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '8px',
-              background: isLinkActive('/leaderboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            Leaderboard
-          </Link>
+        <Link 
+          to="/leaderboard" 
+          style={{ 
+            color: isLinkActive('/leaderboard') ? '#ffffff' : 'var(--text-secondary)',
+            fontWeight: isLinkActive('/leaderboard') ? '700' : '500',
+            fontSize: '0.92rem',
+            textDecoration: 'none',
+            padding: '0.45rem 0.9rem',
+            borderRadius: '8px',
+            background: isLinkActive('/leaderboard') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Leaderboard
+        </Link>
 
-          <Link 
-            to="/add" 
-            style={{ 
-              color: isLinkActive('/add') ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: isLinkActive('/add') ? '700' : '500',
-              fontSize: '0.88rem',
-              textDecoration: 'none',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '8px',
-              background: isLinkActive('/add') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            Log Entry
-          </Link>
+        <Link 
+          to="/add" 
+          style={{ 
+            color: isLinkActive('/add') ? '#ffffff' : 'var(--text-secondary)',
+            fontWeight: isLinkActive('/add') ? '700' : '500',
+            fontSize: '0.92rem',
+            textDecoration: 'none',
+            padding: '0.45rem 0.9rem',
+            borderRadius: '8px',
+            background: isLinkActive('/add') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Log Entry
+        </Link>
 
-          <Link 
-            to="/tools" 
-            style={{ 
-              color: isLinkActive('/tools') ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: isLinkActive('/tools') ? '700' : '500',
-              fontSize: '0.88rem',
-              textDecoration: 'none',
-              padding: '0.4rem 0.8rem',
-              borderRadius: '8px',
-              background: isLinkActive('/tools') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
-              transition: 'all 0.2s ease',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            Tools
-          </Link>
-        </div>
+        <Link 
+          to="/tools" 
+          style={{ 
+            color: isLinkActive('/tools') ? '#ffffff' : 'var(--text-secondary)',
+            fontWeight: isLinkActive('/tools') ? '700' : '500',
+            fontSize: '0.92rem',
+            textDecoration: 'none',
+            padding: '0.45rem 0.9rem',
+            borderRadius: '8px',
+            background: isLinkActive('/tools') ? 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))' : 'transparent',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Tools
+        </Link>
 
-        {/* Vertical Separator */}
-        <div style={{ width: '1px', height: '24px', background: 'rgba(255, 255, 255, 0.12)', margin: '0 2px' }}></div>
-
-        {/* GROUP 2: Landing Page Sections */}
-        <div className="flex items-center gap-1">
-          <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.4)', padding: '0 4px' }}>
-            Platform
-          </span>
-          <a 
-            href="/#preview" 
-            onClick={(e) => {
-              if (location.pathname === '/' || location.pathname === '/dashboard') {
-                e.preventDefault();
-                document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }} 
-            style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.88rem', textDecoration: 'none', padding: '0.4rem 0.65rem', whiteSpace: 'nowrap' }}
-          >
-            Sneak Peek
-          </a>
-
-          <a 
-            href="/#calculator" 
-            onClick={(e) => {
-              if (location.pathname === '/' || location.pathname === '/dashboard') {
-                e.preventDefault();
-                document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }} 
-            style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.88rem', textDecoration: 'none', padding: '0.4rem 0.65rem', whiteSpace: 'nowrap' }}
-          >
-            Calculator
-          </a>
-
-          <a 
-            href="/#features" 
-            onClick={(e) => {
-              if (location.pathname === '/' || location.pathname === '/dashboard') {
-                e.preventDefault();
-                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }} 
-            style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.88rem', textDecoration: 'none', padding: '0.4rem 0.65rem', whiteSpace: 'nowrap' }}
-          >
-            Capabilities
-          </a>
-
-          <a 
-            href="/#faq" 
-            onClick={(e) => {
-              if (location.pathname === '/' || location.pathname === '/dashboard') {
-                e.preventDefault();
-                document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }} 
-            style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.88rem', textDecoration: 'none', padding: '0.4rem 0.65rem', whiteSpace: 'nowrap' }}
-          >
-            FAQ
-          </a>
-        </div>
-
+        <a 
+          href="/#faq" 
+          onClick={(e) => {
+            if (location.pathname === '/' || location.pathname === '/dashboard') {
+              e.preventDefault();
+              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }} 
+          style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.92rem', textDecoration: 'none', padding: '0.45rem 0.9rem', whiteSpace: 'nowrap' }}
+        >
+          FAQ
+        </a>
       </nav>
 
       {/* Right Action Tools */}
