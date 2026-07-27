@@ -650,7 +650,11 @@ export default function Dashboard({ session, profile }) {
       const canvas = await html2canvas(shareCardRef.current, {
         useCORS: true,
         allowTaint: true,
-        scale: 2,
+        scale: 1,
+        width: 1080,
+        height: 1080,
+        windowWidth: 1080,
+        windowHeight: 1080,
         backgroundColor: '#090d16',
         logging: false,
       });
@@ -672,7 +676,11 @@ export default function Dashboard({ session, profile }) {
       const canvas = await html2canvas(shareCardRef.current, {
         useCORS: true,
         allowTaint: true,
-        scale: 2,
+        scale: 1,
+        width: 1080,
+        height: 1080,
+        windowWidth: 1080,
+        windowHeight: 1080,
         backgroundColor: '#090d16',
         logging: false,
       });
@@ -712,8 +720,8 @@ export default function Dashboard({ session, profile }) {
 
   return (
     <div className="flex-col gap-12 pb-12">
-      {/* Visible-Viewport Capture Node for htmlToImage (Guarantees Logo & Avatar Rasterization in WebKit/Chromium) */}
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '1080px', height: '1080px', pointerEvents: 'none', opacity: 0.01, zIndex: 99990 }}>
+      {/* Unscaled 1080x1080 Capture Node (Guarantees zero text distortion and exact 1:1 rendering) */}
+      <div style={{ position: 'fixed', top: 0, left: '-9999px', width: '1080px', height: '1080px', pointerEvents: 'none', zIndex: -9999, overflow: 'hidden' }}>
         <ShareCard 
           key={`capture-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
           ref={shareCardRef} 
@@ -745,7 +753,6 @@ export default function Dashboard({ session, profile }) {
               }}>
                 <ShareCard 
                   key={`preview-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
-                  ref={shareCardRef}
                   profile={profile} 
                   metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
                 />
