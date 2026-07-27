@@ -1073,3 +1073,101 @@ input[type="number"] {
 .flame-icon-bounce {
   animation: flameBounce 1.4s infinite ease-in-out;
 }
+
+/* --- Custom Animated Card Effects (Falling Money & Fire Streak) --- */
+
+/* 1. Falling Money Particle Animation */
+@keyframes fallingMoney {
+  0% {
+    transform: translateY(-25px) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  80% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(150px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.falling-money-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.falling-money-particle {
+  position: absolute;
+  top: -15px;
+  font-weight: bold;
+  font-family: monospace;
+  pointer-events: none;
+  user-select: none;
+  animation: fallingMoney linear infinite;
+  z-index: 1;
+  color: #10b981;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+/* 2. Fire Flame Border & Rising Embers Animation */
+@keyframes fireFlameBorder {
+  0% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.7), inset 0 0 12px rgba(239, 68, 68, 0.5);
+    border-color: #f59e0b !important;
+  }
+  25% {
+    box-shadow: 0 -10px 30px rgba(239, 68, 68, 0.85), inset 0 -6px 18px rgba(245, 158, 11, 0.6);
+    border-color: #ef4444 !important;
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 140, 0, 0.95), inset 0 0 24px rgba(245, 158, 11, 0.7);
+    border-color: #ff8c00 !important;
+  }
+  75% {
+    box-shadow: 0 -12px 35px rgba(245, 158, 11, 0.85), inset 0 -6px 18px rgba(239, 68, 68, 0.6);
+    border-color: #f59e0b !important;
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.7), inset 0 0 12px rgba(239, 68, 68, 0.5);
+    border-color: #f59e0b !important;
+  }
+}
+
+@keyframes fireEmberRise {
+  0% {
+    transform: translateY(100%) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-80px) scale(1.5) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.fire-card-active {
+  animation: fireFlameBorder 2s infinite ease-in-out !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.fire-ember-particle {
+  position: absolute;
+  bottom: -5px;
+  width: 7px;
+  height: 7px;
+  background: radial-gradient(circle, #f59e0b 0%, #ef4444 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #f59e0b, 0 0 15px #ef4444;
+  pointer-events: none;
+  animation: fireEmberRise linear infinite;
+  z-index: 2;
+}

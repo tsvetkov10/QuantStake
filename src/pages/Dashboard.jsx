@@ -911,7 +911,25 @@ export default function Dashboard({ session, profile }) {
 
       {/* Metric Cards - Primary */}
       <div className="grid grid-cols-4 gap-10" style={{ animation: 'fade-in 0.4s ease' }}>
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', animation: netProfit > 0 ? 'profitGlowPulse 2.5s infinite ease-in-out' : 'none', border: netProfit > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
+        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', border: netProfit > 0 ? '1px solid rgba(16, 185, 129, 0.5)' : '1px solid var(--border-glass)' }}>
+          {netProfit > 0 && (
+            <div className="falling-money-container">
+              {['15%', '35%', '55%', '75%', '90%'].map((left, idx) => (
+                <span 
+                  key={idx} 
+                  className="falling-money-particle" 
+                  style={{ 
+                    left, 
+                    animationDuration: `${2.4 + idx * 0.5}s`, 
+                    animationDelay: `${idx * 0.35}s`,
+                    fontSize: idx % 2 === 0 ? '0.85rem' : '1.1rem'
+                  }}
+                >
+                  {idx % 3 === 0 ? '$' : idx % 3 === 1 ? sym : '💵'}
+                </span>
+              ))}
+            </div>
+          )}
           <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <div className="flex items-center gap-2">
@@ -944,7 +962,25 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>{wonBets.length} / {resolvedBets.length} Won</p>
         </div>
 
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', animation: roi > 0 ? 'profitGlowPulse 2.5s infinite ease-in-out' : 'none', border: roi > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
+        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', border: roi > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
+          {roi > 0 && (
+            <div className="falling-money-container">
+              {['20%', '50%', '80%'].map((left, idx) => (
+                <span 
+                  key={idx} 
+                  className="falling-money-particle" 
+                  style={{ 
+                    left, 
+                    animationDuration: `${2.8 + idx * 0.4}s`, 
+                    animationDelay: `${idx * 0.5}s`,
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {idx % 2 === 0 ? '%' : '💸'}
+                </span>
+              ))}
+            </div>
+          )}
           <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--success) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Yield (ROI)</p>
@@ -957,6 +993,22 @@ export default function Dashboard({ session, profile }) {
         </div>
 
         <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+          <div className="falling-money-container">
+            {['25%', '65%'].map((left, idx) => (
+              <span 
+                key={idx} 
+                className="falling-money-particle" 
+                style={{ 
+                  left, 
+                  animationDuration: `${3.2 + idx * 0.6}s`, 
+                  animationDelay: `${idx * 0.7}s`,
+                  fontSize: '0.85rem'
+                }}
+              >
+                {sym}
+              </span>
+            ))}
+          </div>
           <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, #a13bf7 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Total Wagered</p>
@@ -1004,24 +1056,40 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Avg Bet Size</p>
         </div>
 
-        {/* Longest Streaks Card with Animated Flame & Hot Win Streak Pulse */}
+        {/* Longest Streaks Card with Animated Flame & Rising Fire Embers */}
         {(() => {
           const isHotStreak = (currentStreakType === 'W' && currentStreak >= 2) || maxWinStreak >= 3;
           return (
             <div 
-              className="glass-card" 
+              className={`glass-card ${isHotStreak ? 'fire-card-active' : ''}`}
               style={{ 
                 padding: '1.5rem',
                 position: 'relative',
-                animation: isHotStreak ? 'hotStreakPulse 2s infinite ease-in-out' : 'none',
-                border: isHotStreak ? '1px solid rgba(245, 158, 11, 0.6)' : '1px solid var(--border-glass)'
+                border: isHotStreak ? '1px solid #f59e0b' : '1px solid var(--border-glass)'
               }}
             >
-              <div className="flex justify-between items-center mb-2">
+              {/* Rising Fire Embers Effect */}
+              {isHotStreak && (
+                <>
+                  {['12%', '32%', '52%', '72%', '92%'].map((left, idx) => (
+                    <span 
+                      key={`ember-${idx}`} 
+                      className="fire-ember-particle" 
+                      style={{ 
+                        left, 
+                        animationDuration: `${1.8 + idx * 0.4}s`, 
+                        animationDelay: `${idx * 0.3}s` 
+                      }} 
+                    />
+                  ))}
+                </>
+              )}
+
+              <div className="flex justify-between items-center mb-2 relative z-10">
                 <div className="flex items-center gap-2">
                   <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Longest Streaks</p>
                   {isHotStreak && (
-                    <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.4)', borderRadius: '12px', padding: '0.15rem 0.5rem' }}>
+                    <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.2)', border: '1px solid rgba(245, 158, 11, 0.6)', borderRadius: '12px', padding: '0.15rem 0.5rem' }}>
                       <Flame className="flame-icon-bounce" size={13} color="#f59e0b" />
                       <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>HOT STREAK</span>
                     </div>
@@ -1030,7 +1098,7 @@ export default function Dashboard({ session, profile }) {
                 <Zap size={16} color="#FFD700" />
               </div>
               {filteredBets.length === 0 ? <NoDataSmall /> : (
-                <div className="flex gap-4 mt-2">
+                <div className="flex gap-4 mt-2 relative z-10">
                   <div>
                     <p style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                       {maxWinStreak} W {maxWinStreak >= 3 && <Flame className="flame-icon-bounce" size={14} color="#f59e0b" />}
