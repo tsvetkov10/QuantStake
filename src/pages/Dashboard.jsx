@@ -726,7 +726,7 @@ export default function Dashboard({ session, profile }) {
           key={`capture-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
           ref={shareCardRef} 
           profile={profile} 
-          metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
+          metrics={{ netProfit, roi, winRate, totalStaked, biggestWin, wonCount: wonBets.length, totalBets: resolvedBets.length }} 
         />
       </div>
 
@@ -754,7 +754,7 @@ export default function Dashboard({ session, profile }) {
                 <ShareCard 
                   key={`preview-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
                   profile={profile} 
-                  metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
+                  metrics={{ netProfit, roi, winRate, totalStaked, biggestWin, wonCount: wonBets.length, totalBets: resolvedBets.length }} 
                 />
               </div>
             </div>

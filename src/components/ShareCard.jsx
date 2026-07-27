@@ -3,7 +3,7 @@ import { Target, Activity, CheckCircle, Zap } from 'lucide-react';
 import { LOGO_FULL_BASE64 } from '../assets/logoDataUrl';
 
 const ShareCard = forwardRef(({ profile, metrics }, ref) => {
-  const { netProfit, roi, winRate, totalStaked, biggestWin } = metrics;
+  const { netProfit, roi, winRate, totalStaked, biggestWin, wonCount, totalBets } = metrics;
   const sym = profile?.currency === 'EUR' ? '€' : profile?.currency === 'GBP' ? '£' : '$';
   const [avatarDataUrl, setAvatarDataUrl] = useState(null);
 
@@ -78,6 +78,8 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
     };
   }, [profile?.avatar_url]);
 
+  const activeAvatar = avatarDataUrl || profile?.avatar_url;
+
   return (
     <div
       ref={ref}
@@ -109,11 +111,26 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <div style={{ width: '90px', height: '90px', minWidth: '90px', minHeight: '90px', aspectRatio: '1 / 1', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
-              {avatarDataUrl || profile?.avatar_url ? (
-                <img src={avatarDataUrl || profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', aspectRatio: '1 / 1', objectFit: 'cover', objectPosition: 'center', display: 'block', borderRadius: '50%' }} />
-              ) : (
-                <span style={{ fontSize: '3.2rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
+            {/* Avatar Badge matching Profile Page CSS center/cover */}
+            <div 
+              style={{ 
+                width: '90px', 
+                height: '90px', 
+                borderRadius: '50%', 
+                background: activeAvatar ? `url(${activeAvatar}) center/cover no-repeat` : 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', 
+                border: '3px solid rgba(255, 255, 255, 0.2)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                overflow: 'hidden', 
+                flexShrink: 0, 
+                boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' 
+              }}
+            >
+              {!activeAvatar && (
+                <span style={{ fontSize: '3.2rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                  {(profile?.username?.[0] || 'U').toUpperCase()}
+                </span>
               )}
             </div>
             <div>
@@ -155,7 +172,16 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
                 <Target size={30} color="#3b82f6" style={{ flexShrink: 0 }} />
                 <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Win Rate</span>
               </div>
-              <p style={{ fontSize: winRate.toFixed(1).length > 5 ? '3.2rem' : '3.6rem', fontWeight: 'bold', margin: 0, whiteSpace: 'nowrap', letterSpacing: '-1px' }}>{winRate.toFixed(1)}%</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                <p style={{ fontSize: winRate.toFixed(1).length > 5 ? '3.2rem' : '3.6rem', fontWeight: 'bold', margin: 0, whiteSpace: 'nowrap', letterSpacing: '-1px' }}>
+                  {winRate.toFixed(1)}%
+                </p>
+                {totalBets > 0 && (
+                  <span style={{ fontSize: '1.4rem', color: '#38bdf8', fontWeight: '700' }}>
+                    ({wonCount || 0}/{totalBets})
+                  </span>
+                )}
+              </div>
             </div>
             
             <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
