@@ -627,7 +627,8 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
+      await new Promise(r => setTimeout(r, 250));
+      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
       const timestamp = Math.floor(Date.now() / 1000);
       download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
@@ -641,7 +642,8 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: true });
+      await new Promise(r => setTimeout(r, 250));
+      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
       try {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         setIsCopied(true);
@@ -669,10 +671,10 @@ export default function Dashboard({ session, profile }) {
 
   return (
     <div className="flex-col gap-12 pb-12">
-      {/* Off-screen Unscaled 1080x1080 Target Node for htmlToImage (Guarantees Logo & Avatar Export) */}
-      <div style={{ position: 'fixed', left: '-9999px', top: '-9999px', width: '1080px', height: '1080px', pointerEvents: 'none', zIndex: -9999 }}>
+      {/* Visible-Viewport Capture Node for htmlToImage (Guarantees Logo & Avatar Rasterization in WebKit/Chromium) */}
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '1080px', height: '1080px', pointerEvents: 'none', opacity: 0.01, zIndex: 99990 }}>
         <ShareCard 
-          key={`offscreen-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
+          key={`capture-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
           ref={shareCardRef} 
           profile={profile} 
           metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 

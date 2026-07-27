@@ -73,15 +73,15 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', border: '3px solid rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' }}>
-              {avatarDataUrl ? (
-                <img src={avatarDataUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {avatarDataUrl || profile?.avatar_url ? (
+                <img src={avatarDataUrl || profile.avatar_url} crossOrigin="anonymous" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <span style={{ fontSize: '3rem', fontWeight: '900', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{(profile?.username?.[0] || 'U').toUpperCase()}</span>
               )}
             </div>
             <div>
               <h1 style={{ fontSize: '3.2rem', fontWeight: 'bold', margin: 0, letterSpacing: '-1px', color: '#ffffff' }}>{profile?.username || 'Trader'}</h1>
-              <span style={{ color: '#38bdf8', fontSize: '1.5rem', fontWeight: '600' }}>QuantStakes Verified Track Record</span>
+              <span style={{ color: '#38bdf8', fontSize: '1.5rem', fontWeight: '600' }}>QuantStakes Verified</span>
             </div>
           </div>
           
