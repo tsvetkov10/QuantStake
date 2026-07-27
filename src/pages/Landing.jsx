@@ -280,9 +280,10 @@ export default function Landing({ session: initialSession, profile: initialProfi
         </div>
       </section>
 
-      {/* PERSISTENT FIXED FOOTER TICKER: Live Verification Marquee Ticker */}
-      <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', background: 'rgba(4, 7, 20, 0.92)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(56, 189, 248, 0.25)', boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.8)', padding: '0.75rem 0', overflow: 'hidden', whiteSpace: 'nowrap', zIndex: 9999 }}>
-        <div className="marquee-content flex items-center gap-12" style={{ display: 'inline-flex', animation: 'marquee 30s linear infinite' }}>
+      {/* PERSISTENT FIXED FOOTER TICKER: Infinite Non-Stop Seamless Live Verification Ticker */}
+      <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', background: 'rgba(4, 7, 20, 0.92)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(56, 189, 248, 0.25)', boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.8)', padding: '0.75rem 0', overflow: 'hidden', whiteSpace: 'nowrap', zIndex: 9999, display: 'flex' }}>
+        {/* Track 1 */}
+        <div className="flex items-center gap-12" style={{ display: 'inline-flex', flexShrink: 0, animation: 'marqueeContinuous 35s linear infinite', paddingRight: '3rem' }}>
           <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#34d399" /> @alex_vance verified +€1,551 payout on Polymarket</span>
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
           <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#38bdf8" /> SHA-256 Block #948202 Sealed</span>
@@ -295,7 +296,22 @@ export default function Landing({ session: initialSession, profile: initialProfi
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
           <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#34d399" /> Zero fake records verified</span>
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+        </div>
+
+        {/* Track 2 (Identical Clone for 100% Seamless Infinite Loop) */}
+        <div className="flex items-center gap-12" aria-hidden="true" style={{ display: 'inline-flex', flexShrink: 0, animation: 'marqueeContinuous 35s linear infinite', paddingRight: '3rem' }}>
           <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#34d399" /> @alex_vance verified +€1,551 payout on Polymarket</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#38bdf8" /> SHA-256 Block #948202 Sealed</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#a855f7" /> @elena_dimitrova hit +536.9% ROI milestone</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><FileText size={14} color="#34d399" /> Slip OCR parsed in 0.38s</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><Zap size={14} color="#FFD700" /> @marcus_devlin verified 14-game win streak</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+          <span className="flex items-center gap-2" style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 600 }}><ShieldCheck size={14} color="#34d399" /> Zero fake records verified</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
         </div>
       </div>
 

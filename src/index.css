@@ -821,3 +821,8 @@ input[type="number"] {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
 }
+
+@keyframes marqueeContinuous {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
