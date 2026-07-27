@@ -572,7 +572,7 @@ input[type="number"] {
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
-  /* Landing Hero Mobile Optimization */
+  /* Landing Hero & Terminal Preview Mobile Optimization */
   .hero-landing-section {
     padding-top: 5rem !important;
     padding-bottom: 2rem !important;
@@ -582,14 +582,48 @@ input[type="number"] {
   .responsive-padding {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   .title-cirform {
     font-size: 2.1rem !important;
     margin-bottom: 1rem !important;
     line-height: 1.15 !important;
+  }
+
+  .terminal-preview-container {
+    border-radius: 16px !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .terminal-body-padding {
+    padding: 1rem !important;
+  }
+
+  .terminal-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .terminal-stats-grid h4 {
+    font-size: 1.35rem !important;
+  }
+
+  .terminal-table-wrapper {
+    padding: 0.75rem !important;
+  }
+
+  .landing-footer {
+    padding: 2rem 1rem 6rem 1rem !important;
+  }
+
+  .footer-content {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1rem !important;
   }
 
   /* Grid overwrites */

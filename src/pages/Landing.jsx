@@ -340,7 +340,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
         </div>
 
         {/* Mock Dashboard Terminal Window */}
-        <div className="reveal-on-scroll delay-100" style={{ maxWidth: '1200px', width: '100%', background: 'rgba(11, 16, 35, 0.9)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '24px', boxShadow: '0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(56, 189, 248, 0.12)', overflow: 'hidden' }}>
+        <div className="terminal-preview-container reveal-on-scroll delay-100" style={{ maxWidth: '1200px', width: '100%', background: 'rgba(11, 16, 35, 0.9)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '24px', boxShadow: '0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(56, 189, 248, 0.12)', overflow: 'hidden' }}>
           
           {/* Terminal Window Header Bar */}
           <div className="flex justify-between items-center" style={{ padding: '1rem 1.5rem', background: 'rgba(4, 7, 20, 0.8)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
@@ -353,10 +353,10 @@ export default function Landing({ session: initialSession, profile: initialProfi
           </div>
 
           {/* Terminal Body */}
-          <div style={{ padding: '2.5rem' }}>
+          <div className="terminal-body-padding" style={{ padding: '2.5rem' }}>
             
             {/* Top Stat Row */}
-            <div className="grid grid-cols-4 gap-6 mb-8" style={{ gap: '1.25rem' }}>
+            <div className="terminal-stats-grid grid grid-cols-4 gap-6 mb-8">
               <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1.25rem' }}>
                 <span className="text-secondary" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Net Profit</span>
                 <h4 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#34d399', margin: '0.3rem 0 0 0' }}>+$24,850.00</h4>
@@ -379,8 +379,8 @@ export default function Landing({ session: initialSession, profile: initialProfi
             </div>
 
             {/* Live Ledger Table */}
-            <div style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.25rem', overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+            <div className="terminal-table-wrapper" style={{ background: 'rgba(5, 9, 22, 0.7)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '18px', padding: '1.25rem', overflowX: 'auto' }}>
+              <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
                 <thead>
                   <tr style={{ color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <th style={{ padding: '0.6rem 0' }}>EVENT</th>
@@ -839,26 +839,24 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </section>
 
       {/* Sleek, Compact Footer */}
-      <footer style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '2.2rem 3rem 5.5rem 3rem' }}>
-        <div className="flex justify-between items-center" style={{ maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap', gap: '1.5rem' }}>
+      <footer className="landing-footer" style={{ background: 'rgba(2, 4, 12, 0.95)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '2.2rem 2rem 5.5rem 2rem' }}>
+        <div className="footer-content flex justify-between items-center" style={{ maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap', gap: '1.5rem' }}>
           
           <div className="flex items-center gap-4">
-            <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '44px', objectFit: 'contain' }} />
+            <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '40px', objectFit: 'contain' }} />
             <span className="text-secondary desktop-only" style={{ fontSize: '0.85rem', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '1rem' }}>
               Institutional-grade sports portfolio management terminal
             </span>
           </div>
 
-          <div className="flex items-center gap-8" style={{ fontSize: '0.9rem' }}>
-            <Link to="/auth" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</Link>
-            <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Sneak Peek</a>
-            <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Features</a>
-            <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terms of Service</Link>
-            <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Privacy Policy</Link>
+          <div className="footer-links flex items-center gap-6" style={{ fontSize: '0.88rem' }}>
+            <Link to="/auth" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500 }}>Terminal</Link>
+            <Link to="/terms" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500 }}>Terms</Link>
+            <Link to="/privacy" className="text-secondary" style={{ textDecoration: 'none', fontWeight: 500 }}>Privacy</Link>
           </div>
 
-          <p className="text-secondary" style={{ fontSize: '0.85rem', margin: 0 }}>
-            © {new Date().getFullYear()} QuantStakes. All rights reserved.
+          <p className="text-secondary footer-copyright" style={{ fontSize: '0.85rem', margin: 0 }}>
+            © {new Date().getFullYear()} QuantStakes.
           </p>
         </div>
       </footer>
