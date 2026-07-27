@@ -1154,16 +1154,29 @@ export default function Dashboard({ session, profile }) {
                 </>
               )}
 
+              {/* Top-Right Absolute INFERNO STREAK Badge */}
+              {isHotStreak && (
+                <div 
+                  className="flex items-center gap-1" 
+                  style={{ 
+                    position: 'absolute',
+                    top: '0.75rem',
+                    right: '0.75rem',
+                    background: 'rgba(245, 158, 11, 0.25)', 
+                    border: '1px solid rgba(245, 158, 11, 0.7)', 
+                    borderRadius: '12px', 
+                    padding: '0.15rem 0.6rem',
+                    zIndex: 20
+                  }}
+                >
+                  <Flame className="flame-icon-bounce" size={13} color="#f59e0b" />
+                  <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>INFERNO STREAK</span>
+                </div>
+              )}
+
               <div className="flex justify-between items-center mb-2 relative z-10">
                 <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Longest Streaks</p>
-                {isHotStreak ? (
-                  <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.25)', border: '1px solid rgba(245, 158, 11, 0.7)', borderRadius: '12px', padding: '0.15rem 0.6rem' }}>
-                    <Flame className="flame-icon-bounce" size={13} color="#f59e0b" />
-                    <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>INFERNO STREAK</span>
-                  </div>
-                ) : (
-                  <Flame size={16} color="var(--accent-cyan)" />
-                )}
+                {!isHotStreak && <Flame size={16} color="var(--accent-cyan)" />}
               </div>
               {filteredBets.length === 0 ? <NoDataSmall /> : (
                 <div className="flex gap-4 mt-2 relative z-10">
