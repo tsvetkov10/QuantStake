@@ -199,11 +199,7 @@ export default function Auth() {
       {/* Top Header Navigation */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ position: 'relative', zIndex: 10, paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
         <Link to="/" className="flex items-center gap-3">
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
-        </Link>
-        
-        <Link to="/" className="flex items-center gap-2 text-secondary" style={{ textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>
-          <ArrowLeft size={18} /> Back to Landing Page
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain', cursor: 'pointer' }} />
         </Link>
       </header>
 
