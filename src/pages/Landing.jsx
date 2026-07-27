@@ -19,12 +19,8 @@ export default function Landing({ session: initialSession, profile: initialProfi
         const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (data) setCurrentProfile(data);
       } else {
-        const hasMock = sessionStorage.getItem('mock_session') === 'true' || localStorage.getItem('mock_session') === 'true';
-        if (hasMock) {
-          const p = sessionStorage.getItem('mock_profile');
-          setCurrentUser({ email: 'demo@quantstakes.com' });
-          setCurrentProfile(p ? JSON.parse(p) : { username: 'QuantAnalyst' });
-        }
+        setCurrentUser(null);
+        setCurrentProfile(null);
       }
     };
 
