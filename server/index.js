@@ -47,17 +47,33 @@ app.post('/api/parse-slip', upload.single('image'), async (req, res) => {
     ];
 
     const prompt = `
-      You are an expert sports betting analyst. Look at the provided screenshot of a bet slip.
-      Extract the following information and return ONLY a valid JSON object (no markdown, no backticks).
-      If a value is not found, leave it as null.
-      
-      Required JSON structure:
+      You are an expert multi-lingual sports betting AI scanner. Analyze the provided betslip image (which may be in English, Bulgarian, German, Spanish, French, etc.).
+      Extract all numbers and information carefully and return ONLY a single valid JSON object (no markdown formatting, no code blocks, no text before or after).
+
+      Field Extraction Rules:
+      1. "sport": Identify the sport if shown (e.g. Tennis, Football, Basketball, MMA, Esports, Unknown). Look for icons or terms like 🎾, ⚽, 🏀, "Победител".
+      2. "type": Bet type (e.g. "Single" / "Сингъл", "Parlay" / "Акумулатор", "Spread", "Over/Under", "Unknown").
+      3. "teams": The match or event participants (e.g. "Andrey Martin vs Alec Beckley" or "Андрей Мартин vs Алек Бекли").
+      4. "stake": The amount betted / wagered. Look for labels like "Stake", "Залог", "Wager", "Total Stake", "1 залог x 250.00 €". Extract as a clean float number (e.g. 250.0).
+      5. "odds": The decimal odds / multiplier. Look for numbers like 2.05, 1.85, 3.40. Convert American odds (+150 -> 2.5) to decimal floats.
+      6. "payout": The total return or amount won. Look for labels like "Печалба: 512.50 €", "Payout", "Return", "Win Amount", "Total Return". Extract as a clean float number (e.g. 512.5).
+      7. "date": The date of the bet or event (formatted as YYYY-MM-DD e.g. "2026-07-27" from "27.07.2026").
+      8. "status": Determine the bet status:
+         - "Won" if settled as win (e.g. green badge, "Печалба", "Settled Win", "Won")
+         - "Lost" if settled as loss (e.g. red badge, "Загуба", "Lost")
+         - "Cashed Out" if cashed out
+         - "Pending" if active / unsettled
+
+      Required JSON format:
       {
-        "sport": "String (e.g. Football, Basketball, Tennis, MMA, Racing, Unknown)",
-        "type": "String (e.g. Moneyline, Spread, Parlay, Over/Under, Prop, Unknown)",
-        "teams": "String (The teams/players involved, e.g. Lakers vs Warriors)",
-        "stake": Number (The amount wagered, extract just the number),
-        "odds": Number (The decimal odds. If American odds like +150, convert to decimal e.g. 2.5)
+        "sport": "Tennis",
+        "type": "Single",
+        "teams": "Andrey Martin vs Alec Beckley",
+        "stake": 250.00,
+        "odds": 2.05,
+        "payout": 512.50,
+        "date": "2026-07-27",
+        "status": "Won"
       }
     `;
 
