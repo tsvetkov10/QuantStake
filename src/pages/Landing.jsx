@@ -136,6 +136,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
   const calc12Months = Math.round(calcBankroll * Math.pow(1 + calcRoi / 100, 12));
 
   return (
+    /* QuantStakes Landing v2.4.1 Build Cache-Buster */
     <div className="flex-col light-streak-bg" style={{ minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       
       {/* Dynamic Moving Speed Streaks & Flare FX */}
