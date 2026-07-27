@@ -501,21 +501,6 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
             </div>
           </div>
 
-          {/* Account Session Log Out Action */}
-          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#fff', margin: 0 }}>Account Session</h4>
-              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Sign out of your active QuantStakes session.</p>
-            </div>
-
-            <button 
-              onClick={handleLogout}
-              style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.8rem', padding: '0.45rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-            >
-              <LogOut size={14} /> Log Out
-            </button>
-          </div>
-
           {/* Reset Performance History Action */}
           <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '20px', padding: '1.1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
