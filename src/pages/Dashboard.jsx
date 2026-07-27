@@ -822,13 +822,13 @@ export default function Dashboard({ session, profile }) {
         </div>
       )}
 
-      <div className="flex justify-between items-end flex-wrap gap-6">
+      <div className="flex justify-between items-end flex-wrap gap-4" style={{ width: '100%' }}>
         <div>
           <h2 className="text-gradient" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Portfolio Analytics</h2>
           <p className="text-secondary">Comprehensive quantitative breakdown of your betting strategy.</p>
         </div>
         
-        <div className="flex gap-4 items-end md-flex-col" style={{ animation: 'fade-in 0.3s ease' }}>
+        <div className="dashboard-filter-bar flex gap-3 items-end flex-wrap" style={{ animation: 'fade-in 0.3s ease' }}>
           <div className="flex-col">
             <label className="text-secondary" style={{ fontSize: '0.65rem', marginBottom: '0.25rem', opacity: 0, pointerEvents: 'none', userSelect: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Export</label>
             <button 
