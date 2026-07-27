@@ -240,28 +240,53 @@ function parseSpatialData(data) {
 
   // 3. Spatial Odds Extraction
   const potentialOdds = [];
+  const fullRawText = data.text || allWords.map(w => w.text).join(' ');
+
+  // Extract all full date strings to blacklist them from odds
+  const dateSubstrings = [];
+  const dateRegex = /(\d{1,2})[\.\/](\d{1,2})(?:[\.\/](\d{2,4}))?/g;
+  let dMatch;
+  while ((dMatch = dateRegex.exec(fullRawText)) !== null) {
+    dateSubstrings.push(dMatch[0]);
+    if (dMatch[1] && dMatch[2]) {
+      dateSubstrings.push(`${dMatch[1]}.${dMatch[2]}`);
+      dateSubstrings.push(`${dMatch[1].padStart(2, '0')}.${dMatch[2].padStart(2, '0')}`);
+    }
+  }
+
   for (const w of allWords) {
-    const decimalMatch = w.text.match(/(?:^|[^\d])(\d+[\.,]\d{2})(?:[^\d]|$)/);
-    if (decimalMatch && !w.text.match(/[€$£лв]/i)) {
-      const num = parseFloat(decimalMatch[1].replace(',', '.'));
-      // Filter out times
-      const isLikelyTime = w.text.endsWith('.00') && num >= 10 && num <= 24 && (w.bbox.y0 / maxY) > 0.8;
+    const rawText = w.text.trim();
+    const decimalMatch = rawText.match(/(?:^|[^\d])(\d+[\.,]\d{2})(?:[^\d]|$)/);
+    if (decimalMatch && !rawText.match(/[€$£лв]/i)) {
+      const numStr = decimalMatch[1].replace(',', '.');
+      const num = parseFloat(numStr);
       
-      if (num > 1.00 && num < 100.00 && !isLikelyTime) {
-        potentialOdds.push({ val: num, bbox: w.bbox });
+      // Blacklist dates (e.g. 27.07 or 27.07.2026), times (16:43), and year numbers (2026)
+      const isDate = dateSubstrings.some(ds => rawText.includes(ds) || ds.includes(numStr)) ||
+                     (numStr.includes('.') && parseInt(numStr.split('.')[0], 10) > 12 && parseInt(numStr.split('.')[1], 10) <= 12) ||
+                     (numStr.includes('.') && parseInt(numStr.split('.')[1], 10) > 12 && parseInt(numStr.split('.')[0], 10) <= 12);
+      const isLikelyTime = rawText.includes(':') || (rawText.endsWith('.00') && num >= 10 && num <= 24 && (w.bbox.y0 / maxY) > 0.8);
+      const isYear = num >= 2020 && num <= 2035;
+      const isStake = result.stake && Math.abs(num - parseFloat(result.stake)) < 0.01;
+
+      if (num > 1.00 && num < 100.00 && !isDate && !isLikelyTime && !isYear && !isStake) {
+        potentialOdds.push({ val: num, bbox: w.bbox, isSmall: num < 15.0 });
       }
     }
   }
 
   if (potentialOdds.length > 0) {
+    // Prefer reasonable decimal odds (< 15.0) over large anomalies
+    const reasonableOdds = potentialOdds.filter(o => o.isSmall);
+    const poolToUse = reasonableOdds.length > 0 ? reasonableOdds : potentialOdds;
+
     if (foundTeamBBoxes.length > 0) {
-      // Find the odds physically closest to the Matchup (Y-axis distance)
+      // Find odds physically closest to the Matchup (Y-axis distance)
       const avgTeamY = foundTeamBBoxes.reduce((sum, box) => sum + box.y0, 0) / foundTeamBBoxes.length;
-      potentialOdds.sort((a, b) => Math.abs(a.bbox.y0 - avgTeamY) - Math.abs(b.bbox.y0 - avgTeamY));
-      result.odds = potentialOdds[0].val.toFixed(2);
+      poolToUse.sort((a, b) => Math.abs(a.bbox.y0 - avgTeamY) - Math.abs(b.bbox.y0 - avgTeamY));
+      result.odds = poolToUse[0].val.toFixed(2);
     } else {
-      // Fallback
-      result.odds = potentialOdds[0].val.toFixed(2);
+      result.odds = poolToUse[0].val.toFixed(2);
     }
   }
 

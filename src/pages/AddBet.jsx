@@ -257,7 +257,8 @@ export default function AddBet({ session, profile }) {
       // 1. Try server Gemini Vision AI parser
       let data = null;
       try {
-        const res = await fetch('http://localhost:3001/api/parse-slip', {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+        const res = await fetch(`${apiUrl}/api/parse-slip`, {
           method: 'POST',
           body: formData,
         });
