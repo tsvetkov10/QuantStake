@@ -650,7 +650,7 @@ export default function Dashboard({ session, profile }) {
       const canvas = await html2canvas(shareCardRef.current, {
         useCORS: true,
         allowTaint: true,
-        scale: 1,
+        scale: 3,
         width: 1080,
         height: 1080,
         windowWidth: 1080,
@@ -676,7 +676,7 @@ export default function Dashboard({ session, profile }) {
       const canvas = await html2canvas(shareCardRef.current, {
         useCORS: true,
         allowTaint: true,
-        scale: 1,
+        scale: 3,
         width: 1080,
         height: 1080,
         windowWidth: 1080,

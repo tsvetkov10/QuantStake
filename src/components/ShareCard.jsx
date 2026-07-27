@@ -96,8 +96,8 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
       }}
     >
       {/* Background Graphic Elements */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(0, 243, 255, 0.18) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+      <div style={{ position: 'absolute', top: '-20%', left: '-20%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '60%', height: '60%', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }}></div>
       
       {/* Grid Overlay */}
       <div style={{
@@ -111,7 +111,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            {/* Avatar Badge matching Profile Page CSS center/cover with solid opaque background */}
+            {/* Avatar Badge with clean border and zero cyan glow cloud shadow */}
             <div 
               style={{ 
                 width: '90px', 
@@ -119,13 +119,13 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
                 borderRadius: '50%', 
                 backgroundColor: '#090e1a',
                 background: activeAvatar ? `url(${activeAvatar}) center/cover no-repeat #090e1a` : 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', 
-                border: '3px solid rgba(255, 255, 255, 0.2)', 
+                border: '3px solid rgba(255, 255, 255, 0.25)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 overflow: 'hidden', 
                 flexShrink: 0, 
-                boxShadow: '0 0 25px rgba(6, 182, 212, 0.3)' 
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6)' 
               }}
             >
               {!activeAvatar && (
