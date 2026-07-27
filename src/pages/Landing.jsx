@@ -163,7 +163,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
           {currentUser ? (
             <div className="flex items-center gap-2.5">
               <Link to="/settings" style={{ textDecoration: 'none' }}>
-                <div className="flex items-center gap-2.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+                <div className="flex items-center" style={{ gap: '10px', background: 'rgba(255, 255, 255, 0.05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
                   <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0, overflow: 'hidden' }}>
                     {currentProfile?.avatar_url ? (
                       <img src={currentProfile.avatar_url} alt="Profile Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
