@@ -192,9 +192,9 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </header>
 
       {/* Hero Section */}
-      <section style={{ position: 'relative', paddingTop: '10.5rem', paddingBottom: '5rem', width: '100%', minHeight: '88vh' }}>
+      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', minHeight: '88vh' }}>
         
-        <div className="hero-cirform-grid responsive-padding" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
+        <div className="hero-cirform-grid responsive-padding">
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
