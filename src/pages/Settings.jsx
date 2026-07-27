@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, ArrowRight } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2 } from 'lucide-react';
 
 export default function Settings({ session, profile: initialProfile, onProfileUpdate }) {
   const [profile, setProfile] = useState(initialProfile || { username: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
@@ -170,15 +170,15 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
   const isAnalyst = profile.profile_mode === 'analyst';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%', maxWidth: '800px', margin: '0 auto', paddingTop: '1rem', paddingBottom: '4rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', maxWidth: '1200px', margin: '0 auto', paddingTop: '0.25rem', paddingBottom: '1rem' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      {/* Header Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '0.75rem' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px' }}>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px' }}>
             Profile <span style={{ background: 'linear-gradient(90deg, #22d3ee, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
           </h1>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>Manage your account avatar, username, and tipster status.</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>Manage your account avatar, username, and tipster status.</p>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -199,202 +199,218 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
               background: '#ffffff',
               color: '#040714',
               fontWeight: '700',
-              fontSize: '0.9rem',
-              padding: '0.65rem 1.6rem',
+              fontSize: '0.88rem',
+              padding: '0.6rem 1.5rem',
               borderRadius: '40px',
               border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
+              gap: '0.4rem',
               transition: 'all 0.2s ease',
               opacity: loading ? 0.6 : 1
             }}
           >
-            {loading ? <RefreshCw size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Check size={16} />}
+            {loading ? <RefreshCw size={15} style={{ animation: 'spin 1s linear infinite' }} /> : <Check size={15} />}
             {loading ? 'Saving...' : 'Save Profile'}
           </button>
         </div>
       </div>
 
-      {/* Profile Info Card */}
-      <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-          {/* Avatar upload */}
-          <div style={{ position: 'relative' }}>
-            <div style={{ 
-              width: '96px', 
-              height: '96px', 
-              borderRadius: '50%', 
-              border: '2px solid rgba(255, 255, 255, 0.15)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              color: '#fff', 
-              fontSize: '2.2rem', 
-              fontWeight: '700', 
-              overflow: 'hidden', 
-              background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))'
-            }}>
-              {!profile.avatar_url && (profile.username?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
+      {/* Main Unscrollable 2-Column Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', alignItems: 'start' }}>
+        
+        {/* LEFT COLUMN: Profile Avatar, Username Display & Social Stats */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          
+          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+              {/* Avatar Upload */}
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <div style={{ 
+                  width: '84px', 
+                  height: '84px', 
+                  borderRadius: '50%', 
+                  border: '2px solid rgba(255, 255, 255, 0.15)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: '#fff', 
+                  fontSize: '2rem', 
+                  fontWeight: '700', 
+                  overflow: 'hidden', 
+                  background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))'
+                }}>
+                  {!profile.avatar_url && (profile.username?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
+                </div>
+                <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} id="avatar-upload" />
+                <label 
+                  htmlFor="avatar-upload" 
+                  style={{ 
+                    position: 'absolute', bottom: 0, right: 0, width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent-cyan)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '2px solid #040714'
+                  }}
+                  title="Change Picture"
+                >
+                  <ImageIcon size={14} />
+                </label>
+              </div>
+
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <h2 style={{ fontSize: '1.3rem', fontWeight: '700', color: '#fff', margin: 0 }}>
+                    {profile.username || 'Trader'}
+                  </h2>
+                  {isAnalyst && <ShieldCheck size={18} color="#a13bf7" />}
+                </div>
+                <span style={{ fontSize: '0.82rem', color: isAnalyst ? '#c084fc' : 'var(--text-secondary)', fontWeight: 500 }}>
+                  {isAnalyst ? 'Verified Quant Analyst / Tipster' : 'Standard Member'}
+                </span>
+              </div>
             </div>
-            <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} id="avatar-upload" />
-            <label 
-              htmlFor="avatar-upload" 
+
+            {/* Social Metrics Bar: Followers, Following, Subscribers (DEFAULT 0) */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '16px', padding: '0.85rem 0.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+                  Followers
+                </span>
+                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
+                  {profile?.followers_count || 0}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+                  Following
+                </span>
+                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
+                  {profile?.following_count || 0}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-cyan)' }}>
+                  Subscribers
+                </span>
+                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: isAnalyst ? '#c084fc' : '#ffffff', marginTop: '0.15rem' }}>
+                  {profile?.subscribers_count || 0}
+                </span>
+              </div>
+            </div>
+
+            {/* Reset Stats Option */}
+            <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '14px', padding: '0.85rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h4 style={{ fontSize: '0.88rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance</h4>
+                <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Wipe recorded bets from database.</p>
+              </div>
+
+              <button 
+                onClick={() => setShowResetConfirm(true)}
+                style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.8rem', padding: '0.45rem 1rem', borderRadius: '8px', cursor: 'pointer' }}
+              >
+                Reset
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: Become Tipster Banner + Account Details */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          
+          {/* BECOME A QUANT ANALYST / TIPSTER BANNER */}
+          <div style={{ 
+            background: 'linear-gradient(135deg, rgba(161, 59, 247, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)', 
+            border: '1px solid rgba(161, 59, 247, 0.3)', 
+            borderRadius: '20px', 
+            padding: '1.5rem', 
+            display: 'flex', 
+            flexDirection: 'column',
+            gap: '1rem',
+            boxShadow: '0 8px 25px rgba(161, 59, 247, 0.1)'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.3rem' }}>
+                <Zap size={18} color="#a13bf7" />
+                <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: '#fff', margin: 0 }}>
+                  Become a Quant Analyst / Tipster
+                </h3>
+              </div>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.7)', margin: 0, lineHeight: 1.5 }}>
+                Publish verified mathematical performance, get featured on the public leaderboard, and monetize your strategy.
+              </p>
+            </div>
+
+            <button 
+              onClick={() => { if (!isAnalyst) setShowCheckout(true); }}
+              disabled={isAnalyst}
               style={{ 
-                position: 'absolute', bottom: 0, right: 0, width: '32px', height: '32px', borderRadius: '50%', background: 'var(--accent-cyan)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '2px solid #040714'
+                background: isAnalyst ? 'rgba(161, 59, 247, 0.2)' : 'linear-gradient(135deg, #a13bf7, #22d3ee)', 
+                color: '#ffffff', 
+                fontWeight: '700', 
+                fontSize: '0.88rem', 
+                padding: '0.75rem 1.4rem', 
+                borderRadius: '40px', 
+                border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.4)' : 'none', 
+                cursor: isAnalyst ? 'default' : 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                boxShadow: isAnalyst ? 'none' : '0 6px 20px rgba(161, 59, 247, 0.3)',
+                whiteSpace: 'nowrap'
               }}
-              title="Change Picture"
             >
-              <ImageIcon size={16} />
-            </label>
+              {isAnalyst ? <CheckCircle size={16} color="#a13bf7" /> : <Sparkles size={16} />}
+              <span>{isAnalyst ? 'Verified Analyst Active' : 'Become a Quant Analyst / Tipster'}</span>
+            </button>
           </div>
 
-          <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: '700', color: '#fff', margin: 0 }}>
-                {profile.username || 'Trader'}
-              </h2>
-              {isAnalyst && <ShieldCheck size={20} color="#a13bf7" />}
+          {/* Account Edit Fields: Username & Currency */}
+          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* Username Input */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+                Username Handle
+              </label>
+              <input 
+                type="text" 
+                value={profile.username || ''}
+                onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+                style={{ 
+                  width: '100%', 
+                  background: 'rgba(0, 0, 0, 0.4)', 
+                  border: '1px solid rgba(255, 255, 255, 0.12)', 
+                  color: '#fff', 
+                  fontSize: '0.95rem', 
+                  padding: '0.7rem 0.9rem', 
+                  borderRadius: '10px', 
+                  outline: 'none'
+                }}
+                placeholder="Enter username"
+              />
             </div>
-            <span style={{ fontSize: '0.85rem', color: isAnalyst ? '#c084fc' : 'var(--text-secondary)', fontWeight: 500 }}>
-              {isAnalyst ? 'Verified Quant Analyst / Tipster' : 'Standard Member'}
-            </span>
-          </div>
-        </div>
 
-        {/* Social Metrics Bar: Followers, Following, Subscribers */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '16px', padding: '1rem 0.5rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Followers
-            </span>
-            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: '#ffffff', marginTop: '0.2rem' }}>
-              {profile?.followers_count ?? 1284}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', borderLeft: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Following
-            </span>
-            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: '#ffffff', marginTop: '0.2rem' }}>
-              {profile?.following_count ?? 142}
-            </span>
+            {/* Currency Selector */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+                Default Currency
+              </label>
+              <select
+                value={profile.currency || 'USD'}
+                onChange={(e) => setProfile({ ...profile, currency: e.target.value })}
+                style={{ width: '100%', background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', fontSize: '0.95rem', padding: '0.7rem 0.9rem', borderRadius: '10px', outline: 'none' }}
+              >
+                <option value="USD" style={{ background: '#040714', color: '#fff' }}>USD ($)</option>
+                <option value="EUR" style={{ background: '#040714', color: '#fff' }}>EUR (€)</option>
+                <option value="GBP" style={{ background: '#040714', color: '#fff' }}>GBP (£)</option>
+              </select>
+            </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-            <span style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-cyan)' }}>
-              Subscribers
-            </span>
-            <span style={{ fontSize: '1.3rem', fontWeight: 700, color: isAnalyst ? '#c084fc' : '#ffffff', marginTop: '0.2rem' }}>
-              {profile?.subscribers_count ?? (isAnalyst ? 89 : 0)}
-            </span>
-          </div>
         </div>
 
-        {/* Username Input */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-          <label style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
-            Username
-          </label>
-          <input 
-            type="text" 
-            value={profile.username || ''}
-            onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-            style={{ 
-              width: '100%', 
-              background: 'rgba(0, 0, 0, 0.4)', 
-              border: '1px solid rgba(255, 255, 255, 0.12)', 
-              color: '#fff', 
-              fontSize: '1rem', 
-              padding: '0.8rem 1rem', 
-              borderRadius: '12px', 
-              outline: 'none'
-            }}
-            placeholder="Enter username"
-          />
-        </div>
-
-        {/* Currency Selector */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-          <label style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
-            Currency
-          </label>
-          <select
-            value={profile.currency || 'USD'}
-            onChange={(e) => setProfile({ ...profile, currency: e.target.value })}
-            style={{ width: '100%', background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', fontSize: '1rem', padding: '0.8rem 1rem', borderRadius: '12px', outline: 'none' }}
-          >
-            <option value="USD" style={{ background: '#040714', color: '#fff' }}>USD ($)</option>
-            <option value="EUR" style={{ background: '#040714', color: '#fff' }}>EUR (€)</option>
-            <option value="GBP" style={{ background: '#040714', color: '#fff' }}>GBP (£)</option>
-          </select>
-        </div>
-      </div>
-
-      {/* BECOME A QUANT ANALYST / TIPSTER BANNER */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, rgba(161, 59, 247, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)', 
-        border: '1px solid rgba(161, 59, 247, 0.3)', 
-        borderRadius: '20px', 
-        padding: '2rem', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        flexWrap: 'wrap', 
-        gap: '1.5rem',
-        boxShadow: '0 10px 30px rgba(161, 59, 247, 0.1)'
-      }}>
-        <div style={{ maxWidth: '500px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-            <Zap size={20} color="#a13bf7" />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', margin: 0 }}>
-              Become a Quant Analyst / Tipster
-            </h3>
-          </div>
-          <p style={{ fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.7)', margin: 0, lineHeight: 1.5 }}>
-            Publish verified mathematical performance, get featured on the public leaderboard, and monetize your strategy.
-          </p>
-        </div>
-
-        <button 
-          onClick={() => { if (!isAnalyst) setShowCheckout(true); }}
-          disabled={isAnalyst}
-          style={{ 
-            background: isAnalyst ? 'rgba(161, 59, 247, 0.2)' : 'linear-gradient(135deg, #a13bf7, #22d3ee)', 
-            color: '#ffffff', 
-            fontWeight: '700', 
-            fontSize: '0.9rem', 
-            padding: '0.8rem 1.6rem', 
-            borderRadius: '40px', 
-            border: isAnalyst ? '1px solid rgba(161, 59, 247, 0.4)' : 'none', 
-            cursor: isAnalyst ? 'default' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            boxShadow: isAnalyst ? 'none' : '0 6px 20px rgba(161, 59, 247, 0.3)',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          {isAnalyst ? <CheckCircle size={18} color="#a13bf7" /> : <Sparkles size={18} />}
-          <span>{isAnalyst ? 'Verified Analyst Active' : 'Become a Quant Analyst / Tipster'}</span>
-        </button>
-      </div>
-
-      {/* Reset Stats Option */}
-      <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '20px', padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h4 style={{ fontSize: '1rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance History</h4>
-          <p style={{ fontSize: '0.82rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.2rem 0 0 0' }}>Wipe all recorded bets and clear PnL metrics from database.</p>
-        </div>
-
-        <button 
-          onClick={() => setShowResetConfirm(true)}
-          style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.85rem', padding: '0.55rem 1.25rem', borderRadius: '10px', cursor: 'pointer' }}
-        >
-          Reset Stats
-        </button>
       </div>
 
       {/* Analyst Upgrade Modal */}
