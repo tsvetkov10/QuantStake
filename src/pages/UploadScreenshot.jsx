@@ -1,8 +1,3 @@
-import React, { useState } from 'react';
-import { Upload, CheckCircle, BrainCircuit } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
-
 export default function UploadScreenshot({ session }) {
   const [file, setFile] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
@@ -10,6 +5,19 @@ export default function UploadScreenshot({ session }) {
   const [error, setError] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
+
+  // Prevent macOS browser from opening dropped files in tab
+  useEffect(() => {
+    const preventWindowDrop = (e) => {
+      e.preventDefault();
+    };
+    window.addEventListener('dragover', preventWindowDrop);
+    window.addEventListener('drop', preventWindowDrop);
+    return () => {
+      window.removeEventListener('dragover', preventWindowDrop);
+      window.removeEventListener('drop', preventWindowDrop);
+    };
+  }, []);
 
   const validateAndSelectFile = (selectedFile) => {
     if (!selectedFile) return false;
@@ -37,15 +45,27 @@ export default function UploadScreenshot({ session }) {
     return true;
   };
 
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'copy';
+    }
     setIsDragging(true);
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (e.currentTarget && e.relatedTarget && e.currentTarget.contains(e.relatedTarget)) {
+      return;
+    }
     setIsDragging(false);
   };
 
@@ -54,7 +74,7 @@ export default function UploadScreenshot({ session }) {
     e.stopPropagation();
     setIsDragging(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const droppedFile = e.dataTransfer.files[0];
       validateAndSelectFile(droppedFile);
     }
@@ -138,63 +158,84 @@ export default function UploadScreenshot({ session }) {
       </div>
 
       <div 
+        onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className="glass-panel flex-col items-center justify-center gap-6" 
         style={{ 
+          position: 'relative',
           width: '100%', 
           maxWidth: '600px', 
-          padding: '3rem 2rem', 
+          padding: '3.5rem 2rem', 
           borderStyle: 'dashed', 
           borderWidth: '2px', 
           borderColor: error ? 'var(--danger)' : isDragging ? '#38bdf8' : 'var(--border-glass)',
-          background: isDragging ? 'rgba(56, 189, 248, 0.08)' : 'var(--bg-glass)',
+          background: isDragging ? 'rgba(56, 189, 248, 0.12)' : 'var(--bg-glass)',
           transition: 'all 0.2s ease',
-          boxShadow: isDragging ? '0 0 25px rgba(56, 189, 248, 0.25)' : 'none'
+          boxShadow: isDragging ? '0 0 30px rgba(56, 189, 248, 0.3)' : 'none',
+          overflow: 'hidden'
         }}
       >
         
         {error && (
-           <div style={{ padding: '1rem', background: 'rgba(255, 51, 102, 0.15)', color: 'var(--danger)', border: '1px solid rgba(255, 51, 102, 0.3)', borderRadius: '12px', width: '100%', textAlign: 'center', fontWeight: '500' }}>
+           <div style={{ padding: '1rem', background: 'rgba(255, 51, 102, 0.15)', color: 'var(--danger)', border: '1px solid rgba(255, 51, 102, 0.3)', borderRadius: '12px', width: '100%', textAlign: 'center', fontWeight: '500', zIndex: 10 }}>
              {error}
            </div>
         )}
 
         {!result && !analyzing && (
           <>
-            <div style={{ background: isDragging ? 'rgba(56, 189, 248, 0.2)' : 'rgba(0, 243, 255, 0.1)', padding: '1.5rem', borderRadius: '50%', transition: 'all 0.2s ease' }}>
-              <Upload size={48} color={isDragging ? '#38bdf8' : 'var(--accent-cyan)'} />
+            {/* Native Full-Overlay Input Element for macOS Finder Drag & Drop */}
+            <input 
+              type="file" 
+              accept="image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif" 
+              id="file-upload" 
+              style={{ 
+                position: 'absolute', 
+                inset: 0, 
+                width: '100%', 
+                height: '100%', 
+                opacity: 0, 
+                cursor: 'pointer', 
+                zIndex: 20 
+              }} 
+              onChange={handleFileChange}
+              onDragEnter={handleDragEnter}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            />
+
+            <div style={{ background: isDragging ? 'rgba(56, 189, 248, 0.25)' : 'rgba(0, 243, 255, 0.1)', padding: '1.5rem', borderRadius: '50%', transition: 'all 0.2s ease', pointerEvents: 'none' }}>
+              <Upload size={52} color={isDragging ? '#38bdf8' : 'var(--accent-cyan)'} />
             </div>
             
-            <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '0.3rem' }}>
-                {isDragging ? 'Drop your bet slip screenshot here!' : 'Drag & drop your bet slip screenshot'}
+            <div style={{ textAlign: 'center', pointerEvents: 'none' }}>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.4rem', color: isDragging ? '#38bdf8' : '#ffffff' }}>
+                {isDragging ? 'Release to drop your bet slip!' : 'Drag & Drop your bet slip screenshot here'}
               </h3>
               <p className="text-secondary" style={{ fontSize: '0.95rem' }}>
-                or click below to choose a file from your device
+                or click anywhere inside this box to browse files
               </p>
             </div>
 
-            <div style={{ textAlign: 'center', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--adaptive-white-08)', borderRadius: '8px', padding: '0.6rem 1.2rem' }}>
+            <div style={{ textAlign: 'center', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--adaptive-white-08)', borderRadius: '8px', padding: '0.6rem 1.2rem', pointerEvents: 'none' }}>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
                 Supported Formats: <strong style={{ color: '#ffffff' }}>PNG, JPG, JPEG, WEBP, HEIC</strong> (Max 10MB)
               </p>
             </div>
             
-            <input 
-              type="file" 
-              accept="image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif" 
-              id="file-upload" 
-              style={{ display: 'none' }} 
-              onChange={handleFileChange} 
-            />
-            <label htmlFor="file-upload" className="btn btn-secondary" style={{ cursor: 'pointer' }}>
-              {file ? `Selected: ${file.name}` : 'Select File'}
-            </label>
+            <div className="btn btn-secondary" style={{ pointerEvents: 'none', zIndex: 10 }}>
+              {file ? `Selected: ${file.name}` : 'Choose File'}
+            </div>
 
             {file && (
-               <button className="btn btn-primary" onClick={handleUpload} style={{ width: '100%', maxWidth: '280px' }}>
+               <button 
+                 className="btn btn-primary" 
+                 onClick={handleUpload} 
+                 style={{ width: '100%', maxWidth: '280px', zIndex: 30, position: 'relative' }}
+               >
                  Analyze Bet Slip
                </button>
             )}
