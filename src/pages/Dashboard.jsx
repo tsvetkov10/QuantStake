@@ -725,6 +725,7 @@ export default function Dashboard({ session, profile }) {
               }}>
                 <ShareCard 
                   key={`preview-${netProfit}-${roi}-${winRate}-${totalStaked}-${biggestWin}`}
+                  ref={shareCardRef}
                   profile={profile} 
                   metrics={{ netProfit, roi, winRate, totalStaked, biggestWin }} 
                 />
