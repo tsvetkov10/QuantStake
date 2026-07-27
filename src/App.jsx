@@ -21,6 +21,16 @@ import HeaderNav from './components/HeaderNav';
 import { MAINTENANCE_CONFIG } from './config/maintenanceConfig';
 import './index.css';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProfileCompleted, onProfileUpdate }) {
   if (isCheckingProfile && !profile) {
     return <div style={{ height: '100vh', width: '100%', background: 'var(--bg-dark)' }}></div>;
@@ -141,6 +151,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
       <Routes>
