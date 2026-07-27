@@ -525,6 +525,14 @@ input, button, select, textarea {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Desktop / Mobile Visibility Utility Classes */
+.mobile-only {
+  display: none !important;
+}
+.desktop-only {
+  display: flex !important;
+}
+
 /* Responsive Utility Classes (Desktop Base) */
 .responsive-padding { padding: 8rem 2rem 4rem 2rem; }
 .hero-padding { padding: 12rem 2rem 8rem 2rem; }
@@ -572,6 +580,13 @@ input[type="number"] {
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
+  .mobile-only {
+    display: flex !important;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+
   /* Landing Hero & Terminal Preview Mobile Optimization */
   .hero-landing-section {
     padding-top: 5rem !important;
