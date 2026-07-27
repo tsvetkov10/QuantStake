@@ -111,13 +111,14 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            {/* Avatar Badge matching Profile Page CSS center/cover */}
+            {/* Avatar Badge matching Profile Page CSS center/cover with solid opaque background */}
             <div 
               style={{ 
                 width: '90px', 
                 height: '90px', 
                 borderRadius: '50%', 
-                background: activeAvatar ? `url(${activeAvatar}) center/cover no-repeat` : 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', 
+                backgroundColor: '#090e1a',
+                background: activeAvatar ? `url(${activeAvatar}) center/cover no-repeat #090e1a` : 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', 
                 border: '3px solid rgba(255, 255, 255, 0.2)', 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -170,18 +171,13 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
             <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
                 <Target size={30} color="#3b82f6" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Win Rate</span>
+                <span style={{ color: '#888888', fontSize: '1.4rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                  Win Rate {totalBets > 0 && <span style={{ color: '#38bdf8', fontWeight: '700', marginLeft: '6px' }}>({wonCount || 0}/{totalBets})</span>}
+                </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
-                <p style={{ fontSize: winRate.toFixed(1).length > 5 ? '3.2rem' : '3.6rem', fontWeight: 'bold', margin: 0, whiteSpace: 'nowrap', letterSpacing: '-1px' }}>
-                  {winRate.toFixed(1)}%
-                </p>
-                {totalBets > 0 && (
-                  <span style={{ fontSize: '1.4rem', color: '#38bdf8', fontWeight: '700' }}>
-                    ({wonCount || 0}/{totalBets})
-                  </span>
-                )}
-              </div>
+              <p style={{ fontSize: winRate.toFixed(1).length > 5 ? '3.2rem' : '3.6rem', fontWeight: 'bold', margin: 0, whiteSpace: 'nowrap', letterSpacing: '-1px' }}>
+                {winRate.toFixed(1)}%
+              </p>
             </div>
             
             <div style={{ background: 'rgba(10, 10, 15, 0.6)', border: '1px solid var(--adaptive-white-08)', borderRadius: '24px', padding: '36px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
