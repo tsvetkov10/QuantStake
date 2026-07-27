@@ -30,20 +30,17 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
     return <Onboarding session={session} onComplete={() => setProfileCompleted(true)} />;
   }
 
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }, []);
 
   return (
-    <div className="flex-col app-container" style={{ minHeight: '100vh', width: '100%', position: 'relative', background: 'var(--bg-dark)' }}>
+    <div className="flex-col app-container" style={{ minHeight: '100vh', width: '100%', position: 'relative', background: '#040714' }}>
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
 
       {/* Top Universal Header Navbar */}
-      <HeaderNav session={session} profile={profile} isMock={isMock} theme={theme} toggleTheme={toggleTheme} />
+      <HeaderNav session={session} profile={profile} isMock={isMock} />
 
       {/* Main Content Area */}
       <main className="main-content" style={{ width: '100%', maxWidth: '1440px', margin: '0 auto', paddingTop: '96px', paddingBottom: '3rem', paddingLeft: '2rem', paddingRight: '2rem', flexGrow: 1 }}>
