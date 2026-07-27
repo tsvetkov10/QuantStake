@@ -623,12 +623,32 @@ export default function Dashboard({ session, profile }) {
   const NoData = () => <h3 className="relative z-10" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>;
   const NoDataSmall = () => <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>;
 
+  const ensureImagesLoaded = async (element) => {
+    if (!element) return;
+    const imgs = Array.from(element.querySelectorAll('img'));
+    await Promise.all(
+      imgs.map((img) => {
+        if (img.complete && img.naturalWidth !== 0) {
+          return Promise.resolve();
+        }
+        return new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve;
+          if (img.decode) {
+            img.decode().then(resolve).catch(resolve);
+          }
+        });
+      })
+    );
+  };
+
   const handleDownload = async () => {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      await new Promise(r => setTimeout(r, 250));
-      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
+      await new Promise(r => setTimeout(r, 400));
+      await ensureImagesLoaded(shareCardRef.current);
+      const dataUrl = await htmlToImage.toPng(shareCardRef.current, { quality: 1.0, pixelRatio: 1.5, cacheBust: false });
       const timestamp = Math.floor(Date.now() / 1000);
       download(dataUrl, `QuantStakes_${profile?.username || 'Trader'}_Performance_${timestamp}.png`);
     } catch (err) {
@@ -642,8 +662,9 @@ export default function Dashboard({ session, profile }) {
     if (!shareCardRef.current) return;
     try {
       setIsGeneratingShare(true);
-      await new Promise(r => setTimeout(r, 250));
-      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1, cacheBust: false });
+      await new Promise(r => setTimeout(r, 400));
+      await ensureImagesLoaded(shareCardRef.current);
+      const blob = await htmlToImage.toBlob(shareCardRef.current, { quality: 1.0, pixelRatio: 1.5, cacheBust: false });
       try {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         setIsCopied(true);

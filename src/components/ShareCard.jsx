@@ -7,7 +7,7 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
   const sym = profile?.currency === 'EUR' ? '€' : profile?.currency === 'GBP' ? '£' : '$';
   const [avatarDataUrl, setAvatarDataUrl] = useState(null);
 
-  // Convert profile avatar to base64 to ensure 100% CORS-proof rendering in html-to-image exports
+  // Convert profile avatar to base64 via fetch + canvas to ensure 100% CORS-proof rendering in html-to-image exports
   useEffect(() => {
     if (!profile?.avatar_url) {
       setAvatarDataUrl(null);
@@ -15,26 +15,60 @@ const ShareCard = forwardRef(({ profile, metrics }, ref) => {
     }
 
     let isMounted = true;
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
+
+    const convertViaFetch = async (url) => {
       try {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width || 120;
-        canvas.height = img.height || 120;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const dataUrl = canvas.toDataURL('image/png');
-        if (isMounted) setAvatarDataUrl(dataUrl);
+        const response = await fetch(url, { mode: 'cors' });
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
       } catch (err) {
-        console.warn('Avatar base64 conversion fallback to initial badge:', err);
-        if (isMounted) setAvatarDataUrl(null);
+        return null;
       }
     };
-    img.onerror = () => {
-      if (isMounted) setAvatarDataUrl(null);
+
+    const convertViaCanvas = (url) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth || 120;
+            canvas.height = img.naturalHeight || 120;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (e) {
+            resolve(null);
+          }
+        };
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
     };
-    img.src = profile.avatar_url;
+
+    const processAvatar = async () => {
+      if (profile.avatar_url.startsWith('data:')) {
+        if (isMounted) setAvatarDataUrl(profile.avatar_url);
+        return;
+      }
+
+      let dataUrl = await convertViaFetch(profile.avatar_url);
+      if (!dataUrl) {
+        dataUrl = await convertViaCanvas(profile.avatar_url);
+      }
+
+      if (isMounted) {
+        setAvatarDataUrl(dataUrl);
+      }
+    };
+
+    processAvatar();
 
     return () => {
       isMounted = false;
