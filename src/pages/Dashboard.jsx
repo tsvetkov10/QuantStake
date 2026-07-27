@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { ComposedChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LabelList, Legend } from 'recharts';
-import { DollarSign, Percent, Target, Euro, PoundSterling, Banknote, Filter, TrendingDown, Sparkles, Activity, AlertTriangle, Zap, BarChart2, Share2, Copy, X, Download, Check, Plus } from 'lucide-react';
+import { DollarSign, Percent, Target, Euro, PoundSterling, Banknote, Filter, TrendingDown, Sparkles, Activity, AlertTriangle, Zap, BarChart2, Share2, Copy, X, Download, Check, Plus, Flame } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ShareCard from '../components/ShareCard';
 import * as htmlToImage from 'html-to-image';
@@ -871,10 +871,17 @@ export default function Dashboard({ session, profile }) {
 
       {/* Metric Cards - Primary */}
       <div className="grid grid-cols-4 gap-10" style={{ animation: 'fade-in 0.4s ease' }}>
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', animation: netProfit > 0 ? 'profitGlowPulse 2.5s infinite ease-in-out' : 'none', border: netProfit > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
           <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
-            <p className="label">Total Profit</p>
+            <div className="flex items-center gap-2">
+              <p className="label">Total Profit</p>
+              {netProfit > 0 && (
+                <span className="flex items-center gap-1" style={{ fontSize: '0.62rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.15)', padding: '0.15rem 0.5rem', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.3)', letterSpacing: '0.5px' }}>
+                  <Sparkles size={10} /> IN PROFIT
+                </span>
+              )}
+            </div>
             <DollarSign size={20} color="var(--accent-cyan)" />
           </div>
           {filteredBets.length === 0 ? <NoData /> : (
@@ -897,7 +904,7 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>{wonBets.length} / {resolvedBets.length} Won</p>
         </div>
 
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', animation: roi > 0 ? 'profitGlowPulse 2.5s infinite ease-in-out' : 'none', border: roi > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
           <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--success) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Yield (ROI)</p>
@@ -957,22 +964,46 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Avg Bet Size</p>
         </div>
 
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div className="flex justify-between items-center mb-2">
-            <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Longest Streaks</p>
-            <Zap size={16} color="#FFD700" />
-          </div>
-          {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <div className="flex gap-4 mt-2">
-              <div>
-                <p style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.2rem' }}>{maxWinStreak} W</p>
+        {/* Longest Streaks Card with Animated Flame & Hot Win Streak Pulse */}
+        {(() => {
+          const isHotStreak = (currentStreakType === 'W' && currentStreak >= 2) || maxWinStreak >= 3;
+          return (
+            <div 
+              className="glass-card" 
+              style={{ 
+                padding: '1.5rem',
+                position: 'relative',
+                animation: isHotStreak ? 'hotStreakPulse 2s infinite ease-in-out' : 'none',
+                border: isHotStreak ? '1px solid rgba(245, 158, 11, 0.6)' : '1px solid var(--border-glass)'
+              }}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                  <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Longest Streaks</p>
+                  {isHotStreak && (
+                    <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.4)', borderRadius: '12px', padding: '0.15rem 0.5rem' }}>
+                      <Flame className="flame-icon-bounce" size={13} color="#f59e0b" />
+                      <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>HOT STREAK</span>
+                    </div>
+                  )}
+                </div>
+                <Zap size={16} color="#FFD700" />
               </div>
-              <div>
-                <p style={{ color: 'var(--danger)', fontWeight: 'bold', fontSize: '1.2rem' }}>{maxLossStreak} L</p>
-              </div>
+              {filteredBets.length === 0 ? <NoDataSmall /> : (
+                <div className="flex gap-4 mt-2">
+                  <div>
+                    <p style={{ color: 'var(--success)', fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      {maxWinStreak} W {maxWinStreak >= 3 && <Flame className="flame-icon-bounce" size={14} color="#f59e0b" />}
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ color: 'var(--danger)', fontWeight: 'bold', fontSize: '1.2rem' }}>{maxLossStreak} L</p>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          );
+        })()}
       </div>
 
       {/* Main Charts Section */}

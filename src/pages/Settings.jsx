@@ -180,9 +180,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
       {/* Header Bar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '0.75rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px' }}>
-            Profile <span style={{ background: 'linear-gradient(90deg, #22d3ee, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
-          </h1>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#ffffff', margin: 0, letterSpacing: '-0.5px' }}>Profile Settings</h1>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>Manage your account avatar, username, bio, and tipster status.</p>
         </div>
 
