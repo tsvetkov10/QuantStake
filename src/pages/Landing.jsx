@@ -11,7 +11,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
   const [currentProfile, setCurrentProfile] = useState(initialProfile || null);
 
   useEffect(() => {
-    document.title = "QuantStakes - Welcome!";
+    document.title = "QuantStakes";
     const checkUserSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
