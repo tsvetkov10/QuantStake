@@ -254,19 +254,42 @@ export default function AddBet({ session, profile }) {
       const formData = new FormData();
       formData.append('image', file);
 
-      // 1. Try server Gemini Vision AI parser
+      // 1. Try production Vercel serverless function /api/parse-slip with Base64 payload
       let data = null;
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-        const res = await fetch(`${apiUrl}/api/parse-slip`, {
+        const base64String = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const res = await fetch('/api/parse-slip', {
           method: 'POST',
-          body: formData,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64: base64String, mimeType: file.type || 'image/png' }),
         });
         if (res.ok) {
           data = await res.json();
         }
       } catch (e) {
-        console.warn('Gemini Vision backend unreachable, using fallback OCR...', e);
+        console.warn('Vercel serverless AI Vision unreachable, trying local express API...', e);
+      }
+
+      // 2. Try local express backend API
+      if (!data) {
+        try {
+          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+          const res = await fetch(`${apiUrl}/api/parse-slip`, {
+            method: 'POST',
+            body: formData,
+          });
+          if (res.ok) {
+            data = await res.json();
+          }
+        } catch (e) {
+          console.warn('Local Express backend unreachable, using client OCR fallback...', e);
+        }
       }
 
       // 2. Client Tesseract OCR fallback
