@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, Pencil, Edit2 } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, Pencil, Edit2, LogOut } from 'lucide-react';
 
 export default function Settings({ session, profile: initialProfile, onProfileUpdate }) {
   const [profile, setProfile] = useState(initialProfile || { username: '', bio: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
@@ -172,6 +172,16 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
     }
   };
 
+  const handleLogout = async () => {
+    sessionStorage.removeItem('mock_session');
+    localStorage.removeItem('mock_session');
+    sessionStorage.removeItem('mock_profile');
+    if (!isMock) {
+      await supabase.auth.signOut();
+    }
+    window.location.replace('/');
+  };
+
   const isAnalyst = profile.profile_mode === 'analyst';
 
   return (
@@ -184,7 +194,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>Manage your account avatar, username, bio, and tipster status.</p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {errorMsg && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: '600', color: '#ef4444', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.4rem 0.8rem', borderRadius: '30px' }}>
               <AlertCircle size={14} /> {errorMsg}
@@ -203,7 +213,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
               color: '#040714',
               fontWeight: '700',
               fontSize: '0.88rem',
-              padding: '0.6rem 1.5rem',
+              padding: '0.6rem 1.4rem',
               borderRadius: '40px',
               border: 'none',
               cursor: 'pointer',
@@ -216,6 +226,27 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
           >
             {loading ? <RefreshCw size={15} style={{ animation: 'spin 1s linear infinite' }} /> : <Check size={15} />}
             {loading ? 'Saving...' : 'Save Profile'}
+          </button>
+
+          <button 
+            onClick={handleLogout} 
+            style={{
+              background: 'rgba(239, 68, 68, 0.1)',
+              color: '#ef4444',
+              fontWeight: '700',
+              fontSize: '0.88rem',
+              padding: '0.6rem 1.25rem',
+              borderRadius: '40px',
+              border: '1px solid rgba(239, 68, 68, 0.25)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              transition: 'all 0.2s ease'
+            }}
+            title="Log Out"
+          >
+            <LogOut size={15} /> Log Out
           </button>
         </div>
       </div>
@@ -466,13 +497,27 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
               >
                 <option value="USD" style={{ background: '#040714', color: '#fff' }}>USD ($)</option>
                 <option value="EUR" style={{ background: '#040714', color: '#fff' }}>EUR (€)</option>
-                <option value="GBP" style={{ background: '#040714', color: '#fff' }}>GBP (£)</option>
               </select>
             </div>
           </div>
 
+          {/* Account Session Log Out Action */}
+          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#fff', margin: 0 }}>Account Session</h4>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Sign out of your active QuantStakes session.</p>
+            </div>
+
+            <button 
+              onClick={handleLogout}
+              style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.8rem', padding: '0.45rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            >
+              <LogOut size={14} /> Log Out
+            </button>
+          </div>
+
           {/* Reset Performance History Action */}
-          <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '20px', padding: '1.25rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '20px', padding: '1.1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance History</h4>
               <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Wipe all recorded bets from database.</p>
