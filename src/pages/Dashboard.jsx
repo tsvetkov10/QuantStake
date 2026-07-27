@@ -911,26 +911,28 @@ export default function Dashboard({ session, profile }) {
 
       {/* Metric Cards - Primary */}
       <div className="grid grid-cols-4 gap-10" style={{ animation: 'fade-in 0.4s ease' }}>
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', border: netProfit > 0 ? '1px solid rgba(16, 185, 129, 0.5)' : '1px solid var(--border-glass)' }}>
+        
+        {/* 1. Total Profit - Full Box Money Rain */}
+        <div className={`glass-card ${netProfit > 0 ? 'full-box-money-card' : ''}`}>
           {netProfit > 0 && (
             <div className="falling-money-container">
-              {['15%', '35%', '55%', '75%', '90%'].map((left, idx) => (
+              {['10%', '25%', '40%', '55%', '70%', '85%'].map((left, idx) => (
                 <span 
                   key={idx} 
-                  className="falling-money-particle" 
+                  className="dense-money-particle" 
                   style={{ 
                     left, 
-                    animationDuration: `${2.4 + idx * 0.5}s`, 
-                    animationDelay: `${idx * 0.35}s`,
-                    fontSize: idx % 2 === 0 ? '0.85rem' : '1.1rem'
+                    animationDuration: `${2.2 + idx * 0.4}s`, 
+                    animationDelay: `${idx * 0.3}s`,
+                    fontSize: idx % 2 === 0 ? '0.95rem' : '1.2rem',
+                    color: '#10b981'
                   }}
                 >
-                  {idx % 3 === 0 ? '$' : idx % 3 === 1 ? sym : '💵'}
+                  {idx % 4 === 0 ? '💵' : idx % 4 === 1 ? '$' : idx % 4 === 2 ? '💰' : sym}
                 </span>
               ))}
             </div>
           )}
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <div className="flex items-center gap-2">
               <p className="label">Total Profit</p>
@@ -950,8 +952,10 @@ export default function Dashboard({ session, profile }) {
           <p className="relative z-10 text-secondary" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Net Earnings</p>
         </div>
         
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--accent-magenta) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
+        {/* 2. Win Rate - Full Box Target Radar Scanner */}
+        <div className="glass-card full-box-radar-card">
+          <div className="radar-sweep-beam" />
+          <div className="radar-pulse-circle" />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Win Rate</p>
             <Target size={20} color="var(--accent-magenta)" />
@@ -962,18 +966,20 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>{wonBets.length} / {resolvedBets.length} Won</p>
         </div>
 
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden', border: roi > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-glass)' }}>
+        {/* 3. Yield (ROI) - Full Box Money Rain */}
+        <div className={`glass-card ${roi > 0 ? 'full-box-money-card' : ''}`}>
           {roi > 0 && (
             <div className="falling-money-container">
-              {['20%', '50%', '80%'].map((left, idx) => (
+              {['15%', '45%', '75%'].map((left, idx) => (
                 <span 
                   key={idx} 
-                  className="falling-money-particle" 
+                  className="dense-money-particle" 
                   style={{ 
                     left, 
-                    animationDuration: `${2.8 + idx * 0.4}s`, 
-                    animationDelay: `${idx * 0.5}s`,
-                    fontSize: '0.9rem'
+                    animationDuration: `${2.6 + idx * 0.4}s`, 
+                    animationDelay: `${idx * 0.4}s`,
+                    fontSize: '1rem',
+                    color: '#10b981'
                   }}
                 >
                   {idx % 2 === 0 ? '%' : '💸'}
@@ -981,7 +987,6 @@ export default function Dashboard({ session, profile }) {
               ))}
             </div>
           )}
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, var(--success) 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Yield (ROI)</p>
             <Percent size={20} color="var(--success)" />
@@ -992,24 +997,25 @@ export default function Dashboard({ session, profile }) {
           <p className="text-secondary relative z-10" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>True Edge</p>
         </div>
 
-        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* 4. Total Wagered - Full Box Money Rain */}
+        <div className="glass-card full-box-money-card">
           <div className="falling-money-container">
-            {['25%', '65%'].map((left, idx) => (
+            {['20%', '50%', '80%'].map((left, idx) => (
               <span 
                 key={idx} 
-                className="falling-money-particle" 
+                className="dense-money-particle" 
                 style={{ 
                   left, 
-                  animationDuration: `${3.2 + idx * 0.6}s`, 
-                  animationDelay: `${idx * 0.7}s`,
-                  fontSize: '0.85rem'
+                  animationDuration: `${3.0 + idx * 0.5}s`, 
+                  animationDelay: `${idx * 0.5}s`,
+                  fontSize: '0.9rem',
+                  color: '#a13bf7'
                 }}
               >
                 {sym}
               </span>
             ))}
           </div>
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: 'radial-gradient(circle, #a13bf7 0%, transparent 70%)', opacity: 0.1, transform: 'translate(30%, -30%)' }} />
           <div className="flex justify-between items-center mb-4 relative z-10">
             <p className="label">Total Wagered</p>
             <Banknote size={20} color="#a13bf7" />
@@ -1023,62 +1029,96 @@ export default function Dashboard({ session, profile }) {
 
       {/* Metric Cards - Secondary */}
       <div className="grid grid-cols-4 gap-10" style={{ animation: 'fade-in 0.5s ease' }}>
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div className="flex justify-between items-center mb-2">
+        
+        {/* 5. Profit Factor - Full Box Electricity Lightning */}
+        <div className="glass-card full-box-electric-card" style={{ padding: '1.5rem' }}>
+          <div className="flex justify-between items-center mb-2 relative z-10">
             <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Profit Factor</p>
             <Activity size={16} color="var(--accent-cyan)" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{profitFactor.toFixed(2)}</h3>
+            <h3 className="relative z-10" style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{profitFactor.toFixed(2)}</h3>
           )}
-          <p className="text-secondary" style={{ fontSize: '0.8rem' }}>{profitFactor > 1 ? 'Profitable Strategy' : 'Losing Strategy'}</p>
+          <p className="text-secondary relative z-10" style={{ fontSize: '0.8rem' }}>{profitFactor > 1 ? 'Profitable Strategy' : 'Losing Strategy'}</p>
         </div>
         
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div className="flex justify-between items-center mb-2">
+        {/* 6. Most Betted Sport - Full Box Golden Trophy Shimmer */}
+        <div className="glass-card full-box-gold-card" style={{ padding: '1.5rem' }}>
+          <div className="gold-shimmer-beam" />
+          <div className="flex justify-between items-center mb-2 relative z-10">
             <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Most Betted Sport</p>
-            <Sparkles size={16} color="var(--accent-cyan)" />
+            <Sparkles size={16} color="#f59e0b" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{mostBettedSport}</h3>
+            <h3 className="relative z-10" style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{mostBettedSport}</h3>
           )}
-          <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Top Volume Sport</p>
+          <p className="text-secondary relative z-10" style={{ fontSize: '0.8rem' }}>Top Volume Sport</p>
         </div>
 
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <div className="flex justify-between items-center mb-2">
+        {/* 7. Avg Stake - Full Box Money Rain */}
+        <div className="glass-card full-box-money-card" style={{ padding: '1.5rem' }}>
+          <div className="falling-money-container">
+            {['30%', '70%'].map((left, idx) => (
+              <span 
+                key={idx} 
+                className="dense-money-particle" 
+                style={{ 
+                  left, 
+                  animationDuration: `${3.2 + idx * 0.5}s`, 
+                  animationDelay: `${idx * 0.6}s`,
+                  fontSize: '0.85rem',
+                  color: '#ec4899'
+                }}
+              >
+                {sym}
+              </span>
+            ))}
+          </div>
+          <div className="flex justify-between items-center mb-2 relative z-10">
             <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Avg Stake</p>
             <Euro size={16} color="var(--accent-magenta)" />
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{sym}{avgStake.toFixed(2)}</h3>
+            <h3 className="relative z-10" style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{sym}{avgStake.toFixed(2)}</h3>
           )}
-          <p className="text-secondary" style={{ fontSize: '0.8rem' }}>Avg Bet Size</p>
+          <p className="text-secondary relative z-10" style={{ fontSize: '0.8rem' }}>Avg Bet Size</p>
         </div>
 
-        {/* Longest Streaks Card with Animated Flame & Rising Fire Embers */}
+        {/* 8. Longest Streaks Card - FULL BOX FIRE INFERNO ANIMATION */}
         {(() => {
           const isHotStreak = (currentStreakType === 'W' && currentStreak >= 2) || maxWinStreak >= 3;
           return (
             <div 
-              className={`glass-card ${isHotStreak ? 'fire-card-active' : ''}`}
+              className={`glass-card ${isHotStreak ? 'full-box-fire-card' : ''}`}
               style={{ 
                 padding: '1.5rem',
-                position: 'relative',
-                border: isHotStreak ? '1px solid #f59e0b' : '1px solid var(--border-glass)'
+                position: 'relative'
               }}
             >
-              {/* Rising Fire Embers Effect */}
+              {/* Full Box Rising Flame Tongues & Embers */}
               {isHotStreak && (
                 <>
-                  {['12%', '32%', '52%', '72%', '92%'].map((left, idx) => (
+                  {['8%', '28%', '48%', '68%', '88%'].map((left, idx) => (
+                    <span 
+                      key={`flame-${idx}`} 
+                      className="flame-tongue" 
+                      style={{ 
+                        left, 
+                        animationDuration: `${1.6 + idx * 0.3}s`, 
+                        animationDelay: `${idx * 0.25}s` 
+                      }} 
+                    >
+                      🔥
+                    </span>
+                  ))}
+                  {['18%', '38%', '58%', '78%'].map((left, idx) => (
                     <span 
                       key={`ember-${idx}`} 
                       className="fire-ember-particle" 
                       style={{ 
                         left, 
-                        animationDuration: `${1.8 + idx * 0.4}s`, 
-                        animationDelay: `${idx * 0.3}s` 
+                        animationDuration: `${1.4 + idx * 0.4}s`, 
+                        animationDelay: `${idx * 0.2}s` 
                       }} 
                     />
                   ))}
@@ -1089,9 +1129,9 @@ export default function Dashboard({ session, profile }) {
                 <div className="flex items-center gap-2">
                   <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Longest Streaks</p>
                   {isHotStreak && (
-                    <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.2)', border: '1px solid rgba(245, 158, 11, 0.6)', borderRadius: '12px', padding: '0.15rem 0.5rem' }}>
+                    <div className="flex items-center gap-1" style={{ background: 'rgba(245, 158, 11, 0.25)', border: '1px solid rgba(245, 158, 11, 0.7)', borderRadius: '12px', padding: '0.15rem 0.5rem' }}>
                       <Flame className="flame-icon-bounce" size={13} color="#f59e0b" />
-                      <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>HOT STREAK</span>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>INFERNO STREAK</span>
                     </div>
                   )}
                 </div>

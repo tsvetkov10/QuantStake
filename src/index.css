@@ -1171,3 +1171,198 @@ input[type="number"] {
   animation: fireEmberRise linear infinite;
   z-index: 2;
 }
+
+/* ========================================================
+   FULL-BOX SPECTACULAR ANIMATIONS FOR DASHBOARD CARDS
+======================================================== */
+
+/* 1. FULL BOX FIRE INFERNO ANIMATION */
+@keyframes fullBoxInfernoWave {
+  0% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.7), inset 0 -20px 40px rgba(239, 68, 68, 0.6);
+  }
+  50% {
+    box-shadow: 0 -15px 45px rgba(239, 68, 68, 0.9), inset 0 -35px 50px rgba(245, 158, 11, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.7), inset 0 -20px 40px rgba(239, 68, 68, 0.6);
+  }
+}
+
+@keyframes flameTongueRise {
+  0% {
+    transform: translateY(120%) scale(0.7) rotate(-10deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-70px) scale(1.6) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+.full-box-fire-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1.5px solid #f59e0b !important;
+  background: linear-gradient(0deg, rgba(239, 68, 68, 0.35) 0%, rgba(245, 158, 11, 0.2) 45%, rgba(13, 15, 23, 0.95) 100%) !important;
+  animation: fullBoxInfernoWave 2.5s infinite ease-in-out !important;
+}
+
+.flame-tongue {
+  position: absolute;
+  bottom: -10px;
+  font-size: 1.4rem;
+  pointer-events: none;
+  user-select: none;
+  animation: flameTongueRise linear infinite;
+  z-index: 2;
+  filter: drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 15px #ef4444);
+}
+
+/* 2. FULL BOX MONEY RAIN DENSE CASCADING EFFECT */
+@keyframes fullBoxMoneyGlow {
+  0% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.35), inset 0 0 15px rgba(16, 185, 129, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.65), inset 0 0 25px rgba(16, 185, 129, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.35), inset 0 0 15px rgba(16, 185, 129, 0.15);
+  }
+}
+
+.full-box-money-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.5) !important;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.14) 0%, rgba(5, 150, 105, 0.08) 50%, rgba(13, 15, 23, 0.95) 100%) !important;
+  animation: fullBoxMoneyGlow 3s infinite ease-in-out !important;
+}
+
+@keyframes denseMoneyRain {
+  0% {
+    transform: translateY(-30px) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(180px) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.dense-money-particle {
+  position: absolute;
+  top: -20px;
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+  animation: denseMoneyRain linear infinite;
+  z-index: 2;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));
+}
+
+/* 3. FULL BOX TARGET RADAR PULSE EFFECT */
+@keyframes radarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes radarPulseRing {
+  0% { transform: scale(0.3); opacity: 0.8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.full-box-radar-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1.5px solid rgba(236, 72, 153, 0.4) !important;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.08) 100%) !important;
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(236, 72, 153, 0.25) 0deg, transparent 60deg, transparent 360deg);
+  animation: radarSweep 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.radar-pulse-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  margin-top: -60px;
+  margin-left: -60px;
+  border: 2px solid rgba(236, 72, 153, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: radarPulseRing 2.5s infinite ease-out;
+  z-index: 1;
+}
+
+/* 4. FULL BOX ELECTRICITY LIGHTNING EFFECT */
+@keyframes electricPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+    border-color: rgba(56, 189, 248, 0.5) !important;
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.8), inset 0 0 25px rgba(56, 189, 248, 0.4);
+    border-color: #38bdf8 !important;
+  }
+}
+
+.full-box-electric-card {
+  position: relative !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%) !important;
+  animation: electricPulseGlow 2s infinite ease-in-out !important;
+}
+
+/* 5. FULL BOX GOLDEN TROPHY SHIMMER EFFECT */
+@keyframes goldShimmerSweep {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}
+
+.full-box-gold-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%) !important;
+}
+
+.gold-shimmer-beam {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.35) 50%, transparent 100%);
+  animation: goldShimmerSweep 3s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
