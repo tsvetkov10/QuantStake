@@ -277,18 +277,39 @@ export default function AddBet({ session, profile }) {
       }
 
       if (data) {
-        if (data.stake) setStake(data.stake);
-        if (data.odds) setOdds(data.odds);
+        console.log("[AI VISION] Extracted Slip Data:", data);
+        
+        // 1. Convert stake & odds to strings for React controlled inputs
+        if (data.stake !== undefined && data.stake !== null) {
+          setStake(String(data.stake));
+        }
+        if (data.odds !== undefined && data.odds !== null) {
+          setOdds(String(data.odds));
+        }
+
+        // 2. Set Sport first so UI renders correct input component (Tennis vs Football)
+        const extractedSport = data.sport || 'Tennis';
+        const validSport = ['Football', 'Basketball', 'Tennis', 'MMA', 'Esports', 'Other'].includes(extractedSport) 
+          ? extractedSport 
+          : 'Other';
+        setSport(validSport);
+
+        // 3. Set Teams / Matchups
         if (data.teams) {
-          setMatchups([data.teams]);
+          setMatchups([String(data.teams)]);
           setMarkets(['Match Winner']);
         }
-        if (data.sport && ['Football', 'Basketball', 'Tennis', 'MMA', 'Esports', 'Other'].includes(data.sport)) {
-          setSport(data.sport);
+
+        // 4. Set Bet Type
+        if (data.type) {
+          const typeStr = String(data.type);
+          if (typeStr.includes('Single') || typeStr.includes('Сингъл')) setType('Single');
+          else if (typeStr.includes('Multiple') || typeStr.includes('Parlay') || typeStr.includes('Акумулатор')) setType('Multiple');
+          else if (typeStr.includes('System')) setType('System');
+          else setType('Single');
         }
-        if (data.type && ['Single', 'Parlay', 'System'].includes(data.type)) {
-          setType(data.type);
-        }
+
+        // 5. Set Date
         if (data.date) {
           const parsedDate = new Date(data.date);
           if (!isNaN(parsedDate.getTime())) {
@@ -300,7 +321,7 @@ export default function AddBet({ session, profile }) {
           '✨ AI SLIP SCAN COMPLETE',
           `Auto-filled Stake (${data.stake || 'N/A'}), Odds (${data.odds || 'N/A'}), Teams (${data.teams || 'N/A'}).`
         );
-        setSuccessMsg('Bet slip scanned! Verify the auto-filled fields below before submitting.');
+        setSuccessMsg('Bet slip scanned successfully! Stake, Odds, Teams & Date auto-filled.');
       }
     } catch (err) {
       console.error(err);
