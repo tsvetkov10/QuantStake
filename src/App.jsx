@@ -20,30 +20,26 @@ import Maintenance from './components/Maintenance';
 import { MAINTENANCE_CONFIG } from './config/maintenanceConfig';
 import './index.css';
 
-function NavLink({ to, icon: Icon, children }) {
+function TopNavLink({ to, children }) {
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const isActive = location.pathname === to || (to === '/dashboard' && location.pathname === '/');
   return (
     <Link 
       to={to} 
-      className="hover-highlight"
       style={{ 
-        width: '100%', 
-        display: 'flex',
-        alignItems: 'center',
-        background: isActive ? 'linear-gradient(90deg, rgba(0, 243, 255, 0.15) 0%, rgba(0, 243, 255, 0.02) 100%)' : 'transparent',
-        border: isActive ? '1px solid rgba(0, 243, 255, 0.2)' : '1px solid transparent',
-        borderLeft: isActive ? '3px solid var(--accent-cyan)' : '3px solid transparent',
-        color: isActive ? '#fff' : 'var(--text-secondary)',
-        padding: '0.8rem 1rem',
-        borderRadius: '8px',
-        transition: 'all 0.3s ease',
+        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+        fontWeight: isActive ? '700' : '500',
+        fontSize: '0.92rem',
         textDecoration: 'none',
-        boxShadow: isActive ? '0 0 15px rgba(0, 243, 255, 0.05)' : 'none'
+        padding: '0.45rem 0.9rem',
+        borderRadius: '8px',
+        background: isActive ? 'var(--adaptive-white-08)' : 'transparent',
+        border: isActive ? '1px solid var(--border-glass)' : '1px solid transparent',
+        transition: 'all 0.2s ease',
+        whiteSpace: 'nowrap'
       }}
     >
-      <Icon size={20} style={{ color: isActive ? 'var(--accent-cyan)' : 'inherit', marginRight: '0.75rem', transition: 'color 0.3s ease' }} /> 
-      <span style={{ fontWeight: isActive ? '600' : '500', fontSize: '0.95rem', letterSpacing: '0.5px' }}>{children}</span>
+      {children}
     </Link>
   );
 }
@@ -65,67 +61,51 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   return (
-    <div className="flex app-container" style={{ minHeight: '100vh', width: '100%', position: 'relative' }}>
+    <div className="flex-col app-container" style={{ minHeight: '100vh', width: '100%', position: 'relative', background: 'var(--bg-dark)' }}>
       <div className="bg-animation"></div>
       <div className="bg-grid"></div>
 
-      {/* Floating Theme Toggle */}
-      <button onClick={toggleTheme} className="btn btn-secondary" style={{ position: 'fixed', top: '0.5rem', right: '1.5rem', zIndex: 1000, borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-glass)', backdropFilter: 'blur(10px)', border: '1px solid var(--border-glass)', cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-        {theme === 'dark' ? <Sun size={20} color="#facc15" /> : <Moon size={20} color="#475569" />}
-      </button>
-      
-      {/* Mobile Top Header */}
-      <div className="mobile-top-header">
-        <Link to="/" title="Return to Landing Page" className="flex items-center gap-2">
-          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '64px', objectFit: 'contain', cursor: 'pointer' }} />
+      {/* Top Landing Header Navbar */}
+      <header className="flex justify-between items-center" style={{ borderBottom: '1px solid var(--border-glass)', background: 'var(--bg-glass)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', height: '76px', zIndex: 1000, padding: '0 2rem' }}>
+        <Link to="/" className="flex items-center gap-3">
+          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '52px', objectFit: 'contain', cursor: 'pointer' }} />
         </Link>
-        <div className="flex items-center gap-3">
-          <Link to="/settings">
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', fontWeight: 'bold', fontSize: '0.9rem' }}>
-              {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
+
+        {/* Center Navigation Tabs */}
+        <nav className="flex items-center gap-2 desktop-only" style={{ overflowX: 'auto' }}>
+          <TopNavLink to="/dashboard">Terminal</TopNavLink>
+          <TopNavLink to="/history">History</TopNavLink>
+          <TopNavLink to="/leaderboard">Leaderboard</TopNavLink>
+          <TopNavLink to="/add">Log Entry</TopNavLink>
+          <TopNavLink to="/tools">Tools</TopNavLink>
+          <a href="/#faq" onClick={(e) => {
+            if (window.location.pathname === '/' || window.location.pathname === '/dashboard') {
+              e.preventDefault();
+              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }} style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.92rem', textDecoration: 'none', padding: '0.45rem 0.9rem', whiteSpace: 'nowrap' }}>FAQ</a>
+        </nav>
+
+        {/* Right Tools & User Profile */}
+        <div className="flex items-center gap-4">
+          <button onClick={toggleTheme} className="btn btn-secondary" style={{ borderRadius: '50%', width: '38px', height: '38px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--adaptive-white-05)', border: '1px solid var(--border-glass)', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+            {theme === 'dark' ? <Sun size={18} color="#facc15" /> : <Moon size={18} color="#475569" />}
+          </button>
+
+          <Link to="/settings" style={{ textDecoration: 'none' }}>
+            <div className="flex items-center gap-2.5" style={{ background: 'var(--adaptive-white-05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid var(--border-glass)', transition: 'all 0.2s ease' }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
+                {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
+              </div>
+              <span style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                {profile?.username || session.user?.email?.split('@')[0]}
+              </span>
             </div>
           </Link>
-          <LogOut size={20} color="var(--danger)" onClick={async () => {
-            sessionStorage.removeItem('mock_session');
-            localStorage.removeItem('mock_session');
-            sessionStorage.removeItem('mock_profile');
-            if (!isMock) {
-              await supabase.auth.signOut();
-            }
-            window.location.replace('/');
-          }} style={{ cursor: 'pointer' }} />
-        </div>
-      </div>
 
-      {/* Sidebar */}
-      <aside className="glass-panel sidebar" style={{ width: '280px', flexShrink: 0, borderRadius: '0', borderTop: 'none', borderBottom: 'none', borderLeft: 'none', borderRight: '1px solid var(--border-glass)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', padding: '1.5rem 1.25rem' }}>
-        <Link to="/" title="Return to Landing Page" className="flex items-center gap-3 mb-8 sidebar-header" style={{ paddingLeft: '0.5rem', textDecoration: 'none', cursor: 'pointer' }}>
-          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '56px', objectFit: 'contain' }} />
-        </Link>
-        
-        <nav className="flex-col gap-2.5" style={{ flexGrow: 1 }}>
-          <NavLink to="/dashboard" icon={LayoutDashboard}>Terminal</NavLink>
-          <NavLink to="/history" icon={History}>History</NavLink>
-          <NavLink to="/leaderboard" icon={Trophy}>Leaderboard</NavLink>
-          <NavLink to="/add" icon={PlusCircle}>Log Entry</NavLink>
-          <NavLink to="/tools" icon={Target}>Tools</NavLink>
-        </nav>
-        
-        <div className="mt-auto flex-col gap-3 pt-6 sidebar-footer" style={{ borderTop: '1px solid var(--border-glass)' }}>
-          <Link to="/settings" className="flex items-center gap-3 p-3" style={{ borderRadius: '12px', background: 'var(--adaptive-white-03)', border: '1px solid var(--border-glass)', textDecoration: 'none', transition: 'all 0.25s ease', cursor: 'pointer', overflow: 'hidden' }}>
-             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0, boxShadow: '0 0 10px rgba(0, 243, 255, 0.2)' }}>
-                {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
-             </div>
-             <div className="flex-col" style={{ minWidth: 0 }}>
-               <span style={{ color: 'var(--text-primary)', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem' }}>{profile?.username || session.user?.email?.split('@')[0]}</span>
-               <span className="text-secondary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--accent-cyan)', fontWeight: '600' }}>Pro Member</span>
-             </div>
-          </Link>
           <button 
-            className="flex items-center justify-center gap-2" 
-            style={{ width: '100%', background: 'rgba(239, 68, 68, 0.06)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444', padding: '0.75rem', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', transition: 'all 0.25s ease' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.14)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.06)'}
+            className="flex items-center gap-1.5"
+            style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444', padding: '0.45rem 0.85rem', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', transition: 'all 0.25s ease' }}
             onClick={async () => {
               sessionStorage.removeItem('mock_session');
               localStorage.removeItem('mock_session');
@@ -136,15 +116,15 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
               window.location.replace('/');
             }}
           >
-            <LogOut size={18} /> Disconnect
+            <LogOut size={16} /> <span className="desktop-only">Disconnect</span>
           </button>
         </div>
-      </aside>
+      </header>
 
-      {/* Main Content */}
-      <main className="main-content" style={{ flexGrow: 1, padding: '3rem', height: '100vh', overflowY: 'auto' }}>
+      {/* Main Content Area */}
+      <main className="main-content" style={{ width: '100%', maxWidth: '1440px', margin: '0 auto', paddingTop: '96px', paddingBottom: '3rem', paddingLeft: '2rem', paddingRight: '2rem', flexGrow: 1 }}>
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Dashboard session={session} profile={profile} />} />
           <Route path="/dashboard" element={<Dashboard session={session} profile={profile} />} />
           <Route path="/leaderboard" element={MAINTENANCE_CONFIG.leaderboard ? <Maintenance title="Analyst Leaderboard" description="We are optimizing track record verification algorithms. The analyst leaderboard will return online shortly." /> : <Leaderboard session={session} profile={profile} />} />
           <Route path="/trader/:username" element={MAINTENANCE_CONFIG.traderProfile ? <Maintenance title="Trader Profile" description="Trader profile customization and public track record views are currently undergoing scheduled upgrades." /> : <TraderProfile session={session} profile={profile} />} />
@@ -153,7 +133,7 @@ function AuthenticatedApp({ session, isMock, profile, isCheckingProfile, setProf
           <Route path="/tools" element={MAINTENANCE_CONFIG.tools ? <Maintenance title="Calculators & Analytics" description="Upgrading Kelly Criterion and arbitrage computation engines." /> : <Tools />} />
           <Route path="/settings" element={MAINTENANCE_CONFIG.settings ? <Maintenance title="Account Settings" description="System configuration upgrades in progress." /> : <Settings session={session} profile={profile} onProfileUpdate={onProfileUpdate} />} />
           <Route path="/bet/:id" element={<BetDetails session={session} profile={profile} />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>

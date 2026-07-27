@@ -137,7 +137,7 @@ export default function Landing({ session: initialSession, profile: initialProfi
       {/* Navigation Header */}
       <header className="flex justify-between items-center responsive-header-padding" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(4, 7, 20, 0.75)', backdropFilter: 'blur(24px)', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100 }}>
         <Link to="/" className="flex items-center gap-3">
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '56px', objectFit: 'contain' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" className="brand-logo-img" style={{ height: '56px', objectFit: 'contain' }} />
         </Link>
         
         <nav className="flex gap-8 items-center">
