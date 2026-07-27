@@ -119,24 +119,31 @@ export default function HeaderNav({ session, profile, isMock }) {
       </nav>
 
       {/* Right Action Tools */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {session ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <Link to="/settings" style={{ textDecoration: 'none' }}>
-              <div className="flex items-center" style={{ gap: '14px', background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1.25rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
+              <div className="flex items-center" style={{ gap: '10px', background: 'rgba(255, 255, 255, 0.05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }}>
                 <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: profile?.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
                   {!profile?.avatar_url && (profile?.username?.[0] || session.user?.email?.[0] || 'U').toUpperCase()}
                 </div>
-                <span style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                <span className="desktop-only" style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                   {profile?.username || session.user?.email?.split('@')[0]}
                 </span>
               </div>
             </Link>
 
+            {location.pathname !== '/dashboard' && (
+              <Link to="/dashboard" className="btn-white-pill" style={{ padding: '0.45rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                <span>Dashboard</span>
+              </Link>
+            )}
+
             <button 
               className="flex items-center gap-1.5"
-              style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444', padding: '0.45rem 0.85rem', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', transition: 'all 0.25s ease' }}
+              style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444', padding: '0.45rem 0.75rem', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', fontSize: '0.85rem', transition: 'all 0.25s ease' }}
               onClick={handleLogout}
+              title="Disconnect"
             >
               <LogOut size={16} /> <span className="desktop-only">Disconnect</span>
             </button>

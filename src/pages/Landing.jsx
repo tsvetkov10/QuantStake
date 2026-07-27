@@ -137,12 +137,12 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </div>
 
       {/* Navigation Header */}
-      <header className="flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', background: '#040714', position: 'fixed', top: 0, left: 0, width: '100%', height: '76px', zIndex: 100, padding: '0 2rem' }}>
+      <header className="flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', background: '#040714', position: 'fixed', top: 0, left: 0, width: '100%', height: '76px', zIndex: 1000, padding: '0 2rem' }}>
         <Link to="/" className="flex items-center gap-3">
-          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '50px', objectFit: 'contain' }} />
+          <img src="/logo-full.png" alt="QuantStakes Logo" style={{ height: '48px', objectFit: 'contain' }} />
         </Link>
         
-        <nav className="flex gap-8 items-center">
+        <nav className="flex gap-4 items-center">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Terminal</a>
           <a href="#preview" onClick={(e) => { e.preventDefault(); document.getElementById('preview')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Sneak Peek</a>
           <a href="#calculator" onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-secondary desktop-only" style={{ textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500, cursor: 'pointer' }} onMouseEnter={e => e.target.style.color='white'} onMouseLeave={e => e.target.style.color='var(--text-secondary)'}>Calculator</a>
@@ -152,28 +152,28 @@ export default function Landing({ session: initialSession, profile: initialProfi
           <div className="desktop-only" style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }}></div>
 
           {currentUser ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <Link to="/settings" style={{ textDecoration: 'none' }}>
-                <div className="flex items-center gap-3.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.4rem 1rem 0.4rem 0.4rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
-                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                <div className="flex items-center gap-2.5" style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '0.35rem 0.85rem 0.35rem 0.35rem', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'all 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: currentProfile?.avatar_url ? `url(${currentProfile.avatar_url}) center/cover` : 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold', fontSize: '0.85rem', flexShrink: 0 }}>
                     {!currentProfile?.avatar_url && (currentProfile?.username?.[0] || currentUser?.email?.[0] || 'U').toUpperCase()}
                   </div>
-                  <span style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem' }}>
+                  <span className="desktop-only" style={{ color: '#ffffff', fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                     {currentProfile?.username || currentUser?.email?.split('@')[0]}
                   </span>
                 </div>
               </Link>
 
-              <Link to="/dashboard" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Link to="/dashboard" className="btn-white-pill" style={{ padding: '0.45rem 1rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
                 <span>Dashboard</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={14} />
               </Link>
             </div>
           ) : (
-            <>
+            <div className="flex items-center gap-3">
               <Link to="/auth" className="text-secondary desktop-only" style={{ textDecoration: 'none', fontWeight: 600, padding: '0.5rem 0.5rem' }}>Login</Link>
-              <Link to="/auth" className="btn-white-pill" style={{ padding: '0.55rem 1.4rem', fontSize: '0.9rem' }}>Sign up</Link>
-            </>
+              <Link to="/auth" className="btn-white-pill" style={{ padding: '0.55rem 1.3rem', fontSize: '0.88rem' }}>Sign up</Link>
+            </div>
           )}
         </nav>
       </header>
