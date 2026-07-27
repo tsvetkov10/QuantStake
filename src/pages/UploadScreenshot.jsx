@@ -6,19 +6,6 @@ export default function UploadScreenshot({ session }) {
   const [isDragging, setIsDragging] = useState(false);
   const navigate = useNavigate();
 
-  // Prevent macOS browser from opening dropped files in tab
-  useEffect(() => {
-    const preventWindowDrop = (e) => {
-      e.preventDefault();
-    };
-    window.addEventListener('dragover', preventWindowDrop);
-    window.addEventListener('drop', preventWindowDrop);
-    return () => {
-      window.removeEventListener('dragover', preventWindowDrop);
-      window.removeEventListener('drop', preventWindowDrop);
-    };
-  }, []);
-
   const validateAndSelectFile = (selectedFile) => {
     if (!selectedFile) return false;
     setError(null);
@@ -45,40 +32,57 @@ export default function UploadScreenshot({ session }) {
     return true;
   };
 
-  const handleDragEnter = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
+  // Global window drag counter to detect macOS Finder file dragging anywhere on page
+  useEffect(() => {
+    let dragCounter = 0;
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer) {
-      e.dataTransfer.dropEffect = 'copy';
-    }
-    setIsDragging(true);
-  };
+    const handleWindowDragEnter = (e) => {
+      e.preventDefault();
+      dragCounter++;
+      if (e.dataTransfer && e.dataTransfer.types && Array.from(e.dataTransfer.types).includes('Files')) {
+        setIsDragging(true);
+      }
+    };
 
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.currentTarget && e.relatedTarget && e.currentTarget.contains(e.relatedTarget)) {
-      return;
-    }
-    setIsDragging(false);
-  };
+    const handleWindowDragOver = (e) => {
+      e.preventDefault();
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'copy';
+      }
+      setIsDragging(true);
+    };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
+    const handleWindowDragLeave = (e) => {
+      e.preventDefault();
+      dragCounter--;
+      if (dragCounter <= 0) {
+        dragCounter = 0;
+        setIsDragging(false);
+      }
+    };
 
-    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const droppedFile = e.dataTransfer.files[0];
-      validateAndSelectFile(droppedFile);
-    }
-  };
+    const handleWindowDrop = (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      setIsDragging(false);
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const droppedFile = e.dataTransfer.files[0];
+        validateAndSelectFile(droppedFile);
+      }
+    };
+
+    window.addEventListener('dragenter', handleWindowDragEnter);
+    window.addEventListener('dragover', handleWindowDragOver);
+    window.addEventListener('dragleave', handleWindowDragLeave);
+    window.addEventListener('drop', handleWindowDrop);
+
+    return () => {
+      window.removeEventListener('dragenter', handleWindowDragEnter);
+      window.removeEventListener('dragover', handleWindowDragOver);
+      window.removeEventListener('dragleave', handleWindowDragLeave);
+      window.removeEventListener('drop', handleWindowDrop);
+    };
+  }, []);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -151,29 +155,26 @@ export default function UploadScreenshot({ session }) {
   };
 
   return (
-    <div className="flex-col gap-8 items-center">
+    <div className="flex-col gap-8 items-center" style={{ position: 'relative' }}>
       <div style={{ textAlign: 'center' }}>
         <h2 className="text-gradient" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>AI Slip Scanning</h2>
         <p className="text-secondary">Upload or drop a screenshot of any bet slip (in any language) to automatically extract stake, odds, date, payout & teams.</p>
       </div>
 
       <div 
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
         className="glass-panel flex-col items-center justify-center gap-6" 
         style={{ 
           position: 'relative',
           width: '100%', 
-          maxWidth: '600px', 
-          padding: '3.5rem 2rem', 
+          maxWidth: '640px', 
+          padding: isDragging ? '4.5rem 2rem' : '3.5rem 2rem', 
           borderStyle: 'dashed', 
-          borderWidth: '2px', 
+          borderWidth: isDragging ? '3px' : '2px', 
           borderColor: error ? 'var(--danger)' : isDragging ? '#38bdf8' : 'var(--border-glass)',
-          background: isDragging ? 'rgba(56, 189, 248, 0.12)' : 'var(--bg-glass)',
-          transition: 'all 0.2s ease',
-          boxShadow: isDragging ? '0 0 30px rgba(56, 189, 248, 0.3)' : 'none',
+          background: isDragging ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%)' : 'var(--bg-glass)',
+          transform: isDragging ? 'scale(1.03)' : 'scale(1)',
+          transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: isDragging ? '0 0 50px rgba(6, 182, 212, 0.4)' : 'none',
           overflow: 'hidden'
         }}
       >
@@ -186,7 +187,7 @@ export default function UploadScreenshot({ session }) {
 
         {!result && !analyzing && (
           <>
-            {/* Native Full-Overlay Input Element for macOS Finder Drag & Drop */}
+            {/* Full Overlay Input for direct file selection & drop target */}
             <input 
               type="file" 
               accept="image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif" 
@@ -201,22 +202,28 @@ export default function UploadScreenshot({ session }) {
                 zIndex: 20 
               }} 
               onChange={handleFileChange}
-              onDragEnter={handleDragEnter}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
             />
 
-            <div style={{ background: isDragging ? 'rgba(56, 189, 248, 0.25)' : 'rgba(0, 243, 255, 0.1)', padding: '1.5rem', borderRadius: '50%', transition: 'all 0.2s ease', pointerEvents: 'none' }}>
-              <Upload size={52} color={isDragging ? '#38bdf8' : 'var(--accent-cyan)'} />
+            <div 
+              style={{ 
+                background: isDragging ? 'rgba(56, 189, 248, 0.35)' : 'rgba(0, 243, 255, 0.1)', 
+                padding: isDragging ? '2rem' : '1.5rem', 
+                borderRadius: '50%', 
+                transition: 'all 0.25s ease', 
+                pointerEvents: 'none',
+                boxShadow: isDragging ? '0 0 30px rgba(56, 189, 248, 0.6)' : 'none',
+                transform: isDragging ? 'scale(1.15)' : 'scale(1)'
+              }}
+            >
+              <Upload size={isDragging ? 64 : 52} color={isDragging ? '#ffffff' : 'var(--accent-cyan)'} />
             </div>
             
             <div style={{ textAlign: 'center', pointerEvents: 'none' }}>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.4rem', color: isDragging ? '#38bdf8' : '#ffffff' }}>
-                {isDragging ? 'Release to drop your bet slip!' : 'Drag & Drop your bet slip screenshot here'}
+              <h3 style={{ fontSize: isDragging ? '1.6rem' : '1.4rem', fontWeight: 'bold', marginBottom: '0.4rem', color: isDragging ? '#38bdf8' : '#ffffff', transition: 'all 0.2s ease' }}>
+                {isDragging ? 'RELEASE MOUSE TO DROP BET SLIP!' : 'Drag & Drop your bet slip screenshot here'}
               </h3>
-              <p className="text-secondary" style={{ fontSize: '0.95rem' }}>
-                or click anywhere inside this box to browse files
+              <p style={{ color: isDragging ? '#ffffff' : 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: isDragging ? 'bold' : 'normal' }}>
+                {isDragging ? 'AI will scan and extract all details automatically' : 'or click anywhere inside this box to browse files'}
               </p>
             </div>
 
