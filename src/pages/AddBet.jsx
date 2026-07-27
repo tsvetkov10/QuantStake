@@ -217,36 +217,156 @@ export default function AddBet({ session, profile }) {
     }
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
+  const [isDragging, setIsDragging] = useState(false);
+
+  const validateSlipFile = (selectedFile) => {
+    if (!selectedFile) return false;
+    setErrorMsg(null);
+
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/heic', 'image/heif'];
+    const fileNameLower = selectedFile.name.toLowerCase();
+    const validExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif'];
+    const hasValidExt = validExtensions.some(ext => fileNameLower.endsWith(ext));
+    const isValidType = validTypes.includes(selectedFile.type) || hasValidExt;
+
+    if (!isValidType) {
+      setErrorMsg(`Invalid file format "${selectedFile.name}". Please upload a supported image file (PNG, JPG, JPEG, WEBP, HEIC).`);
+      return false;
+    }
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      setErrorMsg(`File "${selectedFile.name}" is too large (${(selectedFile.size / (1024 * 1024)).toFixed(1)}MB). Maximum allowed size is 10MB.`);
+      return false;
+    }
+
+    return true;
+  };
+
+  const processSlipFile = async (file) => {
+    if (!validateSlipFile(file)) return;
+
     setOcrLoading(true);
-    setOcrProgress(0);
+    setOcrProgress(20);
     setErrorMsg(null);
     setSuccessMsg(null);
 
     try {
-      const data = await extractBetData(file, (progress) => {
-        setOcrProgress(Math.round(progress * 100));
-      });
-      
-      if (data.stake) setStake(data.stake);
-      if (data.odds) setOdds(data.odds);
-      if (data.teams) {
-        setMatchups([data.teams]);
-        setMarkets(['Match Winner']);
+      const formData = new FormData();
+      formData.append('image', file);
+
+      // 1. Try server Gemini Vision AI parser
+      let data = null;
+      try {
+        const res = await fetch('http://localhost:3001/api/parse-slip', {
+          method: 'POST',
+          body: formData,
+        });
+        if (res.ok) {
+          data = await res.json();
+        }
+      } catch (e) {
+        console.warn('Gemini Vision backend unreachable, using fallback OCR...', e);
       }
-      if (data.type) setType(data.type);
-      
-      setSuccessMsg('Screenshot scanned! Verify the fields before submitting.');
+
+      // 2. Client Tesseract OCR fallback
+      if (!data) {
+        data = await extractBetData(file, (progress) => {
+          setOcrProgress(Math.round(progress * 100));
+        });
+      }
+
+      if (data) {
+        if (data.stake) setStake(data.stake);
+        if (data.odds) setOdds(data.odds);
+        if (data.teams) {
+          setMatchups([data.teams]);
+          setMarkets(['Match Winner']);
+        }
+        if (data.sport && ['Football', 'Basketball', 'Tennis', 'MMA', 'Esports', 'Other'].includes(data.sport)) {
+          setSport(data.sport);
+        }
+        if (data.type && ['Single', 'Parlay', 'System'].includes(data.type)) {
+          setType(data.type);
+        }
+        if (data.date) {
+          const parsedDate = new Date(data.date);
+          if (!isNaN(parsedDate.getTime())) {
+            setSelectedDate(parsedDate.toISOString().split('T')[0]);
+          }
+        }
+        
+        showToastMsg(
+          '✨ AI SLIP SCAN COMPLETE',
+          `Auto-filled Stake (${data.stake || 'N/A'}), Odds (${data.odds || 'N/A'}), Teams (${data.teams || 'N/A'}).`
+        );
+        setSuccessMsg('Bet slip scanned! Verify the auto-filled fields below before submitting.');
+      }
     } catch (err) {
-      setErrorMsg('Failed to process screenshot. Please enter details manually.');
+      console.error(err);
+      setErrorMsg('Failed to process bet slip screenshot. Please enter details manually.');
     } finally {
       setOcrLoading(false);
       setOcrProgress(0);
-      e.target.value = null; // reset input
     }
+  };
+
+  // Global window drag counter to detect macOS Finder file dragging anywhere on page
+  useEffect(() => {
+    let dragCounter = 0;
+
+    const handleWindowDragEnter = (e) => {
+      e.preventDefault();
+      dragCounter++;
+      if (e.dataTransfer && e.dataTransfer.types && Array.from(e.dataTransfer.types).includes('Files')) {
+        setIsDragging(true);
+      }
+    };
+
+    const handleWindowDragOver = (e) => {
+      e.preventDefault();
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'copy';
+      }
+      setIsDragging(true);
+    };
+
+    const handleWindowDragLeave = (e) => {
+      e.preventDefault();
+      dragCounter--;
+      if (dragCounter <= 0) {
+        dragCounter = 0;
+        setIsDragging(false);
+      }
+    };
+
+    const handleWindowDrop = (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      setIsDragging(false);
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const droppedFile = e.dataTransfer.files[0];
+        processSlipFile(droppedFile);
+      }
+    };
+
+    window.addEventListener('dragenter', handleWindowDragEnter);
+    window.addEventListener('dragover', handleWindowDragOver);
+    window.addEventListener('dragleave', handleWindowDragLeave);
+    window.addEventListener('drop', handleWindowDrop);
+
+    return () => {
+      window.removeEventListener('dragenter', handleWindowDragEnter);
+      window.removeEventListener('dragover', handleWindowDragOver);
+      window.removeEventListener('dragleave', handleWindowDragLeave);
+      window.removeEventListener('drop', handleWindowDrop);
+    };
+  }, []);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    await processSlipFile(file);
+    e.target.value = null; // reset input
   };
 
   const showToastMsg = (title, message) => {
@@ -577,18 +697,33 @@ export default function AddBet({ session, profile }) {
         {/* Main Form Container */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
-          {/* AI Slip Scan Bar */}
-          <div className="glass-panel" style={{ padding: '0.85rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '56px', border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(15, 23, 42, 0.75)', borderRadius: '14px' }}>
+          {/* AI Slip Scan Bar with dynamic drag-and-drop transformation */}
+          <div 
+            className="glass-panel" 
+            style={{ 
+              padding: isDragging ? '1.5rem 2rem' : '0.85rem 1.5rem', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              minHeight: isDragging ? '90px' : '56px', 
+              border: isDragging ? '3px dashed #38bdf8' : '1px solid rgba(56, 189, 248, 0.25)', 
+              background: isDragging ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%)' : 'rgba(15, 23, 42, 0.75)', 
+              borderRadius: '14px',
+              transform: isDragging ? 'scale(1.02)' : 'scale(1)',
+              transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: isDragging ? '0 0 40px rgba(56, 189, 248, 0.4)' : 'none'
+            }}
+          >
             <div className="flex items-center gap-3">
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Upload size={16} color="#38bdf8" />
+              <div style={{ width: isDragging ? '48px' : '32px', height: isDragging ? '48px' : '32px', borderRadius: '50%', background: isDragging ? 'rgba(56, 189, 248, 0.35)' : 'rgba(56, 189, 248, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }}>
+                <Upload size={isDragging ? 26 : 16} color={isDragging ? '#ffffff' : '#38bdf8'} />
               </div>
-              <span style={{ fontSize: '0.88rem', color: '#e2e8f0', fontWeight: '500' }}>
-                {ocrLoading ? `Extracting slip values (${ocrProgress}%)...` : 'AI Slip Scan: Upload any sports slip screenshot for instant 0.5s auto-fill'}
+              <span style={{ fontSize: isDragging ? '1.1rem' : '0.88rem', color: isDragging ? '#38bdf8' : '#e2e8f0', fontWeight: isDragging ? '700' : '500', transition: 'all 0.2s ease' }}>
+                {isDragging ? 'RELEASE MOUSE TO SCAN & AUTO-FILL BET SLIP!' : ocrLoading ? `Extracting slip values (${ocrProgress}%)...` : 'AI Slip Scan: Upload or drag any sports slip screenshot for instant 0.5s auto-fill'}
               </span>
             </div>
             
-            <input type="file" id="screenshot-upload" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} disabled={ocrLoading} />
+            <input type="file" id="screenshot-upload" accept="image/png, image/jpeg, image/jpg, image/webp, image/heic, image/heif" onChange={handleImageUpload} style={{ display: 'none' }} disabled={ocrLoading} />
             <label 
               htmlFor="screenshot-upload" 
               className="btn-white-pill" 
