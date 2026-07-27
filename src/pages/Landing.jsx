@@ -192,18 +192,18 @@ export default function Landing({ session: initialSession, profile: initialProfi
       </header>
 
       {/* Hero Section */}
-      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', paddingTop: '76px' }}>
+      <section className="hero-landing-section" style={{ position: 'relative', width: '100%', paddingTop: '76px', paddingBottom: '1rem' }}>
         
-        <div className="hero-cirform-grid" style={{ padding: '0.75rem 2rem 2rem 2rem' }}>
+        <div className="hero-cirform-grid" style={{ padding: '1.75rem 2rem 1rem 2rem' }}>
           
           {/* Hero Left Column: Headline, Description & White Pill Action */}
           <div className="flex-col reveal-on-scroll" style={{ alignItems: 'flex-start' }}>
-            <h1 className="title-cirform mb-6" style={{ textAlign: 'left', letterSpacing: '-2px' }}>
+            <h1 className="title-cirform mb-4" style={{ textAlign: 'left', letterSpacing: '-2px', fontSize: 'clamp(2.8rem, 4.4vw, 4.5rem)' }}>
               We create bright <br />
               future for Portfolio Management
             </h1>
 
-            <p className="text-secondary mb-10" style={{ fontSize: '1.15rem', maxWidth: '540px', lineHeight: '1.7', textAlign: 'left' }}>
+            <p className="text-secondary mb-6" style={{ fontSize: '1.1rem', maxWidth: '540px', lineHeight: '1.6', textAlign: 'left' }}>
               Empowering sports analysts with verified metrics, cryptographic proof, and institutional-grade portfolio tracking.
             </p>
 
