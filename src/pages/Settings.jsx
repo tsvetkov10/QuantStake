@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2 } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, ShieldCheck, User, ImageIcon, Zap, Check, Sparkles, RefreshCw, RotateCcw, Trash2, Pencil, Edit2 } from 'lucide-react';
 
 export default function Settings({ session, profile: initialProfile, onProfileUpdate }) {
-  const [profile, setProfile] = useState(initialProfile || { username: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
+  const [profile, setProfile] = useState(initialProfile || { username: '', bio: '', currency: 'USD', avatar_url: '', last_avatar_update: null, last_username_update: null, profile_mode: 'tracker' });
   const [originalProfile, setOriginalProfile] = useState(initialProfile);
   const [originalAvatar, setOriginalAvatar] = useState(initialProfile?.avatar_url || '');
   const [originalUsername, setOriginalUsername] = useState(initialProfile?.username || '');
+  const [isEditingUsername, setIsEditingUsername] = useState(false);
+  const [isUsernameHovered, setIsUsernameHovered] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
@@ -83,6 +86,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
     if (e) e.preventDefault();
     if (originalProfile && 
         profile.username === originalProfile.username && 
+        profile.bio === originalProfile.bio && 
         profile.currency === originalProfile.currency && 
         profile.avatar_url === originalProfile.avatar_url &&
         (profile.profile_mode || 'tracker') === (originalProfile.profile_mode || 'tracker')) {
@@ -107,6 +111,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
     try {
       const updates = {
         username: profile.username,
+        bio: profile.bio || '',
         currency: profile.currency,
         avatar_url: profile.avatar_url,
         profile_mode: profile.profile_mode || 'tracker'
@@ -178,7 +183,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
           <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#fff', margin: 0, letterSpacing: '-0.5px' }}>
             Profile <span style={{ background: 'linear-gradient(90deg, #22d3ee, #a13bf7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Settings</span>
           </h1>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>Manage your account avatar, username, and tipster status.</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>Manage your account avatar, username, bio, and tipster status.</p>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -218,13 +223,15 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
       </div>
 
       {/* Main Unscrollable 2-Column Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: '1.25rem', alignItems: 'start' }}>
         
-        {/* LEFT COLUMN: Profile Avatar, Username Display & Social Stats */}
+        {/* LEFT COLUMN: Profile Avatar, Interactive Username & Bio & Social Stats */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
           <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            
+            {/* Top User Info Row with Inline Hover-to-Edit Username */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
               {/* Avatar Upload */}
               <div style={{ position: 'relative', flexShrink: 0 }}>
                 <div style={{ 
@@ -255,26 +262,120 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 </label>
               </div>
 
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <h2 style={{ fontSize: '1.3rem', fontWeight: '700', color: '#fff', margin: 0 }}>
-                    {profile.username || 'Trader'}
-                  </h2>
-                  {isAnalyst && <ShieldCheck size={18} color="#a13bf7" />}
-                </div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                
+                {/* Interactive Inline Username with Hover Animation */}
+                {isEditingUsername ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <input 
+                      type="text" 
+                      value={profile.username || ''}
+                      onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+                      onKeyDown={(e) => { if (e.key === 'Enter') setIsEditingUsername(false); }}
+                      onBlur={() => setIsEditingUsername(false)}
+                      autoFocus
+                      style={{ 
+                        background: 'rgba(0,0,0,0.6)', 
+                        border: '1px solid var(--accent-cyan)', 
+                        color: '#fff', 
+                        fontSize: '1.25rem', 
+                        fontWeight: '700', 
+                        padding: '0.2rem 0.6rem', 
+                        borderRadius: '8px', 
+                        outline: 'none',
+                        width: '100%',
+                        boxShadow: '0 0 10px rgba(34, 211, 238, 0.2)'
+                      }}
+                    />
+                    <button 
+                      onClick={() => setIsEditingUsername(false)}
+                      style={{ background: 'var(--accent-cyan)', border: 'none', color: '#000', padding: '0.3rem 0.6rem', borderRadius: '6px', cursor: 'pointer', fontWeight: '700', fontSize: '0.75rem' }}
+                    >
+                      Done
+                    </button>
+                  </div>
+                ) : (
+                  <div 
+                    onClick={() => setIsEditingUsername(true)}
+                    onMouseEnter={() => setIsUsernameHovered(true)}
+                    onMouseLeave={() => setIsUsernameHovered(false)}
+                    style={{ 
+                      display: 'inline-flex', 
+                      alignItems: 'center', 
+                      gap: '0.5rem', 
+                      cursor: 'pointer',
+                      padding: '0.25rem 0.6rem',
+                      marginLeft: '-0.6rem',
+                      borderRadius: '8px',
+                      background: isUsernameHovered ? 'rgba(34, 211, 238, 0.1)' : 'transparent',
+                      border: isUsernameHovered ? '1px dashed rgba(34, 211, 238, 0.4)' : '1px solid transparent',
+                      transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                      transform: isUsernameHovered ? 'translateY(-1px)' : 'none'
+                    }}
+                    title="Click to edit username"
+                  >
+                    <h2 style={{ fontSize: '1.35rem', fontWeight: '700', color: '#fff', margin: 0 }}>
+                      {profile.username || 'Trader'}
+                    </h2>
+                    {isAnalyst && <ShieldCheck size={18} color="#a13bf7" />}
+                    <Pencil 
+                      size={14} 
+                      color="var(--accent-cyan)" 
+                      style={{ 
+                        opacity: isUsernameHovered ? 1 : 0.4, 
+                        transform: isUsernameHovered ? 'scale(1.15)' : 'scale(1)', 
+                        transition: 'all 0.2s ease' 
+                      }} 
+                    />
+                  </div>
+                )}
+
                 <span style={{ fontSize: '0.82rem', color: isAnalyst ? '#c084fc' : 'var(--text-secondary)', fontWeight: 500 }}>
                   {isAnalyst ? 'Verified Quant Analyst / Tipster' : 'Standard Member'}
                 </span>
               </div>
             </div>
 
+            {/* Bio / About Me Section */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+                  Bio / Strategy Description
+                </label>
+                <span style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)' }}>
+                  {(profile.bio || '').length}/160
+                </span>
+              </div>
+
+              <textarea 
+                rows={2}
+                maxLength={160}
+                value={profile.bio || ''}
+                onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+                placeholder="Write a brief bio about your quantitative strategy or edge..."
+                style={{ 
+                  width: '100%', 
+                  background: 'rgba(0, 0, 0, 0.35)', 
+                  border: '1px solid rgba(255, 255, 255, 0.1)', 
+                  color: '#fff', 
+                  fontSize: '0.88rem', 
+                  padding: '0.65rem 0.85rem', 
+                  borderRadius: '10px', 
+                  outline: 'none',
+                  resize: 'none',
+                  lineHeight: 1.45,
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+
             {/* Social Metrics Bar: Followers, Following, Subscribers (DEFAULT 0) */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '16px', padding: '0.85rem 0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '16px', padding: '0.75rem 0.5rem' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
                   Followers
                 </span>
-                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
                   {profile?.followers_count || 0}
                 </span>
               </div>
@@ -283,7 +384,7 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
                   Following
                 </span>
-                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff', marginTop: '0.15rem' }}>
                   {profile?.following_count || 0}
                 </span>
               </div>
@@ -292,31 +393,16 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
                 <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-cyan)' }}>
                   Subscribers
                 </span>
-                <span style={{ fontSize: '1.25rem', fontWeight: 700, color: isAnalyst ? '#c084fc' : '#ffffff', marginTop: '0.15rem' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: 700, color: isAnalyst ? '#c084fc' : '#ffffff', marginTop: '0.15rem' }}>
                   {profile?.subscribers_count || 0}
                 </span>
               </div>
             </div>
 
-            {/* Reset Stats Option */}
-            <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '14px', padding: '0.85rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h4 style={{ fontSize: '0.88rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance</h4>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Wipe recorded bets from database.</p>
-              </div>
-
-              <button 
-                onClick={() => setShowResetConfirm(true)}
-                style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.8rem', padding: '0.45rem 1rem', borderRadius: '8px', cursor: 'pointer' }}
-              >
-                Reset
-              </button>
-            </div>
-
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Become Tipster Banner + Account Details */}
+        {/* RIGHT COLUMN: Become Tipster Banner + Currency & Danger Action */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
           {/* BECOME A QUANT ANALYST / TIPSTER BANNER */}
@@ -367,46 +453,39 @@ export default function Settings({ session, profile: initialProfile, onProfileUp
             </button>
           </div>
 
-          {/* Account Edit Fields: Username & Currency */}
-          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {/* Username Input */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <label style={{ fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
-                Username Handle
-              </label>
-              <input 
-                type="text" 
-                value={profile.username || ''}
-                onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-                style={{ 
-                  width: '100%', 
-                  background: 'rgba(0, 0, 0, 0.4)', 
-                  border: '1px solid rgba(255, 255, 255, 0.12)', 
-                  color: '#fff', 
-                  fontSize: '0.95rem', 
-                  padding: '0.7rem 0.9rem', 
-                  borderRadius: '10px', 
-                  outline: 'none'
-                }}
-                placeholder="Enter username"
-              />
-            </div>
+          {/* Account Preferences: Default Currency */}
+          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#fff', margin: 0 }}>Default Currency</h4>
+                <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Used across performance charts and bet slips.</p>
+              </div>
 
-            {/* Currency Selector */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <label style={{ fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
-                Default Currency
-              </label>
               <select
                 value={profile.currency || 'USD'}
                 onChange={(e) => setProfile({ ...profile, currency: e.target.value })}
-                style={{ width: '100%', background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', fontSize: '0.95rem', padding: '0.7rem 0.9rem', borderRadius: '10px', outline: 'none' }}
+                style={{ background: 'rgba(0, 0, 0, 0.5)', border: '1px solid rgba(255, 255, 255, 0.15)', color: '#fff', fontSize: '0.88rem', fontWeight: '600', padding: '0.45rem 0.85rem', borderRadius: '10px', outline: 'none', cursor: 'pointer' }}
               >
                 <option value="USD" style={{ background: '#040714', color: '#fff' }}>USD ($)</option>
                 <option value="EUR" style={{ background: '#040714', color: '#fff' }}>EUR (€)</option>
                 <option value="GBP" style={{ background: '#040714', color: '#fff' }}>GBP (£)</option>
               </select>
             </div>
+          </div>
+
+          {/* Reset Performance History Action */}
+          <div style={{ background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '20px', padding: '1.25rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: '700', color: '#fff', margin: 0 }}>Reset Performance History</h4>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', margin: '0.1rem 0 0 0' }}>Wipe all recorded bets from database.</p>
+            </div>
+
+            <button 
+              onClick={() => setShowResetConfirm(true)}
+              style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '600', fontSize: '0.8rem', padding: '0.45rem 1rem', borderRadius: '8px', cursor: 'pointer' }}
+            >
+              Reset Stats
+            </button>
           </div>
 
         </div>
