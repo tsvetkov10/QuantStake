@@ -94,8 +94,16 @@ const BetCardPopup = ({ rawBet, sym }) => {
   );
 };
 
-const BankrollCandlestickChart = ({ data, sym }) => {
+const BankrollCandlestickChart = ({ data, sym, loading }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center" style={{ height: '100%', padding: '1rem' }}>
+        <div className="pulse-skeleton" style={{ width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px' }} />
+      </div>
+    );
+  }
 
   if (!data || data.length === 0) {
     return <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div>;
@@ -237,6 +245,7 @@ const CustomTooltip = ({ active, payload, sym }) => {
 
 export default function Dashboard({ session, profile }) {
   const [bets, setBets] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filterSport, setFilterSport] = useState('All');
   const [filterBookmaker, setFilterBookmaker] = useState('All');
   const [filterType, setFilterType] = useState('All');
@@ -255,27 +264,34 @@ export default function Dashboard({ session, profile }) {
   useEffect(() => {
     document.title = "Dashboard - Analytics";
     async function fetchData() {
-      if (isMock) {
-        const mockBetsRaw = sessionStorage.getItem('mock_bets');
-        if (mockBetsRaw) {
-          setBets(JSON.parse(mockBetsRaw));
-        } else {
-          const defaultMock = [
-            { id: '1', created_at: new Date(Date.now() - 86400000 * 4).toISOString(), sport: 'Basketball', bookmaker: 'Bet365', type: 'Single', teams: 'Lakers vs Warriors', stake: 50, odds: 1.9, status: 'Won' },
-            { id: '2', created_at: new Date(Date.now() - 86400000 * 3).toISOString(), sport: 'Football', bookmaker: 'Betano', type: 'Multiple', teams: 'Acca', stake: 100, odds: 2.1, status: 'Lost' },
-            { id: '3', created_at: new Date(Date.now() - 86400000 * 2).toISOString(), sport: 'Tennis', bookmaker: 'Bet365', type: 'Single', teams: 'Alcaraz', stake: 25, odds: 3.5, status: 'Won' },
-            { id: '4', created_at: new Date(Date.now() - 86400000 * 1).toISOString(), sport: 'Basketball', bookmaker: 'Inbet', type: 'Single', teams: 'Bulls', stake: 150, odds: 1.8, status: 'Pending' },
-            { id: '5', created_at: new Date(Date.now() - 86400000 * 5).toISOString(), sport: 'Football', bookmaker: 'Bet365', type: 'Single', teams: 'France vs Morocco', stake: 60, odds: 2.0, status: 'Lost' },
-            { id: '6', created_at: new Date(Date.now() - 86400000 * 6).toISOString(), sport: 'Tennis', bookmaker: 'Betano', type: 'Single', teams: 'Djokovic', stake: 200, odds: 1.2, status: 'Won' }
-          ];
-          setBets(defaultMock);
-          sessionStorage.setItem('mock_bets', JSON.stringify(defaultMock));
+      setLoading(true);
+      try {
+        if (isMock) {
+          const mockBetsRaw = sessionStorage.getItem('mock_bets');
+          if (mockBetsRaw) {
+            setBets(JSON.parse(mockBetsRaw));
+          } else {
+            const defaultMock = [
+              { id: '1', created_at: new Date(Date.now() - 86400000 * 4).toISOString(), sport: 'Basketball', bookmaker: 'Bet365', type: 'Single', teams: 'Lakers vs Warriors', stake: 50, odds: 1.9, status: 'Won' },
+              { id: '2', created_at: new Date(Date.now() - 86400000 * 3).toISOString(), sport: 'Football', bookmaker: 'Betano', type: 'Multiple', teams: 'Acca', stake: 100, odds: 2.1, status: 'Lost' },
+              { id: '3', created_at: new Date(Date.now() - 86400000 * 2).toISOString(), sport: 'Tennis', bookmaker: 'Bet365', type: 'Single', teams: 'Alcaraz', stake: 25, odds: 3.5, status: 'Won' },
+              { id: '4', created_at: new Date(Date.now() - 86400000 * 1).toISOString(), sport: 'Basketball', bookmaker: 'Inbet', type: 'Single', teams: 'Bulls', stake: 150, odds: 1.8, status: 'Pending' },
+              { id: '5', created_at: new Date(Date.now() - 86400000 * 5).toISOString(), sport: 'Football', bookmaker: 'Bet365', type: 'Single', teams: 'France vs Morocco', stake: 60, odds: 2.0, status: 'Lost' },
+              { id: '6', created_at: new Date(Date.now() - 86400000 * 6).toISOString(), sport: 'Tennis', bookmaker: 'Betano', type: 'Single', teams: 'Djokovic', stake: 200, odds: 1.2, status: 'Won' }
+            ];
+            setBets(defaultMock);
+            sessionStorage.setItem('mock_bets', JSON.stringify(defaultMock));
+          }
+          return;
         }
-        return;
-      }
 
-      const { data: betsData } = await supabase.from('bets').select('*').eq('user_id', session.user.id).order('created_at', { ascending: true });
-      if (betsData) setBets(betsData);
+        const { data: betsData } = await supabase.from('bets').select('*').eq('user_id', session.user.id).order('created_at', { ascending: true });
+        if (betsData) setBets(betsData);
+      } catch (err) {
+        console.error("Error fetching dashboard bets:", err);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, [session, isMock]);
@@ -620,8 +636,25 @@ export default function Dashboard({ session, profile }) {
   };
   const sym = getCurrencySymbol(profile?.currency);
 
-  const NoData = () => <h3 className="relative z-10" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>;
-  const NoDataSmall = () => <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>;
+  const SkeletonPulse = ({ width = '120px', height = '2.2rem' }) => (
+    <div className="pulse-skeleton" style={{ width, height, background: 'rgba(255, 255, 255, 0.06)', borderRadius: '8px', display: 'inline-block' }} />
+  );
+
+  const NoData = () => (
+    loading ? (
+      <SkeletonPulse width="120px" height="2.2rem" />
+    ) : (
+      <h3 className="relative z-10" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>
+    )
+  );
+
+  const NoDataSmall = () => (
+    loading ? (
+      <SkeletonPulse width="90px" height="1.6rem" />
+    ) : (
+      <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--text-secondary)', fontStyle: 'italic', opacity: 0.7 }}>No Data</h3>
+    )
+  );
 
   const ensureImagesLoaded = async (element) => {
     if (!element) return;
@@ -1272,7 +1305,11 @@ export default function Dashboard({ session, profile }) {
           </div>
 
           <div className="dashboard-chart-container" style={{ height: '350px' }}>
-            {filteredBets.length === 0 ? (
+            {loading ? (
+              <div className="flex items-center justify-center" style={{ height: '100%', padding: '1rem' }}>
+                <div className="pulse-skeleton" style={{ width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px' }} />
+              </div>
+            ) : filteredBets.length === 0 ? (
               <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div>
             ) : chartType === 'line' ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -1301,7 +1338,7 @@ export default function Dashboard({ session, profile }) {
                 </AreaChart>
               </ResponsiveContainer>
             ) : (
-              <BankrollCandlestickChart data={candlestickData} sym={sym} />
+              <BankrollCandlestickChart data={candlestickData} sym={sym} loading={loading} />
             )}
           </div>
         </div>
@@ -1411,7 +1448,11 @@ export default function Dashboard({ session, profile }) {
           <div className="glass-panel" style={{ padding: '2rem' }}>
             <h3 className="label mb-6 text-gradient" style={{ fontSize: '1.3rem' }}>Win Rate by Odds Tier</h3>
             <div style={{ height: '250px' }}>
-              {filteredBets.length === 0 ? <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div> : (
+              {loading ? (
+                <div className="flex items-center justify-center" style={{ height: '100%', padding: '1rem' }}>
+                  <div className="pulse-skeleton" style={{ width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px' }} />
+                </div>
+              ) : filteredBets.length === 0 ? <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div> : (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                     <Tooltip
@@ -1445,7 +1486,11 @@ export default function Dashboard({ session, profile }) {
           <div className="glass-panel" style={{ padding: '2rem' }}>
             <h3 className="label mb-6 text-gradient" style={{ fontSize: '1.3rem' }}>Win Rate by Sport</h3>
             <div style={{ height: '250px' }}>
-              {filteredBets.length === 0 ? <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div> : (
+              {loading ? (
+                <div className="flex items-center justify-center" style={{ height: '100%', padding: '1rem' }}>
+                  <div className="pulse-skeleton" style={{ width: '100%', height: '100%', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px' }} />
+                </div>
+              ) : filteredBets.length === 0 ? <div className="flex items-center justify-center" style={{ height: '100%', opacity: 0.5, fontStyle: 'italic', color: 'var(--text-secondary)' }}>No data to display.</div> : (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                     <Tooltip

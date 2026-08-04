@@ -887,7 +887,11 @@ export default function BetHistory({ session, profile }) {
 
       {/* Ledger Main List Content */}
       {loading ? (
-        <div className="glass-panel" style={{ padding: '4rem', textAlign: 'center' }}>Synchronizing ledger entries...</div>
+        <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {[1, 2, 3, 4, 5].map(idx => (
+            <div key={idx} className="pulse-skeleton" style={{ width: '100%', height: '54px', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '10px' }} />
+          ))}
+        </div>
       ) : filteredBets.length === 0 ? (
         <div className="glass-panel" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
           No positions matching the selected filter criteria.

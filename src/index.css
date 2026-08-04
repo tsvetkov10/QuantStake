@@ -1371,6 +1371,15 @@ input[type="number"] {
   height: 200%;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.35) 50%, transparent 100%);
   animation: goldShimmerSweep 4s infinite ease-in-out;
+}
+
+@keyframes pulseSkeleton {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.85; }
+}
+
+.pulse-skeleton {
+  animation: pulseSkeleton 1.4s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
 }
