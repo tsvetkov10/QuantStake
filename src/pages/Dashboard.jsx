@@ -1095,10 +1095,43 @@ export default function Dashboard({ session, profile }) {
           <div className="gold-shimmer-beam" />
           <div className="flex justify-between items-center mb-2 relative z-10">
             <p className="label text-secondary" style={{ fontSize: '0.85rem' }}>Most Betted Sport</p>
-            <Sparkles size={16} color="#f59e0b" />
+            <span style={{ fontSize: '1.2rem' }}>
+              {(() => {
+                if (!mostBettedSport || mostBettedSport === 'N/A') return '🎯';
+                const name = mostBettedSport.toLowerCase();
+                if (name.includes('foot') || name.includes('socc')) return '⚽';
+                if (name.includes('basket')) return '🏀';
+                if (name.includes('tenn')) return '🎾';
+                if (name.includes('mma') || name.includes('ufc') || name.includes('box')) return '🥊';
+                if (name.includes('esport') || name.includes('game')) return '🎮';
+                if (name.includes('base')) return '⚾';
+                if (name.includes('ice') || name.includes('hockey')) return '🏒';
+                if (name.includes('american') || name.includes('nfl')) return '🏈';
+                if (name.includes('race') || name.includes('f1') || name.includes('motor')) return '🏎️';
+                return '🎯';
+              })()}
+            </span>
           </div>
           {filteredBets.length === 0 ? <NoDataSmall /> : (
-            <h3 className="relative z-10" style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{mostBettedSport}</h3>
+            <h3 className="relative z-10 flex items-center gap-2" style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.6rem)', fontWeight: 'bold', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
+              <span>
+                {(() => {
+                  if (!mostBettedSport || mostBettedSport === 'N/A') return '🎯';
+                  const name = mostBettedSport.toLowerCase();
+                  if (name.includes('foot') || name.includes('socc')) return '⚽';
+                  if (name.includes('basket')) return '🏀';
+                  if (name.includes('tenn')) return '🎾';
+                  if (name.includes('mma') || name.includes('ufc') || name.includes('box')) return '🥊';
+                  if (name.includes('esport') || name.includes('game')) return '🎮';
+                  if (name.includes('base')) return '⚾';
+                  if (name.includes('ice') || name.includes('hockey')) return '🏒';
+                  if (name.includes('american') || name.includes('nfl')) return '🏈';
+                  if (name.includes('race') || name.includes('f1') || name.includes('motor')) return '🏎️';
+                  return '🎯';
+                })()}
+              </span>
+              <span>{mostBettedSport}</span>
+            </h3>
           )}
           <p className="text-secondary relative z-10" style={{ fontSize: '0.8rem' }}>Top Volume Sport</p>
         </div>
